@@ -1,0 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Inter, sans-serif;
+}
+
+.filter-blur {
+  backdrop-filter: blur(5px);
+}
+
+.left-nav.active {
+  @apply shadow-gray-300/50 shadow-md bg-white font-semibold text-gray-800 hover:bg-white;
+}
+
+.left-nav.active > div {
+  @apply bg-gradient-to-tl from-primary to-pink-400 !shadow-none;
+}
+
+/* fix MD input width issue */
+.min-w-\[200px\] {
+  min-width: auto !important;
+}
+
+/* fix MD labels */
+.font-light {
+  @apply font-medium text-gray-600;
+}
+
+.font-medium {
+  font-weight: 500 !important;
+}
+
+.community-bg {
+  box-sizing: inherit;
+}
+
+.community-bg:before, .community-bg:after {
+  border-radius: 50%;
+  content: "";
+  display: block;
+  filter: blur(3rem);
+  height: 64vh;
+  position: fixed;
+  width: 64vh;
+  z-index: -1;
+}
+
+.community-bg:before {
+  opacity: 0.8;
+  background: linear-gradient(270deg, #fff3de 20%, #e1d7ff);
+  right: 10vh;
+  top: 8vh;
+}
+
+.community-bg:after {
+  opacity: 0.8;
+  background: linear-gradient(180deg, #e1d7ff 20%, #f8f8e1);
+  bottom: 8vh;
+  left: 10vh;
+}
