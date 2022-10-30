@@ -134,6 +134,16 @@ contract FungibleToken is ERC20, Pausable, Ownable, Utils {
 		}
 	}
 
+	function sendTokenAirdrop(address[] memory _whitelisted, uint _tokensAmount) public onlyOwner payable {
+		require(_tokensAmount > 0, "Wrong tokens amount");
+		require(_whitelisted.length > 0, "Wrong list of addresses");
+
+		uint _tokensPerAddress = _tokensAmount / _whitelisted.length;
+		for (uint _i = 0; _i < _whitelisted.length; ++_i) {
+			IERC20(address(this)).transferFrom(msg.sender, address(_whitelisted[_i]), _tokensPerAddress);
+		}
+	}
+
 	function claimFromCampaign(uint _communityId, uint _campaignId, uint _eventCode, string memory _email,
 		uint root, uint nullifierHash, uint[8] calldata proof) public whenNotPaused payable {
 

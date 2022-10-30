@@ -3,10 +3,12 @@ import { Textarea, Input, Button } from '@material-tailwind/react';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { Loader } from '../../Loader';
 import { Popup } from '../../Popup';
-import { Web3Provider } from "@ethersproject/providers";
-import { useNetwork, useProvider } from "wagmi";
+import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from "wagmi";
 import { convertToEther } from "../../../utils/format";
 import { BigNumber } from "ethers";
+import FungibleTokenABI from "../../../contractsData/FungibleToken.json";
+import { addTransaction } from "../../../store/transactionSlice";
+import { useDispatch } from "react-redux";
 
 export function AirdropFTPopup(
   {
@@ -15,16 +17,128 @@ export function AirdropFTPopup(
     handleSuccess,
     tokenSymbol,
     tokenAddress,
+    currentCommunity,
     myBalance,
   }) {
-  const provider = useProvider();
-  const { chain } = useNetwork();
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [approveFormData, setApproveFormData] = useState({});
+  const [submitFormData, setSubmitFormData] = useState({});
   const [formData, setFormData] = useState({
     whitelisted: "",
     tokensAmount: "",
   });
+
+  // ------------ Approve token transfer ------------
+
+  const { config: configApprove, error: errorApprove } = usePrepareContractWrite({
+    addressOrName: currentCommunity?.ftContract,
+    contractInterface: FungibleTokenABI.abi,
+    enabled: approveFormData?.whitelisted?.length > 0 && approveFormData.tokensAmount > 0,
+    functionName: 'approve',
+    args: [currentCommunity?.ftContract, approveFormData.tokensAmount]
+  });
+
+  const { data: approveData, write: approveWrite, status: approveStatus } = useContractWrite({
+    ...configApprove,
+    onSuccess: ({ hash }) => {
+      dispatch(addTransaction({
+        hash: hash,
+        description: `Approve token transfer`
+      }));
+    },
+    onError: ({ message }) => {
+      setIsLoading(false);
+      setApproveFormData({});
+      console.log('onError message', message);
+    },
+  });
+
+  useWaitForTransaction({
+    hash: approveData?.hash,
+    onError: error => {
+      setIsLoading(false);
+      setApproveFormData({});
+      console.log('is err', error);
+    },
+    onSuccess: data => {
+      if (data) {
+        setSubmitFormData({ ...approveFormData });
+        setApproveFormData({});
+      }
+    },
+  });
+
+  // call contract write when all is ready
+  useEffect(() => {
+    if (approveWrite && approveStatus !== 'loading') {
+      approveWrite();
+    }
+  }, [approveWrite]);
+
+  // ------------ Create Distribution Campaign ------------
+
+  const { config: configCreate, error: errorCreate } = usePrepareContractWrite({
+    addressOrName: currentCommunity?.ftContract,
+    contractInterface: FungibleTokenABI.abi,
+    enabled: submitFormData?.whitelisted?.length > 0 && submitFormData?.tokensAmount > 0,
+    functionName: 'sendTokenAirdrop',
+    args: [submitFormData.whitelisted, submitFormData.tokensAmount]
+  });
+
+  const { data: createData, write: createWrite, status: createStatus } = useContractWrite({
+    ...configCreate,
+    onSuccess: ({ hash }) => {
+      setPopupVisible(false);
+      setSubmitFormData({});
+      resetForm();
+
+      dispatch(addTransaction({
+        hash: hash,
+        description: `Send Airdrop`
+      }));
+    },
+    onError: ({ message }) => {
+      setIsLoading(false);
+      setSubmitFormData({});
+      console.log('onError message', message);
+    },
+  });
+
+  useWaitForTransaction({
+    hash: createData?.hash,
+    onError: error => {
+      console.log('is err', error);
+      setIsLoading(false);
+      setSubmitFormData({});
+    },
+    onSuccess: data => {
+      setIsLoading(false);
+      if (data) {
+        handleSuccess?.();
+      }
+    },
+  });
+
+  useEffect(() => {
+    if (createWrite && createStatus !== 'loading') {
+      createWrite();
+    }
+  }, [createWrite]);
+
+  useEffect(() => {
+    console.log(`errorApprove`, errorApprove);
+  }, [errorApprove]);
+
+  const resetForm = () => {
+    setSubmitFormData({});
+    setApproveFormData({});
+    setFormData({
+      whitelisted: "",
+      tokensAmount: "",
+    });
+  }
 
   const addressCount = () => {
     let count = 0;
@@ -45,15 +159,6 @@ export function AirdropFTPopup(
     return 0;
   }
 
-
-  const sendAirdrop = () => {
-    setIsLoading(true);
-
-    return new Promise(async (resolve, reject) => {
-      console.log(`Send airdrop...`);
-    })
-  }
-
   const handleSendAirdrop = (e) => {
     e.preventDefault();
 
@@ -70,14 +175,18 @@ export function AirdropFTPopup(
       return false;
     }
 
-    sendAirdrop().then(() => {
-      setIsLoading(false);
-      setIsSuccess(true);
-      handleSuccess?.();
-    }).catch(e => {
+    setIsLoading(true);
+
+    try {
+      const whitelisted = formData.whitelisted.replace("\n", ",").split(",").filter(address => address.length > 3);
+      setApproveFormData({
+        tokensAmount: convertToEther(formData.tokensAmount),
+        whitelisted: whitelisted,
+      });
+    } catch (e) {
       setIsLoading(false);
       alert('Error, please try one mo time');
-    });
+    }
   }
 
   useEffect(() => {

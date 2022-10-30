@@ -12,7 +12,7 @@ export const uploadMediaToIPFS = (media) => {
     const token = await nftStorage.store({
       image,
       name,
-      description: `Web3 Community ${name}`,
+      description: `FanZone ${name}`,
     });
 
     if (token.url) {

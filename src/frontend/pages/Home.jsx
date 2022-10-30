@@ -110,7 +110,7 @@ export const Home = () => {
                 <p
                   className="text-lg sm:text-xl leading-relaxed sm:leading-relaxed text-body-color"
                 >
-                  Create and manage your Web3 community in few clicks:
+                  Create and manage your community in few clicks:
                   Tokenomic, NFT Collections, DAO, events and video streams.
                 </p>
               </div>
