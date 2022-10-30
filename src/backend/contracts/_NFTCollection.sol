@@ -13,6 +13,16 @@ import {IWorldID} from '../interfaces/IWorldID.sol';
 
 
 contract NFTCollection is ERC1155, Ownable, Pausable, ERC1155Supply, Utils {
+
+	event CampaignAction(
+		uint indexed _communityId,
+		uint indexed _campaignId,
+		address indexed _address,
+		string _campaignType,
+		uint _deposit,
+		string _email
+	);
+
 	using ByteHasher for bytes;
 	address mainContractAddress;
 	string public name;
@@ -237,6 +247,14 @@ contract NFTCollection is ERC1155, Ownable, Pausable, ERC1155Supply, Utils {
 		_mint(msg.sender, _collectionId, _amount, "");
 
 		// Add stats event
+		emit CampaignAction(
+			_communityId,
+			_collectionId,
+			msg.sender,
+			"NFT",
+			msg.value,
+			_email
+		);
 	}
 
 	function _beforeTokenTransfer(address _operator, address _from, address _to, uint256[] memory _ids, uint256[] memory _amounts, bytes memory _data)

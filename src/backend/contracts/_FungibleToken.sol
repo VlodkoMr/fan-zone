@@ -12,6 +12,16 @@ import {ByteHasher} from '../helpers/ByteHasher.sol';
 import {IWorldID} from '../interfaces/IWorldID.sol';
 
 contract FungibleToken is ERC20, Pausable, Ownable, Utils {
+
+	event CampaignAction(
+		uint indexed _communityId,
+		uint indexed _campaignId,
+		address indexed _address,
+		string _campaignType,
+		uint _deposit,
+		string _email
+	);
+
 	using ByteHasher for bytes;
 	address mainContractAddress;
 
@@ -157,6 +167,14 @@ contract FungibleToken is ERC20, Pausable, Ownable, Utils {
 		IERC20(address(this)).transfer(msg.sender, campaign.tokensPerUser);
 
 		// Add stats event
+		emit CampaignAction(
+			_communityId,
+			_campaignId,
+			msg.sender,
+			"FT",
+			msg.value,
+			_email
+		);
 	}
 
 	function _beforeTokenTransfer(address from, address to, uint256 amount) internal whenNotPaused override {
