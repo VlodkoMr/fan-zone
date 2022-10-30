@@ -69,12 +69,12 @@ export const Header = ({ isInner, reloadCommunityList }) => {
     >
       <Container>
         <div className="flex -mx-4 items-center justify-between relative">
-          <div className="pl-4 pr-8 w-48 max-w-full">
+          <div className="pl-4 pr-8 w-56 max-w-full">
             <Link to={"/"} className="navbar-logo w-full block py-5">
               <img
                 src={scroll ? logoColor : logoWhite}
                 alt="logo"
-                className="w-full header-logo"
+                className="w-full header-logo -mt-1"
               />
             </Link>
           </div>
