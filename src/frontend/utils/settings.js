@@ -52,13 +52,7 @@ export const distributionCampaignsNFT = [
     title: "Event",
     text: "You will receive unique 6 digits code that is required to mint NFT. Can be used to limit access on local or online events.",
     isAvailable: true
-  },
-  {
-    id: "5",
-    title: "Credit Card",
-    text: "(coming soon)",
-    isAvailable: false
-  },
+  }
 ];
 
 export const distributionCampaignsFT = [

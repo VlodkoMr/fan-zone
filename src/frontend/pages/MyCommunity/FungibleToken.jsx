@@ -17,10 +17,10 @@ import { Loader } from "../../components/Loader";
 export const FungibleToken = () => {
   const { address } = useAccount();
   const { chain } = useNetwork();
-  const [ reloadCommunityList ] = useOutletContext();
+  const [reloadCommunityList] = useOutletContext();
   const currentCommunity = useSelector(state => state.community.current);
-  const [ campaignPopupVisible, setCampaignPopupVisible ] = useState(false);
-  const [ airdropPopupVisible, setAirdropPopupVisible ] = useState(false);
+  const [campaignPopupVisible, setCampaignPopupVisible] = useState(false);
+  const [airdropPopupVisible, setAirdropPopupVisible] = useState(false);
 
   const myFTContract = {
     addressOrName: currentCommunity?.ftContract,
@@ -43,7 +43,7 @@ export const FungibleToken = () => {
     ...myFTContract,
     enabled: isContractAddress(currentCommunity?.ftContract),
     functionName: "balanceOf",
-    args: [ address ]
+    args: [address]
   });
 
   const { data: distributionCampaigns, refetch: refetchDistributionCampaigns } = useContractRead({
@@ -62,7 +62,7 @@ export const FungibleToken = () => {
     if (currentCommunity?.ftContract) {
       refetchCampaignsList();
     }
-  }, [ currentCommunity?.ftContract ])
+  }, [currentCommunity?.ftContract])
 
   // useEffect(() => {
   //   console.log('distributionCampaigns', distributionCampaigns)
@@ -138,16 +138,12 @@ export const FungibleToken = () => {
                     </h4>
                   </div>
 
-                  {distributionCampaigns?.length > 0 && (
-                    <>
-                      <InnerBlock className={"text-center mb-8"}>
-                        <div className={"w-full"}>
-                          <h4 className="mb-3 pb-3 font-semibold border-b">Tokenomic</h4>
-                          <Textarea label={`${tokenSymbol} usage and distribution details`}/>
-                        </div>
-                      </InnerBlock>
-                    </>
-                  )}
+                  <InnerBlock className={"text-center mb-8"}>
+                    <div className={"w-full"}>
+                      <h4 className="mb-3 pb-3 font-semibold border-b">Last Activity</h4>
+                      ... some details ...
+                    </div>
+                  </InnerBlock>
                 </div>
               </div>
             </>

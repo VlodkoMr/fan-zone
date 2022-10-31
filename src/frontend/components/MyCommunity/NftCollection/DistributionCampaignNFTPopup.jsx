@@ -18,10 +18,10 @@ export function DistributionCampaignNFTPopup(
     collection
   }) {
   const dispatch = useDispatch();
-  const [ isLoading, setIsLoading ] = useState(false);
-  const [ submitFormData, setSubmitFormData ] = useState({});
-  const [ isLimit, setIsLimit ] = useState(false);
-  const [ formData, setFormData ] = useState({
+  const [isLoading, setIsLoading] = useState(false);
+  const [submitFormData, setSubmitFormData] = useState({});
+  const [isLimit, setIsLimit] = useState(false);
+  const [formData, setFormData] = useState({
     distributionType: "",
     dateFrom: "",
     dateTo: "",
@@ -111,7 +111,7 @@ export function DistributionCampaignNFTPopup(
     if (createWrite && createStatus !== 'loading') {
       createWrite();
     }
-  }, [ createWrite ]);
+  }, [createWrite]);
 
   const resetForm = () => {
     setSubmitFormData({});
@@ -129,14 +129,14 @@ export function DistributionCampaignNFTPopup(
     if (errorCreate) {
       console.log('errorCreate', errorCreate);
     }
-  }, [ errorCreate ]);
+  }, [errorCreate]);
 
   useEffect(() => {
     if (!popupVisible) {
       resetForm();
       setIsLoading(false);
     }
-  }, [ popupVisible ]);
+  }, [popupVisible]);
 
   const isFormErrors = () => {
     if (!parseInt(formData.distributionType)) {
@@ -154,7 +154,7 @@ export function DistributionCampaignNFTPopup(
                setIsVisible={setPopupVisible}>
           <form className="flex flex-row gap-8 relative" onSubmit={handleCreateCampaign}>
             <div className="w-1/3">
-              <img className="mt-2 h-48 w-48 bg-gray-50 rounded-lg object-cover mx-auto"
+              <img className="mt-2 h-40 w-40 bg-gray-50 rounded-lg object-cover mx-auto"
                    src={collection.mediaUri}
                    alt=""/>
 
@@ -177,7 +177,7 @@ export function DistributionCampaignNFTPopup(
                 </div>
               </div>
 
-              <div className="mb-1 block text-left font-semibold mt-4">
+              <div className="mb-1 block text-left font-semibold mt-5">
                 Proof of Personhood by World ID
               </div>
               <div className="bg-yellow-50 text-sm font-medium pl-2 pr-6 py-2 rounded-md border border-orange-200">
