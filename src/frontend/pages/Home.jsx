@@ -59,20 +59,21 @@ export const Home = () => {
                     </ScrollLink>
                   </li>
                 </ul>
-                {/*<div className="text-center wow fadeInUp flex flex-row justify-center gap-8">*/}
-                {/*  <a href="https://aurora.dev/" target={"_blank"}>*/}
-                {/*    <img src={auroraLogo} alt="aurora"*/}
-                {/*         className={"h-12 opacity-50 hover:opacity-100 transition"}/>*/}
-                {/*  </a>*/}
-                {/*</div>*/}
               </div>
             </div>
 
             <div className="w-full px-4">
               <div
-                className="mx-auto max-w-[845px] relative z-10 wow fadeInUp"
+                className="mx-auto max-w-[845px] relative z-10 wow fadeInUp relative"
                 data-wow-delay=".25s"
               >
+                <div className="absolute left-4 -top-10">
+                  <a href="https://aurora.dev/" target={"_blank"}>
+                    <img src={auroraLogo} alt="aurora"
+                         className={"h-8 opacity-50 hover:opacity-100 transition"}/>
+                  </a>
+                </div>
+
                 <div className="mt-12">
                   <img
                     src={heroImage}

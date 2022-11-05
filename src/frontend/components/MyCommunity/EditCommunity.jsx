@@ -12,11 +12,11 @@ import { mediaURL } from "../../utils/format";
 
 export function EditCommunity({ handleSuccess, handleTxStart, editCommunity }) {
   const dispatch = useDispatch();
-  const [ isLoading, setIsLoading ] = useState(false);
-  const [ isMediaLoading, setIsMediaLoading ] = useState(false);
-  const [ editFormData, setEditFormData ] = useState({});
-  const [ addFormData, setAddFormData ] = useState({});
-  const [ formData, setFormData ] = useState({
+  const [isLoading, setIsLoading] = useState(false);
+  const [isMediaLoading, setIsMediaLoading] = useState(false);
+  const [editFormData, setEditFormData] = useState({});
+  const [addFormData, setAddFormData] = useState({});
+  const [formData, setFormData] = useState({
     name: editCommunity?.name || "",
     category: editCommunity?.category || "",
     privacy: editCommunity?.privacy || "0",
@@ -30,7 +30,7 @@ export function EditCommunity({ handleSuccess, handleTxStart, editCommunity }) {
     ...mainContract,
     enabled: !editCommunity && addFormData.name?.length > 0,
     functionName: 'createCommunity',
-    args: [ addFormData.name, addFormData.logo, addFormData.category, addFormData.privacy, addFormData.description ]
+    args: [addFormData.name, addFormData.logo, addFormData.category, addFormData.privacy, addFormData.description]
   });
 
   const { data: addCommunityData, write: addCommunityWrite, status: addCommunityStatus } = useContractWrite({
@@ -68,7 +68,7 @@ export function EditCommunity({ handleSuccess, handleTxStart, editCommunity }) {
     if (addCommunityWrite && addCommunityStatus !== 'loading') {
       addCommunityWrite();
     }
-  }, [ addCommunityWrite ]);
+  }, [addCommunityWrite]);
 
   // ------------- Update Community Methods -------------
 
@@ -76,7 +76,7 @@ export function EditCommunity({ handleSuccess, handleTxStart, editCommunity }) {
     ...mainContract,
     enabled: !!editCommunity && editFormData.name?.length > 0,
     functionName: 'updateCommunity',
-    args: [ editCommunity?.id, editFormData.name, editFormData.logo, editFormData.privacy, editFormData.description ]
+    args: [editCommunity?.id, editFormData.name, editFormData.logo, editFormData.privacy, editFormData.description]
   });
 
   const { data: editCommunityData, write: editCommunityWrite, status: editCommunityStatus } = useContractWrite({
@@ -113,7 +113,7 @@ export function EditCommunity({ handleSuccess, handleTxStart, editCommunity }) {
     if (editCommunityWrite && editCommunityStatus !== 'loading') {
       editCommunityWrite();
     }
-  }, [ editCommunityWrite ]);
+  }, [editCommunityWrite]);
 
   // ------------- Form -------------
 
@@ -126,7 +126,7 @@ export function EditCommunity({ handleSuccess, handleTxStart, editCommunity }) {
       logo: editCommunity?.logo || "",
       description: editCommunity?.description || ""
     });
-  }, [ editCommunity ]);
+  }, [editCommunity]);
 
   // Reset form
   const resetForm = () => {
@@ -245,7 +245,7 @@ export function EditCommunity({ handleSuccess, handleTxStart, editCommunity }) {
                 <Loader size={"sm"}/>
               </span>
             )}
-            {editCommunity ? "Save" : "Create Community"}
+            {editCommunity ? "Save Settings" : "Create Community"}
             <MdKeyboardArrowRight className="text-lg align-bottom ml-1 inline-block"/>
           </Button>
         </div>

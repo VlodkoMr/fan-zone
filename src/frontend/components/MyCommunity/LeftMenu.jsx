@@ -45,11 +45,11 @@ export function DashboardLeftMenu() {
           <GoVerified color={getNavLinkClass("/my/dao") ? "white" : ""}/>
         </MenuItem>
       </li>
-      <li className="relative">
-        <MenuItem title={"Raffle"} link={"/my/raffle"}>
-          <HiGift color={getNavLinkClass("/my/raffle") ? "white" : ""}/>
-        </MenuItem>
-      </li>
+      {/*<li className="relative">*/}
+      {/*  <MenuItem title={"Raffle"} link={"/my/raffle"}>*/}
+      {/*    <HiGift color={getNavLinkClass("/my/raffle") ? "white" : ""}/>*/}
+      {/*  </MenuItem>*/}
+      {/*</li>*/}
       <li className="relative">
         <MenuItem title={"Members"} link={"/my/members"}>
           <ImUsers color={getNavLinkClass("/my/members") ? "white" : ""}/>

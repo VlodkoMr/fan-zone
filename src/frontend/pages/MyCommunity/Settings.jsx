@@ -8,9 +8,9 @@ import { Loader } from "../../components/Loader";
 import { MdKeyboardArrowRight } from "react-icons/md";
 
 export const Settings = ({ edit }) => {
-  const [ reloadCommunityList ] = useOutletContext();
+  const [reloadCommunityList] = useOutletContext();
   const currentCommunity = useSelector(state => state.community.current);
-  const [ formData, setFormData ] = useState({
+  const [formData, setFormData] = useState({
     twitter: edit?.twitter || "",
     facebook: edit?.facebook || "",
     instagram: edit?.instagram || "",
@@ -92,8 +92,8 @@ export const Settings = ({ edit }) => {
               />
             </div>
             <div className={"flex justify-end"}>
-              <Button type="Submit" variant="gradient" disabled={true}>
-                Save
+              <Button type="Submit" variant="gradient" onClick={() => alert('coming soon')}>
+                Save Links
                 <MdKeyboardArrowRight className="text-lg align-bottom ml-1 inline-block"/>
               </Button>
             </div>
