@@ -19,14 +19,14 @@ export const CustomConnect = ({ isHeader }) => {
   return (
     <ConnectButton.Custom>
       {({
-          account,
-          chain,
-          openAccountModal,
-          openChainModal,
-          openConnectModal,
-          authenticationStatus,
-          mounted,
-        }) => {
+        account,
+        chain,
+        openAccountModal,
+        openChainModal,
+        openConnectModal,
+        authenticationStatus,
+        mounted,
+      }) => {
         const ready = mounted && authenticationStatus !== 'loading';
         const connected = ready && account && chain && (!authenticationStatus || authenticationStatus === 'authenticated');
         return (
@@ -57,7 +57,7 @@ export const CustomConnect = ({ isHeader }) => {
                       onClick={openChainModal}
                       type="button"
                     >
-                      {chain.hasIcon && (
+                      {chain.hasIcon ? (
                         <div
                           style={{
                             background: chain.iconBackground,
@@ -76,12 +76,12 @@ export const CustomConnect = ({ isHeader }) => {
                             />
                           )}
                         </div>
-                      )}
+                      ) : ("...")}
                       {/*{chain.name}*/}
                     </button>
 
                     {chain.unsupported ? (
-                      <BtnSmall onClick={() => openChainModal()} type="button">
+                      <BtnSmall onClick={() => openChainModal()} type="button" className={"rounded-l-none"}>
                         Wrong network
                       </BtnSmall>
                     ) : (

@@ -125,7 +125,7 @@ export const MyDashboard = () => {
           <div className={"w-full"}>
             <InnerBlock.Header>Last Activity</InnerBlock.Header>
 
-            <table className="border-collapse table-auto w-full text-sm mt-4 opacity-50">
+            <table className="border-collapse table-auto w-full text-sm mt-4">
               <thead className={"bg-gray-50"}>
               <tr>
                 <TableTh>Member</TableTh>
@@ -136,27 +136,15 @@ export const MyDashboard = () => {
               </tr>
               </thead>
               <tbody className="bg-white dark:bg-slate-800">
-              <tr>
-                <TableTd>0x71fd...45e3</TableTd>
-                <TableTd>Mint NFT</TableTd>
-                <TableTd>Serie v1</TableTd>
-                <TableTd>&minus;</TableTd>
-                <TableTd>26.05.2022</TableTd>
-              </tr>
-              <tr>
-                <TableTd>0x93fd...46e4</TableTd>
-                <TableTd>Claim FT</TableTd>
-                <TableTd>Serie v2</TableTd>
-                <TableTd>&minus;</TableTd>
-                <TableTd>25.05.2022</TableTd>
-              </tr>
-              <tr>
-                <TableTd>0xkd73...653c</TableTd>
-                <TableTd>Mint NFT</TableTd>
-                <TableTd>Serie v1</TableTd>
-                <TableTd>+10 Matic</TableTd>
-                <TableTd>25.05.2022</TableTd>
-              </tr>
+              {lastActions.map((action, index) => (
+                <tr key={index}>
+                  <TableTd>{action.address}</TableTd>
+                  <TableTd>{action.campaignType}</TableTd>
+                  <TableTd>{action.campaignId} / Serie v1</TableTd>
+                  <TableTd>{action.deposit || "&minus;"}</TableTd>
+                  <TableTd>{action.dateTime}</TableTd>
+                </tr>
+              ))}
               </tbody>
             </table>
           </div>

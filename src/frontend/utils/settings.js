@@ -93,6 +93,15 @@ export const getTokenName = (currentChain) => {
   return token;
 }
 
+export const getCampaignType = (id) => {
+  switch (id) {
+    case 1:
+      return "Mint NFT";
+    case 2:
+      return "Claim Token";
+  }
+}
+
 export const getAlchemyURL = (chainId) => {
   if (chainId === 80001) {
     // Mumbai

@@ -16,7 +16,7 @@ contract FungibleToken is ERC20, Pausable, Ownable, Utils {
 	event CampaignAction(
 		uint indexed _communityId,
 		uint indexed _campaignId,
-		string indexed _campaignType,
+		uint indexed _campaignType,
 		address _address,
 		uint _deposit,
 		string _email,
@@ -181,7 +181,7 @@ contract FungibleToken is ERC20, Pausable, Ownable, Utils {
 		emit CampaignAction(
 			_communityId,
 			_campaignId,
-			"FT",
+			2,
 			msg.sender,
 			msg.value,
 			_email,

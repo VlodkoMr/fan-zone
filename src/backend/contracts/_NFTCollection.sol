@@ -17,7 +17,7 @@ contract NFTCollection is ERC1155, Ownable, Pausable, ERC1155Supply, Utils {
 	event CampaignAction(
 		uint indexed _communityId,
 		uint indexed _campaignId,
-		string indexed _campaignType,
+		uint indexed _campaignType,
 		address _address,
 		uint _deposit,
 		string _email,
@@ -251,7 +251,7 @@ contract NFTCollection is ERC1155, Ownable, Pausable, ERC1155Supply, Utils {
 		emit CampaignAction(
 			_communityId,
 			_collectionId,
-			"NFT",
+			1,
 			msg.sender,
 			msg.value,
 			_email,
