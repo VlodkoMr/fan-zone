@@ -10,6 +10,12 @@ import "../interfaces/IMainContract.sol";
 import "./_FungibleToken.sol";
 
 contract FactoryFTContract is Initializable, OwnableUpgradeable, UUPSUpgradeable {
+
+	event NewContract(
+		uint indexed _communityId,
+		address _contractAddress
+	);
+
 	address mainContractAddress;
 	FungibleToken[] private contractsFTList;
 	IWorldID internal worldId;
@@ -45,5 +51,7 @@ contract FactoryFTContract is Initializable, OwnableUpgradeable, UUPSUpgradeable
 
 		// Update contract address
 		IMainContract(mainContractAddress).updateCommunityFT(_communityId, address(token));
+
+		emit NewContract(_communityId, address(token));
 	}
 }

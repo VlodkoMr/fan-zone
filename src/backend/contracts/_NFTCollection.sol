@@ -17,10 +17,11 @@ contract NFTCollection is ERC1155, Ownable, Pausable, ERC1155Supply, Utils {
 	event CampaignAction(
 		uint indexed _communityId,
 		uint indexed _campaignId,
-		address indexed _address,
-		string _campaignType,
+		string indexed _campaignType,
+		address _address,
 		uint _deposit,
-		string _email
+		string _email,
+		uint _dateTime
 	);
 
 	using ByteHasher for bytes;
@@ -250,10 +251,11 @@ contract NFTCollection is ERC1155, Ownable, Pausable, ERC1155Supply, Utils {
 		emit CampaignAction(
 			_communityId,
 			_collectionId,
-			msg.sender,
 			"NFT",
+			msg.sender,
 			msg.value,
-			_email
+			_email,
+			block.timestamp
 		);
 	}
 
