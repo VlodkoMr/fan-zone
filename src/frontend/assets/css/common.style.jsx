@@ -98,7 +98,7 @@ export const ScrollLink = styled(Scroll.Link).attrs((props) => ({
     px-6
     lg:mr-0
     cursor-pointer
-    lg:py-6 lg:inline-flex  lg:hover:opacity-70
+    lg:py-6 lg:inline-flex lg:hover:opacity-70
     ${props.dark === "true" ? "lg:text-dark" : "lg:text-white hover:text-primary lg:hover:text-white"}
     `,
 }))``;

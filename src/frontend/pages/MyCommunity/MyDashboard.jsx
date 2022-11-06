@@ -1,36 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Badge, InnerBlock, InnerSmallBlock, InnerTransparentBlock, TableTd, TableTh } from '../../assets/css/common.style';
 import { Link } from "react-router-dom";
-import { useAccount, useContractRead } from "wagmi";
+import { useAccount, useContractRead, useContract, useProvider } from "wagmi";
 import NFTCollectionABI from "../../contractsData/NFTCollection.json";
 import FungibleTokenABI from '../../contractsData/FungibleToken.json';
 import { convertFromEther, formatNumber, isContractAddress } from "../../utils/format";
-import { transformFTCampaign } from "../../utils/transform";
-import { mainContract } from "../../utils/contracts";
+import { transformCampaignEvent, transformFTCampaign } from "../../utils/transform";
 
 export const MyDashboard = () => {
   const { address } = useAccount();
+  const [lastActions, setLastActions] = useState([]);
   const currentCommunity = useSelector(state => state.community.current);
-
-  // const { data: memberStatsTable } = useContractRead({
-  //   ...mainContract,
-  //   functionName: "memberStatsTable",
-  // });
-  //
-  // const loadLastActivity = async () => {
-  //   const selectLastSQL = `SELECT * FROM ${memberStatsTable}`;
-  //   const activity = await fetch(`https://testnet.tableland.network/query?s=${selectLastSQL}`);
-  //   console.log(`activity`, activity);
-  // }
-  //
-  // useEffect(() => {
-  //   if (memberStatsTable) {
-  //     console.log(`memberStatsTable`, memberStatsTable);
-  //     loadLastActivity();
-  //   }
-  // }, [ memberStatsTable ]);
-
+  const provider = useProvider();
 
   // ---------------- NFT ----------------
 
@@ -51,6 +33,11 @@ export const MyDashboard = () => {
     functionName: "mintedTotal",
   });
 
+  const contractNFT = useContract({
+    ...myNFTContract,
+    signerOrProvider: provider
+  });
+
   // ---------------- FT ----------------
 
   const myFTContract = {
@@ -65,21 +52,29 @@ export const MyDashboard = () => {
     select: (data) => data.map(camp => transformFTCampaign(camp))
   });
 
+  const contractFT = useContract({
+    ...myFTContract,
+    signerOrProvider: provider
+  });
+
   // ---------------- Actions ----------------
 
-  // useEffect(() => {
-  //   console.log('currentCommunity', currentCommunity);
-  // }, [ currentCommunity ]);
+  const loadLastActions = async () => {
+    const actionsFilterNFT = await contractNFT.filters.CampaignAction();
+    const actionsFilterFT = await contractFT.filters.CampaignAction();
+    const actionsNFT = await contractNFT.queryFilter(actionsFilterNFT);
+    const actionsFT = await contractFT.queryFilter(actionsFilterFT);
 
-  // useEffect(() => {
-  //   console.log('mintedTotal', mintedTotal);
-  // }, [ mintedTotal ]);
+    const allEvents = actionsNFT.concat(actionsFT);
+    allEvents.sort((a, b) => b.blockNumber - a.blockNumber);
+
+    setLastActions(allEvents.map(event => transformCampaignEvent(event)));
+    console.log(`allEvents`, allEvents);
+  }
 
   useEffect(() => {
-    if (window.contracts) {
-      console.log('Dashboard load')
-    }
-  }, [ window.contracts ]);
+    loadLastActions();
+  }, [])
 
   const InfoBlock = ({ title, value }) => (
     <InnerSmallBlock className={"w-1/4"}>

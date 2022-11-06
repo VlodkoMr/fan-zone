@@ -16,13 +16,13 @@ import NFTCollectionABI from '../../contractsData/NFTCollection.json';
 
 export const NftCollection = () => {
   const currentCommunity = useSelector(state => state.community.current);
-  const [ reloadCommunityList ] = useOutletContext();
-  const [ createNFTPopupVisible, setCreateNFTPopupVisible ] = useState(false);
+  const [reloadCommunityList] = useOutletContext();
+  const [createNFTPopupVisible, setCreateNFTPopupVisible] = useState(false);
 
-  const [ mintNFTCollection, setMintNFTCollection ] = useState();
-  const [ mintNFTPopupVisible, setMintNFTPopupVisible ] = useState(false);
-  const [ createCampaign, setCreateCampaign ] = useState();
-  const [ campaignPopupVisible, setCampaignPopupVisible ] = useState(false);
+  const [mintNFTCollection, setMintNFTCollection] = useState();
+  const [mintNFTPopupVisible, setMintNFTPopupVisible] = useState(false);
+  const [createCampaign, setCreateCampaign] = useState();
+  const [campaignPopupVisible, setCampaignPopupVisible] = useState(false);
 
   const myNFTContract = {
     addressOrName: currentCommunity?.nftContract,
@@ -37,10 +37,12 @@ export const NftCollection = () => {
   });
   const { data: totalCollections, refetch: refetchTotalCollections } = useContractRead({
     ...myNFTContract,
+    enabled: isContractAddress(currentCommunity?.nftContract),
     functionName: "collectionsTotal",
   });
   const { data: tokenName } = useContractRead({
     ...myNFTContract,
+    enabled: isContractAddress(currentCommunity?.nftContract),
     functionName: "name"
   });
 

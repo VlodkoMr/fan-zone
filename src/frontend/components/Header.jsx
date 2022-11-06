@@ -25,7 +25,7 @@ export const Header = ({ isInner, reloadCommunityList }) => {
   useEffect(() => {
     // Change header bg on scroll
     window.addEventListener("scroll", () => {
-      setScroll(window.scrollY > 80);
+      setScroll(window.scrollY > 40);
     });
   }, []);
 
