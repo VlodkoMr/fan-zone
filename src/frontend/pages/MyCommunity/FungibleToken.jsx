@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { InnerBlock, InnerTransparentBlock } from '../../assets/css/common.style';
-import { useAccount, useContractRead, useNetwork } from 'wagmi';
-import { convertFromEther, formatNumber, isContractAddress } from '../../utils/format';
-import { transformFTCampaign } from '../../utils/transform';
+import { InnerBlock, InnerTransparentBlock, TableTd } from '../../assets/css/common.style';
+import { useAccount, useContract, useContractRead, useNetwork, useProvider } from 'wagmi';
+import { convertFromEther, formatNumber, isContractAddress, shortAddress } from '../../utils/format';
+import { transformCampaignEvent, transformFTCampaign } from '../../utils/transform';
 import { useOutletContext } from 'react-router-dom';
-import { Button, Textarea } from '@material-tailwind/react';
+import { Button } from '@material-tailwind/react';
 import { DeployFTContract } from '../../components/MyCommunity/FungibleToken/DeployFTContract';
 import { DistributionCampaignFTPopup } from '../../components/MyCommunity/FungibleToken/DistributionCampaignFTPopup';
 import { OneFTDistribution } from '../../components/MyCommunity/FungibleToken/OneFTDistribution';
 import { PauseUnpausePopup } from '../../components/MyCommunity/PauseUnpausePopup';
 import { AirdropFTPopup } from "../../components/MyCommunity/FungibleToken/AirdropFTPopup";
 import FungibleTokenABI from '../../contractsData/FungibleToken.json';
-import { Loader } from "../../components/Loader";
+import { distributionCampaignsFT, getTokenName } from "../../utils/settings";
 
 export const FungibleToken = () => {
   const { address } = useAccount();
   const { chain } = useNetwork();
+  const provider = useProvider();
+  const [lastActions, setLastActions] = useState([]);
   const [reloadCommunityList] = useOutletContext();
   const currentCommunity = useSelector(state => state.community.current);
   const [campaignPopupVisible, setCampaignPopupVisible] = useState(false);
@@ -26,6 +28,11 @@ export const FungibleToken = () => {
     addressOrName: currentCommunity?.ftContract,
     contractInterface: FungibleTokenABI.abi,
   };
+
+  const contractFT = useContract({
+    ...myFTContract,
+    signerOrProvider: provider
+  });
 
   const { data: totalSupply } = useContractRead({
     ...myFTContract,
@@ -58,15 +65,26 @@ export const FungibleToken = () => {
     refetchDistributionCampaigns();
   }
 
+  const loadLastActions = async () => {
+    const actionsFilterFT = await contractFT.filters.CampaignAction();
+    const events = await contractFT.queryFilter(actionsFilterFT);
+    events.sort((a, b) => b.blockNumber - a.blockNumber);
+    setLastActions(events.filter((event, index) => index < 5).map(event => transformCampaignEvent(event)));
+  }
+
   useEffect(() => {
     if (currentCommunity?.ftContract) {
       refetchCampaignsList();
+      loadLastActions();
     }
-  }, [currentCommunity?.ftContract])
+  }, [currentCommunity?.ftContract]);
 
-  // useEffect(() => {
-  //   console.log('distributionCampaigns', distributionCampaigns)
-  // }, [ distributionCampaigns ])
+  const getTokenSymbol = (campaignTypeId) => {
+    if (campaignTypeId === 3) {
+      return tokenSymbol;
+    }
+    return getTokenName(chain);
+  }
 
   return (
     <div className="flex flex-row">
@@ -140,8 +158,25 @@ export const FungibleToken = () => {
 
                   <InnerBlock className={"text-center mb-8"}>
                     <div className={"w-full"}>
-                      <h4 className="mb-3 pb-3 font-semibold border-b">Last Activity</h4>
-                      ... some details ...
+                      <h4 className="pb-3 font-semibold border-b">Last Activity</h4>
+                      {lastActions.map(action => (
+                        <div className={"border-b py-2"}>
+                          <div className={"flex flex-row text-sm justify-between"}>
+                            <p>{shortAddress(action.address)}</p>
+                            <p className={"opacity-60"}>{action.dateTime}</p>
+                          </div>
+                          <div className={"flex flex-row text-sm justify-between"}>
+                            <span className={"font-medium"}>{action.campaignType}</span>
+                            <span>{action.deposit > 0 ? `${action.deposit} ${getTokenSymbol(action.campaignTypeId)}` : ("")}</span>
+                          </div>
+                        </div>
+                      ))}
+
+                      {lastActions.length === 0 && (
+                        <div className={"text-center my-4 opacity-60 text-sm"}>
+                          *No Activity
+                        </div>
+                      )}
                     </div>
                   </InnerBlock>
                 </div>

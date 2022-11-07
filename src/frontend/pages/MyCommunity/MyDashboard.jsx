@@ -11,9 +11,9 @@ import { distributionCampaignsFT, getTokenName } from "../../utils/settings";
 
 export const MyDashboard = () => {
   const { chain } = useNetwork();
+  const provider = useProvider();
   const [lastActions, setLastActions] = useState([]);
   const currentCommunity = useSelector(state => state.community.current);
-  const provider = useProvider();
 
   // ---------------- NFT ----------------
 
@@ -76,7 +76,7 @@ export const MyDashboard = () => {
     const allEvents = actionsNFT.concat(actionsFT);
     allEvents.sort((a, b) => b.blockNumber - a.blockNumber);
 
-    setLastActions(allEvents.map(event => transformCampaignEvent(event)));
+    setLastActions(allEvents.filter((event, index) => index < 50).map(event => transformCampaignEvent(event)));
   }
 
   useEffect(() => {
@@ -106,13 +106,21 @@ export const MyDashboard = () => {
   const getCampaignTitle = (action) => {
     let result = "";
     if (action.campaignTypeId === 1) {
-      collectionItemsNFT.map(item => {
-        if (item.id === action.campaignId) {
-          result = item.title;
-        }
-      })
+      if (collectionItemsNFT) {
+        collectionItemsNFT.map(item => {
+          if (item.id === action.campaignId) {
+            result = item.title;
+          }
+        })
+      }
     } else if (action.campaignTypeId === 2) {
-      result = distributionCampaignsFT[action.campaignTypeId - 1].title;
+      if (distributionCampaignsFT) {
+        distributionCampaignsFT.map(item => {
+          if (item.id === action.campaignId.toString()) {
+            result = item.title;
+          }
+        })
+      }
     }
 
     return result;
