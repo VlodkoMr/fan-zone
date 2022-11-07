@@ -6,12 +6,9 @@ import { Feature } from '../components/Home/Feature';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { communityTypes } from "../utils/settings";
 import auroraLogo from "../assets/images/logo/aurora-logo.png";
-import heroImage from "../assets/images/hero/hero-image.jpg";
+import heroImage from "../assets/images/hero/hero-image.jpeg";
 import dotsImage from "../assets/images/home/dots-about.svg";
 import aboutImage from "../assets/images/about/about-image.svg";
-import author1Image from "../assets/images/testimonials/author-01.png";
-import author2Image from "../assets/images/testimonials/author-02.png";
-import author3Image from "../assets/images/testimonials/author-03.png";
 import { CustomConnect } from "../components/CustomConnect.jsx";
 
 import '../assets/css/animate.css';
@@ -38,14 +35,14 @@ export const Home = () => {
                   className="text-white font-bold text-3xl sm:text-4xl md:text-[45px] leading-snug
                   sm:leading-snug md:leading-snug mb-8"
                 >
-                  Your FanZone
+                  Web3 FanZone
                 </h1>
                 <p
                   className="text-base sm:text-lg sm:leading-relaxed md:text-xl md:leading-relaxed mx-auto
                   mb-10 text-[#e4e4e4] max-w-[600px]"
                 >
                   Take advantage of web3 in a few clicks: create NFT collection,
-                  fungible token, share news, raffles and extend your audience!
+                  fungible token, share news and extend your audience!
                 </p>
                 <ul className="flex flex-wrap items-center justify-center mb-10">
                   <li>
@@ -67,10 +64,10 @@ export const Home = () => {
                 className="mx-auto max-w-[845px] relative z-10 wow fadeInUp relative"
                 data-wow-delay=".25s"
               >
-                <div className="absolute left-4 -top-10">
+                <div className="absolute left-6 -top-10">
                   <a href="https://aurora.dev/" target={"_blank"}>
                     <img src={auroraLogo} alt="aurora"
-                         className={"h-8 opacity-50 hover:opacity-100 transition"}/>
+                         className={"h-8 opacity-30 hover:opacity-100 transition"}/>
                   </a>
                 </div>
 
@@ -99,40 +96,33 @@ export const Home = () => {
         <div className="container">
           <div className="flex flex-wrap -mx-4">
             <div className="w-full px-4">
-              <div className="mb-12 lg:mb-20 max-w-[620px]">
-              <span className="font-semibold text-lg text-primary mb-2 block">
-                Overview
-              </span>
-                <h2
-                  className="font-bold text-3xl sm:text-4xl md:text-[42px] text-dark mb-4"
-                >
+              <div className="mb-12 lg:mb-20 max-w-[620px] mx-auto">
+                <h2 className="font-bold text-center text-3xl sm:text-4xl md:text-[42px] text-dark mb-4">
                   Main Features
                 </h2>
-                <p
-                  className="text-lg sm:text-xl leading-relaxed sm:leading-relaxed text-body-color"
-                >
+                <p className="text-lg text-center sm:text-lg leading-relaxed sm:leading-relaxed text-body-color">
                   Create and manage your community in few clicks:
-                  Tokenomic, NFT Collections, DAO, events and video streams.
+                  your own tokenomic, NFT Collections, DAO, events and distribution campaigns.
                 </p>
               </div>
             </div>
           </div>
 
           <div className="flex flex-wrap -mx-4">
-            <Feature title="Free and Easy to use"
-                     text="Lorem Ipsum is simply dummy text of the printing and industry."
+            <Feature title="Easy to Use"
+                     text="We provide simple interface for all our features and you will be owner of all deployed smart-contracts."
                      icon="gift"
             />
-            <Feature title="Extend community"
-                     text="Lorem Ipsum is simply dummy text of the printing and industry."
+            <Feature title="Extend Community"
+                     text="Extend community by sharing in your social channels, all public community listed in our website."
                      icon="move"
             />
             <Feature title="Web3 Marketing tools"
-                     text="Lorem Ipsum is simply dummy text of the printing and industry."
+                     text="New marketing tools - distribution campaigns give you the best experience and opportunities."
                      icon="apps"
             />
             <Feature title="Multipurpose Service"
-                     text="Lorem Ipsum is simply dummy text of the printing and industry."
+                     text="Create and manage multiple communities - all features can be used by one or multiple wallet addresses."
                      icon="layers"
             />
           </div>
@@ -152,21 +142,33 @@ export const Home = () => {
                 >
                   <div
                     className="lg:max-w-[565px] xl:max-w-[640px] w-full py-12 px-7 sm:px-12 md:p-16 lg:py-9 lg:px-16 xl:p-[70px]">
-                  <span className="font-semibold text-lg text-primary mb-2 block">
-                    About Us
-                  </span>
-                    <h2 className="font-bold text-3xl sm:text-4xl 2xl:text-[40px] sm:leading-snug text-dark mb-6">
-                      New Tools in Web3 to extend your possibilities!
+                    <h2 className="font-bold text-2xl sm:text-3xl 2xl:text-[36px] sm:leading-snug text-dark mb-6">
+                      New Web3 tools to extend your possibilities!
                     </h2>
-                    <p className="text-base text-body-color mb-9 leading-relaxed">
-                      Create your own community or fan-zone in a few clicks with modern web3 features: NFT collections, token, DAO, raffles,
-                      news and much more! Perfect solution for: any teams, musicians, artists, singers and any groups of people by interest.
+                    <p className="text-base text-body-color mb-6 leading-relaxed">
+                      Create your own community or fan-zone in a few clicks with modern web3 features:
+                      any teams, musicians, artists, singers and any groups of people by interest.
                     </p>
-                    <p className="text-base text-body-color mb-9 leading-relaxed">
-                      The main ‘thrust' is to focus on educating attendees on how
-                      to best protect highly vulnerable business applications with
-                      interactive panel.
-                    </p>
+                    <b className={"text-lg"}>Use Cases:</b>
+                    <div className="text-base text-body-color mb-9 leading-relaxed">
+                      <ul className={"list-disc ml-3.5 leading-5 mt-3"}>
+                        <li className={"mb-3"}>
+                          <b>Sport team</b> can create NFT Series with player cards.
+                          Fans collect this NFT to support favorite team and participate in raffles for next match tickets.
+                        </li>
+                        <li className={"mb-3"}>
+                          <b>Gaming team</b> can store the best gameplay moments as NFT, send token airdrops for your NFT holders.
+                        </li>
+                        <li className={"mb-3"}>
+                          <b>Media channels</b> (radio, TV or individuals) can distribute the best materials as NFT,
+                          collect users list for future media sharing and offline campaigns.
+                        </li>
+                        <li>
+                          <b>Musicians and artists</b> can join web3 world, share creativity, art, find new fans and sell their digital
+                          assets. Now only you own your work!
+                        </li>
+                      </ul>
+                    </div>
                   </div>
                   <div className="text-center">
                     <div className="relative inline-block z-10">
@@ -611,374 +613,363 @@ export const Home = () => {
       {/*  </div>*/}
       {/*</section>*/}
 
-      <section id="testimonials" className="pt-20 md:py-[80px]">
-        <div className="container px-4">
-          <div className="flex flex-wrap">
-            <div className="w-full mx-4">
-              <div className="text-center mx-auto mb-[60px] lg:mb-20 max-w-[620px]">
-              <span className="font-semibold text-lg text-primary mb-2 block">
-                Testimonials
-              </span>
-                <h2
-                  className="
-                  font-bold
-                  text-3xl
-                  sm:text-4xl
-                  md:text-[42px]
-                  text-dark
-                  mb-4
-                "
-                >
-                  What our Client Say
-                </h2>
-                <p
-                  className="
-                  text-lg
-                  sm:text-xl
-                  leading-relaxed
-                  sm:leading-relaxed
-                  text-body-color
-                "
-                >
-                  There are many variations of passages of Lorem Ipsum available
-                  but the majority have suffered alteration in some form.
-                </p>
-              </div>
-            </div>
-          </div>
+      {/*<section id="testimonials" className="pt-20 md:py-[80px]">*/}
+      {/*  <div className="container px-4">*/}
+      {/*    <div className="flex flex-wrap">*/}
+      {/*      <div className="w-full mx-4">*/}
+      {/*        <div className="text-center mx-auto mb-[60px] lg:mb-20 max-w-[620px]">*/}
+      {/*        <span className="font-semibold text-lg text-primary mb-2 block">*/}
+      {/*          Testimonials*/}
+      {/*        </span>*/}
+      {/*          <h2*/}
+      {/*            className="*/}
+      {/*            font-bold*/}
+      {/*            text-3xl*/}
+      {/*            sm:text-4xl*/}
+      {/*            md:text-[42px]*/}
+      {/*            text-dark*/}
+      {/*            mb-4*/}
+      {/*          "*/}
+      {/*          >*/}
+      {/*            What our Client Say*/}
+      {/*          </h2>*/}
+      {/*          <p*/}
+      {/*            className="*/}
+      {/*            text-lg*/}
+      {/*            sm:text-xl*/}
+      {/*            leading-relaxed*/}
+      {/*            sm:leading-relaxed*/}
+      {/*            text-body-color*/}
+      {/*          "*/}
+      {/*          >*/}
+      {/*            There are many variations of passages of Lorem Ipsum available*/}
+      {/*            but the majority have suffered alteration in some form.*/}
+      {/*          </p>*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
 
-          <div className="flex flex-wrap">
-            <div className="w-full md:w-1/2 lg:w-1/3 px-4">
-              <div
-                className="
-                ud-single-testimonial
-                p-8
-                bg-white
-                mb-12
-                shadow-testimonial
-                wow
-                fadeInUp
-              "
-                data-wow-delay=".1s
-              "
-              >
-                <div className="ud-testimonial-ratings flex items-center mb-3">
-                <span className="text-[#fbb040] mr-1">
-                  <svg
-                    width="18"
-                    height="16"
-                    viewBox="0 0 18 16"
-                    className="fill-current"
-                  >
-                    <path
-                      d="M9.09815 0.360596L11.1054 6.06493H17.601L12.3459 9.5904L14.3532 15.2947L9.09815 11.7693L3.84309 15.2947L5.85035 9.5904L0.595291 6.06493H7.0909L9.09815 0.360596Z"
-                    />
-                  </svg>
-                </span>
-                  <span className="text-[#fbb040] mr-1">
-                  <svg
-                    width="18"
-                    height="16"
-                    viewBox="0 0 18 16"
-                    className="fill-current"
-                  >
-                    <path
-                      d="M9.09815 0.360596L11.1054 6.06493H17.601L12.3459 9.5904L14.3532 15.2947L9.09815 11.7693L3.84309 15.2947L5.85035 9.5904L0.595291 6.06493H7.0909L9.09815 0.360596Z"
-                    />
-                  </svg>
-                </span>
-                  <span className="text-[#fbb040] mr-1">
-                  <svg
-                    width="18"
-                    height="16"
-                    viewBox="0 0 18 16"
-                    className="fill-current"
-                  >
-                    <path
-                      d="M9.09815 0.360596L11.1054 6.06493H17.601L12.3459 9.5904L14.3532 15.2947L9.09815 11.7693L3.84309 15.2947L5.85035 9.5904L0.595291 6.06493H7.0909L9.09815 0.360596Z"
-                    />
-                  </svg>
-                </span>
-                  <span className="text-[#fbb040] mr-1">
-                  <svg
-                    width="18"
-                    height="16"
-                    viewBox="0 0 18 16"
-                    className="fill-current"
-                  >
-                    <path
-                      d="M9.09815 0.360596L11.1054 6.06493H17.601L12.3459 9.5904L14.3532 15.2947L9.09815 11.7693L3.84309 15.2947L5.85035 9.5904L0.595291 6.06493H7.0909L9.09815 0.360596Z"
-                    />
-                  </svg>
-                </span>
-                  <span className="text-[#fbb040] mr-1">
-                  <svg
-                    width="18"
-                    height="16"
-                    viewBox="0 0 18 16"
-                    className="fill-current"
-                  >
-                    <path
-                      d="M9.09815 0.360596L11.1054 6.06493H17.601L12.3459 9.5904L14.3532 15.2947L9.09815 11.7693L3.84309 15.2947L5.85035 9.5904L0.595291 6.06493H7.0909L9.09815 0.360596Z"
-                    />
-                  </svg>
-                </span>
-                </div>
-                <div className="ud-testimonial-content mb-6">
-                  <p className="text-base tracking-wide text-body-color">
-                    “Our members are so impressed. It's intuitive. It's clean.
-                    It's distraction free. If you're building a community.
-                  </p>
-                </div>
-                <div className="ud-testimonial-info flex items-center">
-                  <div
-                    className="
-                    ud-testimonial-image
-                    w-[50px]
-                    h-[50px]
-                    rounded-full
-                    overflow-hidden
-                    mr-5
-                  "
-                  >
-                    <img
-                      src={author1Image}
-                      alt="author"
-                    />
-                  </div>
-                  <div className="ud-testimonial-meta">
-                    <h4 className="text-sm font-semibold">Sabo Masties</h4>
-                    <p className="text-[#969696] text-xs">Founder @ Rolex</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="w-full md:w-1/2 lg:w-1/3 px-4">
-              <div
-                className="
-                ud-single-testimonial
-                p-8
-                bg-white
-                mb-12
-                shadow-testimonial
-                wow
-                fadeInUp
-              "
-                data-wow-delay=".15s
-              "
-              >
-                <div className="ud-testimonial-ratings flex items-center mb-3">
-                <span className="text-[#fbb040] mr-1">
-                  <svg
-                    width="18"
-                    height="16"
-                    viewBox="0 0 18 16"
-                    className="fill-current"
-                  >
-                    <path
-                      d="M9.09815 0.360596L11.1054 6.06493H17.601L12.3459 9.5904L14.3532 15.2947L9.09815 11.7693L3.84309 15.2947L5.85035 9.5904L0.595291 6.06493H7.0909L9.09815 0.360596Z"
-                    />
-                  </svg>
-                </span>
-                  <span className="text-[#fbb040] mr-1">
-                  <svg
-                    width="18"
-                    height="16"
-                    viewBox="0 0 18 16"
-                    className="fill-current"
-                  >
-                    <path
-                      d="M9.09815 0.360596L11.1054 6.06493H17.601L12.3459 9.5904L14.3532 15.2947L9.09815 11.7693L3.84309 15.2947L5.85035 9.5904L0.595291 6.06493H7.0909L9.09815 0.360596Z"
-                    />
-                  </svg>
-                </span>
-                  <span className="text-[#fbb040] mr-1">
-                  <svg
-                    width="18"
-                    height="16"
-                    viewBox="0 0 18 16"
-                    className="fill-current"
-                  >
-                    <path
-                      d="M9.09815 0.360596L11.1054 6.06493H17.601L12.3459 9.5904L14.3532 15.2947L9.09815 11.7693L3.84309 15.2947L5.85035 9.5904L0.595291 6.06493H7.0909L9.09815 0.360596Z"
-                    />
-                  </svg>
-                </span>
-                  <span className="text-[#fbb040] mr-1">
-                  <svg
-                    width="18"
-                    height="16"
-                    viewBox="0 0 18 16"
-                    className="fill-current"
-                  >
-                    <path
-                      d="M9.09815 0.360596L11.1054 6.06493H17.601L12.3459 9.5904L14.3532 15.2947L9.09815 11.7693L3.84309 15.2947L5.85035 9.5904L0.595291 6.06493H7.0909L9.09815 0.360596Z"
-                    />
-                  </svg>
-                </span>
-                  <span className="text-[#fbb040] mr-1">
-                  <svg
-                    width="18"
-                    height="16"
-                    viewBox="0 0 18 16"
-                    className="fill-current"
-                  >
-                    <path
-                      d="M9.09815 0.360596L11.1054 6.06493H17.601L12.3459 9.5904L14.3532 15.2947L9.09815 11.7693L3.84309 15.2947L5.85035 9.5904L0.595291 6.06493H7.0909L9.09815 0.360596Z"
-                    />
-                  </svg>
-                </span>
-                </div>
-                <div className="ud-testimonial-content mb-6">
-                  <p className="text-base tracking-wide text-body-color">
-                    “Our members are so impressed. It's intuitive. It's clean.
-                    It's distraction free. If you're building a community.
-                  </p>
-                </div>
-                <div className="ud-testimonial-info flex items-center">
-                  <div
-                    className="
-                    ud-testimonial-image
-                    w-[50px]
-                    h-[50px]
-                    rounded-full
-                    overflow-hidden
-                    mr-5
-                  "
-                  >
-                    <img
-                      src={author2Image}
-                      alt="author"
-                    />
-                  </div>
-                  <div className="ud-testimonial-meta">
-                    <h4 className="text-sm font-semibold">Margin Gesmu</h4>
-                    <p className="text-[#969696] text-xs">Founder @ UI Hunter</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="w-full md:w-1/2 lg:w-1/3 px-4">
-              <div
-                className="
-                ud-single-testimonial
-                p-8
-                bg-white
-                mb-12
-                shadow-testimonial
-                wow
-                fadeInUp
-              "
-                data-wow-delay=".2s
-              "
-              >
-                <div className="ud-testimonial-ratings flex items-center mb-3">
-                <span className="text-[#fbb040] mr-1">
-                  <svg
-                    width="18"
-                    height="16"
-                    viewBox="0 0 18 16"
-                    className="fill-current"
-                  >
-                    <path
-                      d="M9.09815 0.360596L11.1054 6.06493H17.601L12.3459 9.5904L14.3532 15.2947L9.09815 11.7693L3.84309 15.2947L5.85035 9.5904L0.595291 6.06493H7.0909L9.09815 0.360596Z"
-                    />
-                  </svg>
-                </span>
-                  <span className="text-[#fbb040] mr-1">
-                  <svg
-                    width="18"
-                    height="16"
-                    viewBox="0 0 18 16"
-                    className="fill-current"
-                  >
-                    <path
-                      d="M9.09815 0.360596L11.1054 6.06493H17.601L12.3459 9.5904L14.3532 15.2947L9.09815 11.7693L3.84309 15.2947L5.85035 9.5904L0.595291 6.06493H7.0909L9.09815 0.360596Z"
-                    />
-                  </svg>
-                </span>
-                  <span className="text-[#fbb040] mr-1">
-                  <svg
-                    width="18"
-                    height="16"
-                    viewBox="0 0 18 16"
-                    className="fill-current"
-                  >
-                    <path
-                      d="M9.09815 0.360596L11.1054 6.06493H17.601L12.3459 9.5904L14.3532 15.2947L9.09815 11.7693L3.84309 15.2947L5.85035 9.5904L0.595291 6.06493H7.0909L9.09815 0.360596Z"
-                    />
-                  </svg>
-                </span>
-                  <span className="text-[#fbb040] mr-1">
-                  <svg
-                    width="18"
-                    height="16"
-                    viewBox="0 0 18 16"
-                    className="fill-current"
-                  >
-                    <path
-                      d="M9.09815 0.360596L11.1054 6.06493H17.601L12.3459 9.5904L14.3532 15.2947L9.09815 11.7693L3.84309 15.2947L5.85035 9.5904L0.595291 6.06493H7.0909L9.09815 0.360596Z"
-                    />
-                  </svg>
-                </span>
-                  <span className="text-[#fbb040] mr-1">
-                  <svg
-                    width="18"
-                    height="16"
-                    viewBox="0 0 18 16"
-                    className="fill-current"
-                  >
-                    <path
-                      d="M9.09815 0.360596L11.1054 6.06493H17.601L12.3459 9.5904L14.3532 15.2947L9.09815 11.7693L3.84309 15.2947L5.85035 9.5904L0.595291 6.06493H7.0909L9.09815 0.360596Z"
-                    />
-                  </svg>
-                </span>
-                </div>
-                <div className="ud-testimonial-content mb-6">
-                  <p className="text-base tracking-wide text-body-color">
-                    “Our members are so impressed. It's intuitive. It's clean.
-                    It's distraction free. If you're building a community.
-                  </p>
-                </div>
-                <div className="ud-testimonial-info flex items-center">
-                  <div
-                    className="
-                    ud-testimonial-image
-                    w-[50px]
-                    h-[50px]
-                    rounded-full
-                    overflow-hidden
-                    mr-5
-                  "
-                  >
-                    <img
-                      src={author3Image}
-                      alt="author"
-                    />
-                  </div>
-                  <div className="ud-testimonial-meta">
-                    <h4 className="text-sm font-semibold">William Smith</h4>
-                    <p className="text-[#969696] text-xs">Founder @ Trorex</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/*    <div className="flex flex-wrap">*/}
+      {/*      <div className="w-full md:w-1/2 lg:w-1/3 px-4">*/}
+      {/*        <div*/}
+      {/*          className="*/}
+      {/*          ud-single-testimonial*/}
+      {/*          p-8*/}
+      {/*          bg-white*/}
+      {/*          mb-12*/}
+      {/*          shadow-testimonial*/}
+      {/*          wow*/}
+      {/*          fadeInUp*/}
+      {/*        "*/}
+      {/*          data-wow-delay=".1s*/}
+      {/*        "*/}
+      {/*        >*/}
+      {/*          <div className="ud-testimonial-ratings flex items-center mb-3">*/}
+      {/*          <span className="text-[#fbb040] mr-1">*/}
+      {/*            <svg*/}
+      {/*              width="18"*/}
+      {/*              height="16"*/}
+      {/*              viewBox="0 0 18 16"*/}
+      {/*              className="fill-current"*/}
+      {/*            >*/}
+      {/*              <path*/}
+      {/*                d="M9.09815 0.360596L11.1054 6.06493H17.601L12.3459 9.5904L14.3532 15.2947L9.09815 11.7693L3.84309 15.2947L5.85035 9.5904L0.595291 6.06493H7.0909L9.09815 0.360596Z"*/}
+      {/*              />*/}
+      {/*            </svg>*/}
+      {/*          </span>*/}
+      {/*            <span className="text-[#fbb040] mr-1">*/}
+      {/*            <svg*/}
+      {/*              width="18"*/}
+      {/*              height="16"*/}
+      {/*              viewBox="0 0 18 16"*/}
+      {/*              className="fill-current"*/}
+      {/*            >*/}
+      {/*              <path*/}
+      {/*                d="M9.09815 0.360596L11.1054 6.06493H17.601L12.3459 9.5904L14.3532 15.2947L9.09815 11.7693L3.84309 15.2947L5.85035 9.5904L0.595291 6.06493H7.0909L9.09815 0.360596Z"*/}
+      {/*              />*/}
+      {/*            </svg>*/}
+      {/*          </span>*/}
+      {/*            <span className="text-[#fbb040] mr-1">*/}
+      {/*            <svg*/}
+      {/*              width="18"*/}
+      {/*              height="16"*/}
+      {/*              viewBox="0 0 18 16"*/}
+      {/*              className="fill-current"*/}
+      {/*            >*/}
+      {/*              <path*/}
+      {/*                d="M9.09815 0.360596L11.1054 6.06493H17.601L12.3459 9.5904L14.3532 15.2947L9.09815 11.7693L3.84309 15.2947L5.85035 9.5904L0.595291 6.06493H7.0909L9.09815 0.360596Z"*/}
+      {/*              />*/}
+      {/*            </svg>*/}
+      {/*          </span>*/}
+      {/*            <span className="text-[#fbb040] mr-1">*/}
+      {/*            <svg*/}
+      {/*              width="18"*/}
+      {/*              height="16"*/}
+      {/*              viewBox="0 0 18 16"*/}
+      {/*              className="fill-current"*/}
+      {/*            >*/}
+      {/*              <path*/}
+      {/*                d="M9.09815 0.360596L11.1054 6.06493H17.601L12.3459 9.5904L14.3532 15.2947L9.09815 11.7693L3.84309 15.2947L5.85035 9.5904L0.595291 6.06493H7.0909L9.09815 0.360596Z"*/}
+      {/*              />*/}
+      {/*            </svg>*/}
+      {/*          </span>*/}
+      {/*            <span className="text-[#fbb040] mr-1">*/}
+      {/*            <svg*/}
+      {/*              width="18"*/}
+      {/*              height="16"*/}
+      {/*              viewBox="0 0 18 16"*/}
+      {/*              className="fill-current"*/}
+      {/*            >*/}
+      {/*              <path*/}
+      {/*                d="M9.09815 0.360596L11.1054 6.06493H17.601L12.3459 9.5904L14.3532 15.2947L9.09815 11.7693L3.84309 15.2947L5.85035 9.5904L0.595291 6.06493H7.0909L9.09815 0.360596Z"*/}
+      {/*              />*/}
+      {/*            </svg>*/}
+      {/*          </span>*/}
+      {/*          </div>*/}
+      {/*          <div className="ud-testimonial-content mb-6">*/}
+      {/*            <p className="text-base tracking-wide text-body-color">*/}
+      {/*              “Our members are so impressed. It's intuitive. It's clean.*/}
+      {/*              It's distraction free. If you're building a community.*/}
+      {/*            </p>*/}
+      {/*          </div>*/}
+      {/*          <div className="ud-testimonial-info flex items-center">*/}
+      {/*            <div*/}
+      {/*              className="*/}
+      {/*              ud-testimonial-image*/}
+      {/*              w-[50px]*/}
+      {/*              h-[50px]*/}
+      {/*              rounded-full*/}
+      {/*              overflow-hidden*/}
+      {/*              mr-5*/}
+      {/*            "*/}
+      {/*            >*/}
+      {/*              <img*/}
+      {/*                src={author1Image}*/}
+      {/*                alt="author"*/}
+      {/*              />*/}
+      {/*            </div>*/}
+      {/*            <div className="ud-testimonial-meta">*/}
+      {/*              <h4 className="text-sm font-semibold">Sabo Masties</h4>*/}
+      {/*              <p className="text-[#969696] text-xs">Founder @ Rolex</p>*/}
+      {/*            </div>*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*      <div className="w-full md:w-1/2 lg:w-1/3 px-4">*/}
+      {/*        <div*/}
+      {/*          className="*/}
+      {/*          ud-single-testimonial*/}
+      {/*          p-8*/}
+      {/*          bg-white*/}
+      {/*          mb-12*/}
+      {/*          shadow-testimonial*/}
+      {/*          wow*/}
+      {/*          fadeInUp*/}
+      {/*        "*/}
+      {/*          data-wow-delay=".15s*/}
+      {/*        "*/}
+      {/*        >*/}
+      {/*          <div className="ud-testimonial-ratings flex items-center mb-3">*/}
+      {/*          <span className="text-[#fbb040] mr-1">*/}
+      {/*            <svg*/}
+      {/*              width="18"*/}
+      {/*              height="16"*/}
+      {/*              viewBox="0 0 18 16"*/}
+      {/*              className="fill-current"*/}
+      {/*            >*/}
+      {/*              <path*/}
+      {/*                d="M9.09815 0.360596L11.1054 6.06493H17.601L12.3459 9.5904L14.3532 15.2947L9.09815 11.7693L3.84309 15.2947L5.85035 9.5904L0.595291 6.06493H7.0909L9.09815 0.360596Z"*/}
+      {/*              />*/}
+      {/*            </svg>*/}
+      {/*          </span>*/}
+      {/*            <span className="text-[#fbb040] mr-1">*/}
+      {/*            <svg*/}
+      {/*              width="18"*/}
+      {/*              height="16"*/}
+      {/*              viewBox="0 0 18 16"*/}
+      {/*              className="fill-current"*/}
+      {/*            >*/}
+      {/*              <path*/}
+      {/*                d="M9.09815 0.360596L11.1054 6.06493H17.601L12.3459 9.5904L14.3532 15.2947L9.09815 11.7693L3.84309 15.2947L5.85035 9.5904L0.595291 6.06493H7.0909L9.09815 0.360596Z"*/}
+      {/*              />*/}
+      {/*            </svg>*/}
+      {/*          </span>*/}
+      {/*            <span className="text-[#fbb040] mr-1">*/}
+      {/*            <svg*/}
+      {/*              width="18"*/}
+      {/*              height="16"*/}
+      {/*              viewBox="0 0 18 16"*/}
+      {/*              className="fill-current"*/}
+      {/*            >*/}
+      {/*              <path*/}
+      {/*                d="M9.09815 0.360596L11.1054 6.06493H17.601L12.3459 9.5904L14.3532 15.2947L9.09815 11.7693L3.84309 15.2947L5.85035 9.5904L0.595291 6.06493H7.0909L9.09815 0.360596Z"*/}
+      {/*              />*/}
+      {/*            </svg>*/}
+      {/*          </span>*/}
+      {/*            <span className="text-[#fbb040] mr-1">*/}
+      {/*            <svg*/}
+      {/*              width="18"*/}
+      {/*              height="16"*/}
+      {/*              viewBox="0 0 18 16"*/}
+      {/*              className="fill-current"*/}
+      {/*            >*/}
+      {/*              <path*/}
+      {/*                d="M9.09815 0.360596L11.1054 6.06493H17.601L12.3459 9.5904L14.3532 15.2947L9.09815 11.7693L3.84309 15.2947L5.85035 9.5904L0.595291 6.06493H7.0909L9.09815 0.360596Z"*/}
+      {/*              />*/}
+      {/*            </svg>*/}
+      {/*          </span>*/}
+      {/*            <span className="text-[#fbb040] mr-1">*/}
+      {/*            <svg*/}
+      {/*              width="18"*/}
+      {/*              height="16"*/}
+      {/*              viewBox="0 0 18 16"*/}
+      {/*              className="fill-current"*/}
+      {/*            >*/}
+      {/*              <path*/}
+      {/*                d="M9.09815 0.360596L11.1054 6.06493H17.601L12.3459 9.5904L14.3532 15.2947L9.09815 11.7693L3.84309 15.2947L5.85035 9.5904L0.595291 6.06493H7.0909L9.09815 0.360596Z"*/}
+      {/*              />*/}
+      {/*            </svg>*/}
+      {/*          </span>*/}
+      {/*          </div>*/}
+      {/*          <div className="ud-testimonial-content mb-6">*/}
+      {/*            <p className="text-base tracking-wide text-body-color">*/}
+      {/*              “Our members are so impressed. It's intuitive. It's clean.*/}
+      {/*              It's distraction free. If you're building a community.*/}
+      {/*            </p>*/}
+      {/*          </div>*/}
+      {/*          <div className="ud-testimonial-info flex items-center">*/}
+      {/*            <div*/}
+      {/*              className="*/}
+      {/*              ud-testimonial-image*/}
+      {/*              w-[50px]*/}
+      {/*              h-[50px]*/}
+      {/*              rounded-full*/}
+      {/*              overflow-hidden*/}
+      {/*              mr-5*/}
+      {/*            "*/}
+      {/*            >*/}
+      {/*              <img*/}
+      {/*                src={author2Image}*/}
+      {/*                alt="author"*/}
+      {/*              />*/}
+      {/*            </div>*/}
+      {/*            <div className="ud-testimonial-meta">*/}
+      {/*              <h4 className="text-sm font-semibold">Margin Gesmu</h4>*/}
+      {/*              <p className="text-[#969696] text-xs">Founder @ UI Hunter</p>*/}
+      {/*            </div>*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*      <div className="w-full md:w-1/2 lg:w-1/3 px-4">*/}
+      {/*        <div*/}
+      {/*          className="*/}
+      {/*          ud-single-testimonial*/}
+      {/*          p-8*/}
+      {/*          bg-white*/}
+      {/*          mb-12*/}
+      {/*          shadow-testimonial*/}
+      {/*          wow*/}
+      {/*          fadeInUp*/}
+      {/*        "*/}
+      {/*          data-wow-delay=".2s*/}
+      {/*        "*/}
+      {/*        >*/}
+      {/*          <div className="ud-testimonial-ratings flex items-center mb-3">*/}
+      {/*          <span className="text-[#fbb040] mr-1">*/}
+      {/*            <svg*/}
+      {/*              width="18"*/}
+      {/*              height="16"*/}
+      {/*              viewBox="0 0 18 16"*/}
+      {/*              className="fill-current"*/}
+      {/*            >*/}
+      {/*              <path*/}
+      {/*                d="M9.09815 0.360596L11.1054 6.06493H17.601L12.3459 9.5904L14.3532 15.2947L9.09815 11.7693L3.84309 15.2947L5.85035 9.5904L0.595291 6.06493H7.0909L9.09815 0.360596Z"*/}
+      {/*              />*/}
+      {/*            </svg>*/}
+      {/*          </span>*/}
+      {/*            <span className="text-[#fbb040] mr-1">*/}
+      {/*            <svg*/}
+      {/*              width="18"*/}
+      {/*              height="16"*/}
+      {/*              viewBox="0 0 18 16"*/}
+      {/*              className="fill-current"*/}
+      {/*            >*/}
+      {/*              <path*/}
+      {/*                d="M9.09815 0.360596L11.1054 6.06493H17.601L12.3459 9.5904L14.3532 15.2947L9.09815 11.7693L3.84309 15.2947L5.85035 9.5904L0.595291 6.06493H7.0909L9.09815 0.360596Z"*/}
+      {/*              />*/}
+      {/*            </svg>*/}
+      {/*          </span>*/}
+      {/*            <span className="text-[#fbb040] mr-1">*/}
+      {/*            <svg*/}
+      {/*              width="18"*/}
+      {/*              height="16"*/}
+      {/*              viewBox="0 0 18 16"*/}
+      {/*              className="fill-current"*/}
+      {/*            >*/}
+      {/*              <path*/}
+      {/*                d="M9.09815 0.360596L11.1054 6.06493H17.601L12.3459 9.5904L14.3532 15.2947L9.09815 11.7693L3.84309 15.2947L5.85035 9.5904L0.595291 6.06493H7.0909L9.09815 0.360596Z"*/}
+      {/*              />*/}
+      {/*            </svg>*/}
+      {/*          </span>*/}
+      {/*            <span className="text-[#fbb040] mr-1">*/}
+      {/*            <svg*/}
+      {/*              width="18"*/}
+      {/*              height="16"*/}
+      {/*              viewBox="0 0 18 16"*/}
+      {/*              className="fill-current"*/}
+      {/*            >*/}
+      {/*              <path*/}
+      {/*                d="M9.09815 0.360596L11.1054 6.06493H17.601L12.3459 9.5904L14.3532 15.2947L9.09815 11.7693L3.84309 15.2947L5.85035 9.5904L0.595291 6.06493H7.0909L9.09815 0.360596Z"*/}
+      {/*              />*/}
+      {/*            </svg>*/}
+      {/*          </span>*/}
+      {/*            <span className="text-[#fbb040] mr-1">*/}
+      {/*            <svg*/}
+      {/*              width="18"*/}
+      {/*              height="16"*/}
+      {/*              viewBox="0 0 18 16"*/}
+      {/*              className="fill-current"*/}
+      {/*            >*/}
+      {/*              <path*/}
+      {/*                d="M9.09815 0.360596L11.1054 6.06493H17.601L12.3459 9.5904L14.3532 15.2947L9.09815 11.7693L3.84309 15.2947L5.85035 9.5904L0.595291 6.06493H7.0909L9.09815 0.360596Z"*/}
+      {/*              />*/}
+      {/*            </svg>*/}
+      {/*          </span>*/}
+      {/*          </div>*/}
+      {/*          <div className="ud-testimonial-content mb-6">*/}
+      {/*            <p className="text-base tracking-wide text-body-color">*/}
+      {/*              “Our members are so impressed. It's intuitive. It's clean.*/}
+      {/*              It's distraction free. If you're building a community.*/}
+      {/*            </p>*/}
+      {/*          </div>*/}
+      {/*          <div className="ud-testimonial-info flex items-center">*/}
+      {/*            <div*/}
+      {/*              className="*/}
+      {/*              ud-testimonial-image*/}
+      {/*              w-[50px]*/}
+      {/*              h-[50px]*/}
+      {/*              rounded-full*/}
+      {/*              overflow-hidden*/}
+      {/*              mr-5*/}
+      {/*            "*/}
+      {/*            >*/}
+      {/*              <img*/}
+      {/*                src={author3Image}*/}
+      {/*                alt="author"*/}
+      {/*              />*/}
+      {/*            </div>*/}
+      {/*            <div className="ud-testimonial-meta">*/}
+      {/*              <h4 className="text-sm font-semibold">William Smith</h4>*/}
+      {/*              <p className="text-[#969696] text-xs">Founder @ Trorex</p>*/}
+      {/*            </div>*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*</section>*/}
 
-      <section
-        className="
-        bg-[#f3f4ff]
-        pt-20
-        lg:pt-[120px]
-        pb-12
-        lg:pb-[90px]
-        relative
-        z-20
-        overflow-hidden
-      "
-      >
+      <section id="faq" className="bg-[#f3f4ff] pt-20 lg:pt-[30px] pb-12 lg:pb-[90px] relative z-20 overflow-hidden">
         <div className="container">
           <div className="flex flex-wrap -mx-4">
             <div className="w-full px-4">
@@ -986,27 +977,10 @@ export const Home = () => {
               <span className="font-semibold text-lg text-primary mb-2 block">
                 FAQ
               </span>
-                <h2
-                  className="
-                  font-bold
-                  text-3xl
-                  sm:text-4xl
-                  md:text-[42px]
-                  text-dark
-                  mb-4
-                "
-                >
+                <h2 className="font-bold text-3xl sm:text-4xl md:text-[42px] text-dark mb-4">
                   Any Questions? Answered
                 </h2>
-                <p
-                  className="
-                  text-lg
-                  sm:text-xl
-                  leading-relaxed
-                  sm:leading-relaxed
-                  text-body-color
-                "
-                >
+                <p className="text-lg sm:text-xl leading-relaxed sm:leading-relaxed text-body-color">
                   There are many variations of passages of Lorem Ipsum available
                   but the majority have suffered alteration in some form.
                 </p>

@@ -104,7 +104,7 @@ export const Header = ({ isInner, reloadCommunityList }) => {
                           <ScrollLink to={"about"} dark={scroll ? "true" : undefined} smooth={true}>Features</ScrollLink>
                         </li>
                         <li className="relative group">
-                          <ScrollLink to={"pricing"} dark={scroll ? "true" : undefined} smooth={true}>FAQ</ScrollLink>
+                          <ScrollLink to={"faq"} dark={scroll ? "true" : undefined} smooth={true}>FAQ</ScrollLink>
                         </li>
                         <li className="relative group">
                           <ScrollLink to={"communities"} dark={scroll ? "true" : undefined} smooth={true}>Communities</ScrollLink>

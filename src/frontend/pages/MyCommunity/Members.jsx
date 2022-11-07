@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { InnerBlock, InnerTransparentBlock } from '../../assets/css/common.style';
 import NFTCollectionABI from "../../contractsData/NFTCollection.json";
-import { useContract, useContractRead, useNetwork, useProvider } from "wagmi";
+import { useContract, useContractRead, useProvider } from "wagmi";
 import { isContractAddress } from "../../utils/format";
 import { transformCollectionNFT } from "../../utils/transform";
 import { Option, Select, Switch } from "@material-tailwind/react";
@@ -65,7 +65,7 @@ export const Members = () => {
             <div className="w-32 mr-6 text-sm font-normal">
               <Switch checked={isShowEmail} onChange={() => setIsShowEmail(prev => !prev)} label="Show emails"/>
             </div>
-            <div className="w-64 -mt-3">
+            <div className="w-48 -mt-3">
               {collectionItems && (
                 <Select label="NFT Collection*"
                         value={filterCollection}

@@ -16,7 +16,7 @@ export function Feature({ title, text, icon }) {
     <div className="w-full md:w-1/2 lg:w-1/4 px-4">
       <div className="bg-white mb-12 group wow fadeInUp" data-wow-delay=".1s">
         <div
-          className="w-[70px] h-[70px] flex items-center justify-center bg-primary rounded-2xl mb-8 relative z-10"
+          className="w-[70px] h-[70px] flex items-center justify-center bg-primary rounded-2xl mb-8 relative z-10 mx-auto"
         >
           <span
             className="w-[70px] h-[70px] flex items-center justify-center bg-primary bg-opacity-20 rounded-2xl
@@ -24,10 +24,10 @@ export function Feature({ title, text, icon }) {
           />
           <img src={iconsMap[icon]} alt="" className="w-[35px] h-[35px]"/>
         </div>
-        <h4 className="font-bold text-xl text-dark mb-3">
+        <h4 className="font-bold text-xl text-dark mb-3 text-center">
           {title}
         </h4>
-        <p className="text-body-color mb-8 lg:mb-11">
+        <p className="text-body-color mb-8 lg:mb-11 text-center">
           {text}
         </p>
         {/*<a*/}
