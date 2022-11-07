@@ -15,6 +15,16 @@
       "address": "0xa797a5bAdD4b2250C8C5e25A7C34CF3a9F0722a9",
       "txHash": "0x273916074f92ecf964f7f1d77b8332f18de1b87f75910f1b16b655e622e0e35e",
       "kind": "uups"
+    },
+    {
+      "address": "0x6BdBb69660E6849b98e8C524d266a0005D3655F7",
+      "txHash": "0x40fbbd396d30aa782eb979518e0d7dffbf42ceb14a4ce3445248854fbb56caf0",
+      "kind": "uups"
+    },
+    {
+      "address": "0x9B06D17ce54B06dF4A644900492036E3AC384517",
+      "txHash": "0xc043f84fe94d651a3e42ebc50787b127fe39ad436c3b131ff24a62e361e84ccc",
+      "kind": "uups"
     }
   ],
   "impls": {

@@ -1,7 +1,7 @@
 {
   "name": "web3-react-app",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.1.0",
   "scripts": {
     "preview": "vite preview",
     "clean:hardhat": "env $(cat .env) npx hardhat clean",
@@ -12,11 +12,11 @@
     "update:local": "env $(cat .env) npx hardhat run src/backend/scripts/update.local.js --network localhost",
     "build:local": "vite build",
     "start": "vite",
-    "deploy:aurora": "env $(cat .env) npx hardhat run src/backend/scripts/deploy.js --network aurora_testnet",
-    "update:aurora": "env $(cat .env) npx hardhat run src/backend/scripts/update.aurora.js --network aurora_testnet",
-    "verify:aurora": "env $(cat .env) npx hardhat verify '' --network aurora_testnet",
-    "build:aurora_testnet": "vite build --mode aurora_testnet",
-    "start:aurora_testnet": "vite --mode aurora_testnet"
+    "deploy:aurora": "env $(cat .env) npx hardhat run src/backend/scripts/deploy.js --network aurora",
+    "update:aurora": "env $(cat .env) npx hardhat run src/backend/scripts/update.aurora.js --network aurora",
+    "verify:aurora": "env $(cat .env) npx hardhat verify '0x1229EBc5C2b50714E8b52114082ee5A0d55ABd23' --network aurora",
+    "build:aurora": "vite build --mode aurora",
+    "start:aurora": "vite --mode aurora"
   },
   "dependencies": {
     "@ethersproject/bignumber": "^5.7.0",

@@ -34,9 +34,9 @@ module.exports = {
         interval: [1000, 2000]
       }
     },
-    aurora_testnet: {
-      url: process.env.AURORA_TESTNET_RPC_URL !== undefined ? process.env.AURORA_TESTNET_RPC_URL : "",
-      accounts: process.env.AURORA_TESTNET_PRIVATE_KEY !== undefined ? [process.env.AURORA_TESTNET_PRIVATE_KEY] : []
+    aurora: {
+      url: process.env.AURORA_RPC_URL !== undefined ? process.env.AURORA_RPC_URL : "",
+      accounts: process.env.AURORA_PRIVATE_KEY !== undefined ? [process.env.AURORA_PRIVATE_KEY] : []
     }
   }
 };

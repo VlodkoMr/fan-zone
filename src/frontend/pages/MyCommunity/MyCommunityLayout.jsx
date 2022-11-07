@@ -13,15 +13,14 @@ import { transformCommunity } from '../../utils/transform';
 import { mainContract } from '../../utils/contracts';
 import { Loader } from '../../components/Loader';
 
-const MyCommunityLayout = () => {
+export const MyCommunityLayout = () => {
   const dispatch = useDispatch();
   const { address } = useAccount();
   const [isReady, setIsReady] = useState(false);
   const {
     data: communityList,
     isLoading,
-    refetch: RefetchCommunityList,
-    error
+    refetch: RefetchCommunityList
   } = useContractRead({
     ...mainContract,
     functionName: 'getUserCommunities',
@@ -33,11 +32,6 @@ const MyCommunityLayout = () => {
       loadCommunityList(communityList);
     }
   }, [isLoading])
-
-  useEffect(() => {
-    console.log(`address`, address);
-    console.log(`error`, error);
-  }, [address])
 
   const loadCommunityList = (communityList, setLastByDefault = false) => {
     setIsReady(false);
@@ -120,5 +114,3 @@ const MyCommunityLayout = () => {
     </InnerPageWrapper>
   );
 }
-
-export default MyCommunityLayout;

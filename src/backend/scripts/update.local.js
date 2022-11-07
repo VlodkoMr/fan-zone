@@ -2,7 +2,6 @@ const hre = require("hardhat");
 const { saveFrontendFiles } = require('./utils');
 
 const MAIN_CONTRACT_PROXY = "";
-const MEMBER_CONTRACT_PROXY = "";
 const NFT_FACTORY_CONTRACT_PROXY = "";
 const FT_FACTORY_CONTRACT_PROXY = "";
 

@@ -11,7 +11,7 @@ import { transformCommunity } from "../../utils/transform";
 import { Loader } from "../../components/Loader";
 import { mediaURL } from "../../utils/format";
 
-const CommunityPageLayout = () => {
+export const CommunityPageLayout = () => {
   let { categoryId, communityId } = useParams();
 
   const { data: community } = useContractRead({
@@ -98,5 +98,3 @@ const CommunityPageLayout = () => {
     </div>
   );
 }
-
-export default CommunityPageLayout;

@@ -3,9 +3,14 @@ import { ethers } from "ethers";
 import mainContractLocal from '../contractsData/localhost/MainContract-address.json';
 import factoryNFTContractLocal from '../contractsData/localhost/FactoryNFTContract-address.json';
 import factoryFTContractLocal from '../contractsData/localhost/FactoryFTContract-address.json';
-import mainContractAurora from '../contractsData/aurora_testnet/MainContract-address.json';
-import factoryNFTContractAurora from '../contractsData/aurora_testnet/FactoryNFTContract-address.json';
-import factoryFTContractAurora from '../contractsData/aurora_testnet/FactoryFTContract-address.json';
+
+// import mainContractAuroraTestnet from '../contractsData/aurora_testnet/MainContract-address.json';
+// import factoryNFTContractAuroraTestnet from '../contractsData/aurora_testnet/FactoryNFTContract-address.json';
+// import factoryFTContractAuroraTestnet from '../contractsData/aurora_testnet/FactoryFTContract-address.json';
+
+import mainContractAurora from '../contractsData/aurora/MainContract-address.json';
+import factoryNFTContractAurora from '../contractsData/aurora/FactoryNFTContract-address.json';
+import factoryFTContractAurora from '../contractsData/aurora/FactoryFTContract-address.json';
 
 import mainContractABI from '../contractsData/MainContract.json';
 import factoryNFTContractABI from '../contractsData/FactoryNFTContract.json';
@@ -15,14 +20,17 @@ const provider = new ethers.providers.Web3Provider(window.ethereum);
 const network = await provider.getNetwork();
 const chainId = network.chainId;
 
-console.log(`chainId`, chainId);
-
 let mainAddress = mainContractLocal.address;
 let factoryNFTAddress = factoryNFTContractLocal.address;
 let factoryFTAddress = factoryFTContractLocal.address;
 
 switch (chainId) {
-  case 1313161555:
+  // case 1313161555:
+  //   mainAddress = mainContractAuroraTestnet.address;
+  //   factoryNFTAddress = factoryNFTContractAuroraTestnet.address;
+  //   factoryFTAddress = factoryFTContractAuroraTestnet.address;
+  //   break;
+  case 1313161554:
     mainAddress = mainContractAurora.address;
     factoryNFTAddress = factoryNFTContractAurora.address;
     factoryFTAddress = factoryFTContractAurora.address;

@@ -13,26 +13,28 @@ import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import '@rainbow-me/rainbowkit/styles.css';
 
-const auroraTestnetChain = {
-  id: 1313161555,
-  name: 'Aurora Testnet',
+const auroraChain = {
+  id: 1313161554,
+  name: 'Aurora+',
   network: 'aurora',
   nativeCurrency: {
     decimals: 18,
-    name: 'Aurora',
-    symbol: 'Aurora',
+    name: 'ETH',
+    symbol: 'ETH',
   },
   rpcUrls: {
-    default: import.meta.env.AURORA_TESTNET_RPC_URL,
+    default: import.meta.env.VITE_AURORA_RPC_URL,
   },
   blockExplorers: {
-    default: { name: 'aurorascan', url: 'https://testnet.aurorascan.dev' },
+    default: { name: 'aurorascan', url: 'https://aurorascan.dev' },
   },
-  testnet: true,
+  testnet: false,
 }
 
+console.log(`auroraChain`, auroraChain);
+
 const { chains, provider } = configureChains(
-  [auroraTestnetChain],
+  [chain.hardhat, auroraChain],
   [
     // publicProvider(),
     jsonRpcProvider({

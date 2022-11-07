@@ -2,7 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
 import {
   Category, Home, Error404,
-  MyDashboard, FungibleToken, NftCollection, Settings, DAO, Members, Dashboard, NFTDetails, Raffle
+  MyDashboard, FungibleToken, NftCollection, Settings, DAO, Members, Dashboard, NFTDetails, Raffle, MyCommunityLayout, CommunityPageLayout
 } from './pages';
 import { useAccount } from 'wagmi'
 import { Transaction } from './components/Transaction';
@@ -24,9 +24,6 @@ export default function App() {
     }
     return <Outlet/>;
   };
-
-  const MyCommunityLayout = lazy(() => import("./pages/MyCommunity/MyCommunityLayout"))
-  const CommunityPageLayout = lazy(() => import("./pages/CommunityPage/CommunityPageLayout"))
 
   const loadingFallback = () => (
     <small>...</small>
