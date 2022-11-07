@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useContractRead, useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi';
 import { useDispatch } from 'react-redux';
 import { addTransaction } from '../../store/transactionSlice';
 import { Button } from '@material-tailwind/react';
+import { isContractAddress } from "../../utils/format";
 
 export function PauseUnpausePopup({ contractAddress, contractABI, handleSuccess }) {
   const dispatch = useDispatch();
@@ -11,21 +12,21 @@ export function PauseUnpausePopup({ contractAddress, contractABI, handleSuccess 
 
   const { data: isPaused, refetch: refetchIsPaused } = useContractRead({
     addressOrName: contractAddress,
-    enabled: contractAddress.length > 0,
+    enabled: contractAddress.length > 0 && isContractAddress(contractAddress),
     contractInterface: contractABI.abi,
     functionName: "paused",
   });
 
   // ---------- Pause ----------
 
-  const { config: configPause, error: errorPause } = usePrepareContractWrite({
+  const { config: configPause } = usePrepareContractWrite({
     addressOrName: contractAddress,
-    enabled: contractAddress.length > 0,
+    enabled: contractAddress.length > 0 && isContractAddress(contractAddress) && !isPaused,
     contractInterface: contractABI.abi,
     functionName: 'pause',
   });
 
-  const { data: pauseData, write: pauseWrite } = useContractWrite({
+  const { data: pauseData, write: pauseWrite, error: errorPause } = useContractWrite({
     ...configPause,
     onSuccess: ({ hash }) => {
       dispatch(addTransaction({
@@ -62,7 +63,7 @@ export function PauseUnpausePopup({ contractAddress, contractABI, handleSuccess 
   const { config: configUnPause, error: errorUnPause } = usePrepareContractWrite({
     addressOrName: contractAddress,
     contractInterface: contractABI.abi,
-    enabled: contractAddress.length > 0 && isPaused,
+    enabled: contractAddress.length > 0 && isContractAddress(contractAddress) && isPaused,
     functionName: 'unpause',
   });
 

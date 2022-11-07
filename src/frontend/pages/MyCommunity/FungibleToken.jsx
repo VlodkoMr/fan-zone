@@ -61,8 +61,10 @@ export const FungibleToken = () => {
   });
 
   const refetchCampaignsList = () => {
-    refetchBalance();
-    refetchDistributionCampaigns();
+    if (isContractAddress(currentCommunity?.ftContract)) {
+      refetchBalance();
+      refetchDistributionCampaigns();
+    }
   }
 
   const loadLastActions = async () => {
