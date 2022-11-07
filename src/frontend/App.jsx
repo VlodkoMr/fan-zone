@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
 import {
-  Category, Home, Error404, CommunityPageLayout,
+  Category, Home, Error404,
   MyDashboard, FungibleToken, NftCollection, Settings, DAO, Members, Dashboard, NFTDetails, Raffle
 } from './pages';
 import { useAccount } from 'wagmi'
@@ -26,6 +26,7 @@ export default function App() {
   };
 
   const MyCommunityLayout = lazy(() => import("./pages/MyCommunity/MyCommunityLayout"))
+  const CommunityPageLayout = lazy(() => import("./pages/CommunityPage/CommunityPageLayout"))
 
   const loadingFallback = () => (
     <small>...</small>

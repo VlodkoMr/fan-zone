@@ -11,7 +11,7 @@ import { transformCommunity } from "../../utils/transform";
 import { Loader } from "../../components/Loader";
 import { mediaURL } from "../../utils/format";
 
-export const CommunityPageLayout = () => {
+const CommunityPageLayout = () => {
   let { categoryId, communityId } = useParams();
 
   const { data: community } = useContractRead({
@@ -19,7 +19,7 @@ export const CommunityPageLayout = () => {
     enabled: !!communityId,
     functionName: "communities",
     select: data => transformCommunity(data),
-    args: [ communityId ]
+    args: [communityId]
   });
 
   // useEffect(() => {
@@ -83,7 +83,7 @@ export const CommunityPageLayout = () => {
           <div className="community-bg"/>
 
           <Wrapper>
-            <Outlet context={[ community ]}/>
+            <Outlet context={[community]}/>
           </Wrapper>
         </>
       ) : (
@@ -98,3 +98,5 @@ export const CommunityPageLayout = () => {
     </div>
   );
 }
+
+export default CommunityPageLayout;

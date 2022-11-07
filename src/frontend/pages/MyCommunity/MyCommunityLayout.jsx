@@ -20,7 +20,8 @@ const MyCommunityLayout = () => {
   const {
     data: communityList,
     isLoading,
-    refetch: RefetchCommunityList
+    refetch: RefetchCommunityList,
+    error
   } = useContractRead({
     ...mainContract,
     functionName: 'getUserCommunities',
@@ -32,6 +33,11 @@ const MyCommunityLayout = () => {
       loadCommunityList(communityList);
     }
   }, [isLoading])
+
+  useEffect(() => {
+    console.log(`address`, address);
+    console.log(`error`, error);
+  }, [address])
 
   const loadCommunityList = (communityList, setLastByDefault = false) => {
     setIsReady(false);
