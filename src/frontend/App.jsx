@@ -1,48 +1,53 @@
-import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import React, { lazy, Suspense } from 'react';
+import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
 import {
   Category, Home, Error404, CommunityPageLayout,
-  MyCommunityLayout, MyDashboard, FungibleToken, NftCollection, Settings, DAO, Members, Dashboard, NFTDetails, Raffle
+  MyDashboard, FungibleToken, NftCollection, Settings, DAO, Members, Dashboard, NFTDetails, Raffle
 } from './pages';
 import { useAccount } from 'wagmi'
 import { Transaction } from './components/Transaction';
 import { useSelector } from 'react-redux';
 
 export default function App() {
-  const [ isReady, setIsReady ] = useState(false);
   const { isConnected } = useAccount();
   const transactions = useSelector(state => state.transactions.list);
 
   useAccount({
     onDisconnect() {
       localStorage.removeItem("communityId");
-      // document.location.href = "/";
     }
   });
 
-  useEffect(() => {
-    if (isConnected || document.location.pathname === "/") {
-      setIsReady(true);
-    } else {
-      document.location.href = "/";
+  const ProtectedRoute = () => {
+    if (!isConnected) {
+      return <Navigate to="/" replace/>;
     }
-  }, [ isConnected ])
+    return <Outlet/>;
+  };
+
+  const MyCommunityLayout = lazy(() => import("./pages/MyCommunity/MyCommunityLayout"))
+
+  const loadingFallback = () => (
+    <small>...</small>
+  )
 
   return (
     <>
       <BrowserRouter>
-        {isReady && (
+        <Suspense fallback={loadingFallback()}>
           <Routes>
             <Route exact path="/" element={<Home/>}/>
 
-            <Route exact path="/my" element={<MyCommunityLayout/>}>
-              <Route exact path="dashboard" element={<MyDashboard/>}/>
-              <Route exact path="nft" element={<NftCollection/>}/>
-              <Route exact path="token" element={<FungibleToken/>}/>
-              <Route exact path="settings" element={<Settings/>}/>
-              <Route exact path="dao" element={<DAO/>}/>
-              <Route exact path="raffle" element={<Raffle/>}/>
-              <Route exact path="members" element={<Members/>}/>
+            <Route element={<ProtectedRoute/>}>
+              <Route exact path="/my" element={<MyCommunityLayout/>}>
+                <Route exact path="dashboard" element={<MyDashboard/>}/>
+                <Route exact path="nft" element={<NftCollection/>}/>
+                <Route exact path="token" element={<FungibleToken/>}/>
+                <Route exact path="settings" element={<Settings/>}/>
+                <Route exact path="dao" element={<DAO/>}/>
+                <Route exact path="raffle" element={<Raffle/>}/>
+                <Route exact path="members" element={<Members/>}/>
+              </Route>
             </Route>
 
             <Route exact path="/category/:categoryId" element={<Category/>}/>
@@ -53,7 +58,7 @@ export default function App() {
 
             <Route path='*' element={<Error404/>}/>
           </Routes>
-        )}
+        </Suspense>
       </BrowserRouter>
 
       {transactions.length > 0 && (

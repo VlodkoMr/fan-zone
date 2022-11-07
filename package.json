@@ -15,7 +15,7 @@
     "deploy:aurora": "env $(cat .env) npx hardhat run src/backend/scripts/deploy.js --network aurora_testnet",
     "update:aurora": "env $(cat .env) npx hardhat run src/backend/scripts/update.aurora.js --network aurora_testnet",
     "verify:aurora": "env $(cat .env) npx hardhat verify '' --network aurora_testnet",
-    "build:testnet": "vite build --mode testnet"
+    "build:aurora_testnet": "vite build --mode aurora_testnet"
   },
   "dependencies": {
     "@ethersproject/bignumber": "^5.7.0",

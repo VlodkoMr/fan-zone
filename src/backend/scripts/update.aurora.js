@@ -1,10 +1,9 @@
 const hre = require("hardhat");
 const { saveFrontendFiles } = require('./utils');
 
-const MAIN_CONTRACT_PROXY = "";
-const MEMBER_CONTRACT_PROXY = "";
-const NFT_FACTORY_CONTRACT_PROXY = "";
-const FT_FACTORY_CONTRACT_PROXY = "";
+const MAIN_CONTRACT_PROXY = "0x1229EBc5C2b50714E8b52114082ee5A0d55ABd23";
+const NFT_FACTORY_CONTRACT_PROXY = "0xB6b5FEb8F8fc13237753C2AfE81c82a0431455Ef";
+const FT_FACTORY_CONTRACT_PROXY = "0xa797a5bAdD4b2250C8C5e25A7C34CF3a9F0722a9";
 
 async function main() {
   const [ deployer ] = await hre.ethers.getSigners();

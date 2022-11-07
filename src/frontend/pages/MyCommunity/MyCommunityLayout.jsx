@@ -13,10 +13,10 @@ import { transformCommunity } from '../../utils/transform';
 import { mainContract } from '../../utils/contracts';
 import { Loader } from '../../components/Loader';
 
-export const MyCommunityLayout = () => {
+const MyCommunityLayout = () => {
   const dispatch = useDispatch();
   const { address } = useAccount();
-  const [ isReady, setIsReady ] = useState(false);
+  const [isReady, setIsReady] = useState(false);
   const {
     data: communityList,
     isLoading,
@@ -24,14 +24,14 @@ export const MyCommunityLayout = () => {
   } = useContractRead({
     ...mainContract,
     functionName: 'getUserCommunities',
-    args: [ address ]
+    args: [address]
   })
 
   useEffect(() => {
     if (!isLoading) {
       loadCommunityList(communityList);
     }
-  }, [ isLoading ])
+  }, [isLoading])
 
   const loadCommunityList = (communityList, setLastByDefault = false) => {
     setIsReady(false);
@@ -79,7 +79,7 @@ export const MyCommunityLayout = () => {
                 <DashboardLeftMenu/>
               </div>
               <div className="flex-auto ml-12">
-                <Outlet context={[ reloadCommunityList ]}/>
+                <Outlet context={[reloadCommunityList]}/>
               </div>
             </Container>
           ) : (
@@ -114,3 +114,5 @@ export const MyCommunityLayout = () => {
     </InnerPageWrapper>
   );
 }
+
+export default MyCommunityLayout;
