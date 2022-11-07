@@ -45,14 +45,6 @@ export function OneFTDistribution({ campaign, currentCommunity, tokenSymbol, han
   });
 
   useEffect(() => {
-    console.log(`errorCancelCampaign`, errorCancelCampaign);
-  }, [ errorCancelCampaign ])
-
-  useEffect(() => {
-    console.log(`errorCancelWrite`, errorCancelWrite);
-  }, [ errorCancelWrite ])
-
-  useEffect(() => {
     distributionCampaignsFT.map(campSettings => {
       if (parseInt(campSettings.id) === campaign.distType) {
         setCampaignDetails(campSettings)

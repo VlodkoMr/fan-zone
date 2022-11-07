@@ -6,9 +6,9 @@ import { useContract, useContractRead, useNetwork, useProvider } from "wagmi";
 import { isContractAddress } from "../../utils/format";
 import { transformCollectionNFT } from "../../utils/transform";
 import { Option, Select, Switch } from "@material-tailwind/react";
+import { Loader } from "../../components/Loader";
 
 export const Members = () => {
-  const { chain } = useNetwork();
   const provider = useProvider();
   const currentCommunity = useSelector(state => state.community.current);
   const [filterCollection, setFilterCollection] = useState("");
@@ -86,16 +86,29 @@ export const Members = () => {
 
       <InnerBlock className={"flex-1"}>
         <div className="flex-auto">
-          {nftOwners && nftOwners.length > 0 ? (
-            <div className={"text-sm"}>
-              <b className={"block mb-4 text-base"}>{isShowEmail ? "Email" : "Address"} List for "{filterCollectionTitle}" collection:</b>
-              {nftOwners.filter(value => value.length > 0).map(value => (
-                <div key={value}>
-                  <span>{value}</span>
-                  <span className={"opacity-0"}>,</span>
+          {filterCollection ? (
+            <>
+              {isReady ? (
+                <>
+                  {nftOwners && (
+                    <div className={"text-sm"}>
+                      <b className={"block mb-4 text-base"}>{isShowEmail ? "Email" : "Address"} List for "{filterCollectionTitle}"
+                        collection:</b>
+                      {nftOwners.filter(value => value.length > 0).map(value => (
+                        <div key={value}>
+                          <span>{value}</span>
+                          <span className={"opacity-0"}>,</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </>
+              ) : (
+                <div className={"w-12 mx-auto mt-10"}>
+                  <Loader/>
                 </div>
-              ))}
-            </div>
+              )}
+            </>
           ) : (
             <div className={"text-gray-500"}>
               Please select NFT Collection to view all NFT holders.

@@ -19,14 +19,6 @@ export function NftList({ community }) {
     select: data => data.filter(c => c.distribution.distType > 0).map(collection => transformCollectionNFT(collection))
   });
 
-  useEffect(() => {
-    console.log(`collectionNFT`, collectionNFT);
-  }, [collectionNFT])
-
-  useEffect(() => {
-    console.log(`community`, community);
-  }, [community])
-
   return (
     <div className={"flex flex-wrap flex-row gap-6 justify-around"}>
       {(collectionNFT && collectionNFT.length > 0) ? collectionNFT.map(nft => (

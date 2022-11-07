@@ -104,7 +104,6 @@ export const NFTDetails = () => {
     },
     onSuccess: data => {
       if (data) {
-        console.log('data', data);
         setMintFormData({});
       }
     },
@@ -299,7 +298,6 @@ export const NFTDetails = () => {
                                 signal="my_signal"
                                 enableTelemetry
                                 onSuccess={(verificationResponse) => {
-                                  console.log('verificationResponse', verificationResponse);
                                   setWorldIDProof(verificationResponse);
                                 }} // pass the proof to the API or your smart contract
                                 onError={(error) => console.error(error)}

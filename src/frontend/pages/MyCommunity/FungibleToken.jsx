@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { InnerBlock, InnerTransparentBlock, TableTd } from '../../assets/css/common.style';
+import { InnerBlock, InnerTransparentBlock } from '../../assets/css/common.style';
 import { useAccount, useContract, useContractRead, useNetwork, useProvider } from 'wagmi';
 import { convertFromEther, formatNumber, isContractAddress, shortAddress } from '../../utils/format';
 import { transformCampaignEvent, transformFTCampaign } from '../../utils/transform';
@@ -12,7 +12,7 @@ import { OneFTDistribution } from '../../components/MyCommunity/FungibleToken/On
 import { PauseUnpausePopup } from '../../components/MyCommunity/PauseUnpausePopup';
 import { AirdropFTPopup } from "../../components/MyCommunity/FungibleToken/AirdropFTPopup";
 import FungibleTokenABI from '../../contractsData/FungibleToken.json';
-import { distributionCampaignsFT, getTokenName } from "../../utils/settings";
+import { getTokenName } from "../../utils/settings";
 
 export const FungibleToken = () => {
   const { address } = useAccount();
@@ -159,8 +159,8 @@ export const FungibleToken = () => {
                   <InnerBlock className={"text-center mb-8"}>
                     <div className={"w-full"}>
                       <h4 className="pb-3 font-semibold border-b">Last Activity</h4>
-                      {lastActions.map(action => (
-                        <div className={"border-b py-2"}>
+                      {lastActions.map((action, index) => (
+                        <div className={"border-b py-2"} key={index}>
                           <div className={"flex flex-row text-sm justify-between"}>
                             <p>{shortAddress(action.address)}</p>
                             <p className={"opacity-60"}>{action.dateTime}</p>

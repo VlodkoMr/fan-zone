@@ -85,12 +85,6 @@ export function MintNFTPopup({ popupVisible, setPopupVisible, handleSuccess, cur
     }
   }, [ mintWrite ]);
 
-  useEffect(() => {
-    if (errorMint) {
-      console.log('errorUpload', errorMint);
-    }
-  }, [ errorMint ]);
-
   const isFormErrors = () => {
     if (formData.account.length < 1) {
       return "Wrong account address";

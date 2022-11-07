@@ -127,10 +127,6 @@ export function AirdropFTPopup(
     }
   }, [createWrite]);
 
-  useEffect(() => {
-    console.log(`errorApprove`, errorApprove);
-  }, [errorApprove]);
-
   const resetForm = () => {
     setSubmitFormData({});
     setApproveFormData({});

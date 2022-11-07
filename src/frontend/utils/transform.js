@@ -65,7 +65,6 @@ export const transformFTCampaign = (item) => {
 
 
 export const transformCampaignEvent = (event) => {
-
   let countDecimals = 5;
   if (parseInt(event.args._deposit) > 100) {
     countDecimals = 0;
@@ -73,7 +72,7 @@ export const transformCampaignEvent = (event) => {
     countDecimals = 2;
   }
 
-  let x = {
+  return {
     address: event.args._address,
     campaignId: parseInt(event.args._campaignId),
     campaignTypeId: parseInt(event.args._campaignType),
@@ -82,6 +81,4 @@ export const transformCampaignEvent = (event) => {
     deposit: convertFromEther(event.args._deposit, countDecimals),
     email: event.args._email
   }
-  console.log(`x`, x);
-  return x;
 };

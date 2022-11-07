@@ -31,15 +31,6 @@ export function OneTokenCampaign({ community, campaign, tokenSymbol, ftCampaignT
     watch: true
   });
 
-
-  useEffect(() => {
-    console.log(`ftClaimed`, ftClaimed);
-  }, [ ftClaimed ]);
-
-  useEffect(() => {
-    console.log(`isCheckSuccess`, isCheckSuccess);
-  }, [ isCheckSuccess ]);
-
   // -------- Claim ---------
 
   const getABIEncodedProof = () => {
@@ -81,7 +72,6 @@ export function OneTokenCampaign({ community, campaign, tokenSymbol, ftCampaignT
     },
     onSuccess: data => {
       if (data) {
-        console.log('data', data);
         setClaimFormData({});
         onSuccess?.();
       }
@@ -89,7 +79,6 @@ export function OneTokenCampaign({ community, campaign, tokenSymbol, ftCampaignT
   });
 
   useEffect(() => {
-    console.log(`claimWrite`, claimWrite);
     if (claimWrite && claimWriteStatus !== 'loading') {
       claimWrite();
     }

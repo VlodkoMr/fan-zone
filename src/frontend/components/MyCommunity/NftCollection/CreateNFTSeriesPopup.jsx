@@ -118,12 +118,6 @@ export function CreateNFTSeriesPopup({ popupVisible, setPopupVisible, handleSucc
     setCurrentStep(1);
   }
 
-  useEffect(() => {
-    if (errorUpload) {
-      console.log('errorUpload', errorUpload);
-    }
-  }, [ errorUpload ]);
-
   // call contract write when all is ready
   useEffect(() => {
     // submit data if we receive json result URL
