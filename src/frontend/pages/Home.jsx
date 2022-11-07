@@ -138,20 +138,19 @@ export const Home = () => {
             <div className="flex flex-wrap -mx-4">
               <div className="w-full px-4">
                 <div
-                  className="lg:flex items-center justify-between border overflow-hidden"
+                  className="lg:flex justify-between border overflow-hidden"
                 >
                   <div
-                    className="lg:max-w-[565px] xl:max-w-[640px] w-full py-12 px-7 sm:px-12 md:p-16 lg:py-9 lg:px-16 xl:p-[70px]">
+                    className="lg:max-w-[580px] xl:max-w-[680px] w-full py-12 px-7 sm:px-12 md:p-16 lg:py-9 lg:px-16 xl:p-[70px]">
                     <h2 className="font-bold text-2xl sm:text-3xl 2xl:text-[36px] sm:leading-snug text-dark mb-6">
-                      New Web3 tools to extend your possibilities!
+                      Use Cases
                     </h2>
                     <p className="text-base text-body-color mb-6 leading-relaxed">
-                      Create your own community or fan-zone in a few clicks with modern web3 features:
-                      any teams, musicians, artists, singers and any groups of people by interest.
+                      Create your own community or fan-zone in a few clicks with modern web3 features.
+                      Can be used by sport, gaming teams, musicians, artists, singers and groups of people by interest:
                     </p>
-                    <b className={"text-lg"}>Use Cases:</b>
-                    <div className="text-base text-body-color mb-9 leading-relaxed">
-                      <ul className={"list-disc ml-3.5 leading-5 mt-3"}>
+                    <div className="text-base text-body-color mb-4 leading-relaxed">
+                      <ul className={"list-disc ml-3.5 leading-6 mt-3"}>
                         <li className={"mb-3"}>
                           <b>Sport team</b> can create NFT Series with player cards.
                           Fans collect this NFT to support favorite team and participate in raffles for next match tickets.
@@ -163,9 +162,13 @@ export const Home = () => {
                           <b>Media channels</b> (radio, TV or individuals) can distribute the best materials as NFT,
                           collect users list for future media sharing and offline campaigns.
                         </li>
-                        <li>
+                        <li className={"mb-3"}>
                           <b>Musicians and artists</b> can join web3 world, share creativity, art, find new fans and sell their digital
                           assets. Now only you own your work!
+                        </li>
+                        <li>
+                          <b>Teachers</b> can create events for students and allow only local event participant
+                          to claim their assets, set a date range and limit distribution with an extensive set of rules.
                         </li>
                       </ul>
                     </div>
@@ -974,15 +977,14 @@ export const Home = () => {
           <div className="flex flex-wrap -mx-4">
             <div className="w-full px-4">
               <div className="text-center mx-auto mb-[60px] lg:mb-20 max-w-[620px]">
-              <span className="font-semibold text-lg text-primary mb-2 block">
-                FAQ
-              </span>
+                {/*<span className="font-semibold text-lg text-primary mb-2 block">*/}
+                {/*  FAQ*/}
+                {/*</span>*/}
                 <h2 className="font-bold text-3xl sm:text-4xl md:text-[42px] text-dark mb-4">
                   Any Questions? Answered
                 </h2>
                 <p className="text-lg sm:text-xl leading-relaxed sm:leading-relaxed text-body-color">
-                  There are many variations of passages of Lorem Ipsum available
-                  but the majority have suffered alteration in some form.
+                  This section contains all basic question that you can have when start using our service and tools.
                 </p>
               </div>
             </div>
@@ -1037,7 +1039,7 @@ export const Home = () => {
                   </div>
                   <div className="w-full">
                     <h4 className="text-base sm:text-lg font-semibold text-black">
-                      How to use TailGrids?
+                      How to use Web3 FanZone?
                     </h4>
                   </div>
                 </button>
@@ -1097,7 +1099,7 @@ export const Home = () => {
                   </div>
                   <div className="w-full">
                     <h4 className="text-base sm:text-lg font-semibold text-black">
-                      How to download icons from LineIcons?
+                      How to create my NFT Collection?
                     </h4>
                   </div>
                 </button>
@@ -1157,7 +1159,7 @@ export const Home = () => {
                   </div>
                   <div className="w-full">
                     <h4 className="text-base sm:text-lg font-semibold text-black">
-                      Is GrayGrids part of UIdeck?
+                      What types of distribution campaigns you provide?
                     </h4>
                   </div>
                 </button>
@@ -1219,7 +1221,7 @@ export const Home = () => {
                   </div>
                   <div className="w-full">
                     <h4 className="text-base sm:text-lg font-semibold text-black">
-                      Can I use this template for commercial project?
+                      How to create my own Token?
                     </h4>
                   </div>
                 </button>
@@ -1279,7 +1281,7 @@ export const Home = () => {
                   </div>
                   <div className="w-full">
                     <h4 className="text-base sm:text-lg font-semibold text-black">
-                      Do you have plan to releasing Play Pro?
+                      Can I get a list of all NFT holders?
                     </h4>
                   </div>
                 </button>
@@ -1339,7 +1341,7 @@ export const Home = () => {
                   </div>
                   <div className="w-full">
                     <h4 className="text-base sm:text-lg font-semibold text-black">
-                      Where and how to host this template?
+                      Where and how I can promote my community?
                     </h4>
                   </div>
                 </button>
@@ -1387,7 +1389,7 @@ export const Home = () => {
         </div>
       </section>
 
-      <section id="communities" className="pt-20 lg:pt-[120px] pb-10 lg:pb-20">
+      <section id="communities" className="pt-20 lg:pt-[120px] pb-12 lg:pb-32">
         <div className="container">
           <div className="flex flex-wrap -mx-4">
             <div className="w-full px-4">
@@ -1416,8 +1418,7 @@ export const Home = () => {
                   text-body-color
                 "
                 >
-                  There are many variations of passages of Lorem Ipsum available
-                  but the majority have suffered alteration in some form.
+                  List of all public communities - explore most interesting sources, join and participate in their community life.
                 </p>
               </div>
             </div>
@@ -1441,33 +1442,26 @@ export const Home = () => {
         </div>
       </section>
 
-      <section id="contact" className="py-20 md:py-[120px] relative">
-        <div
-          className="
-          absolute
-          z-[-1]
-          w-full
-          h-1/2
-          lg:h-[45%]
-          xl:h-1/2
-          bg-[#f3f4fe]
-          top-0
-          left-0
-        "
-        />
+      <section id="contact" className="py-20 md:py-[80px] relative">
+        <div className="absolute z-[-1] w-full h-1/2 lg:h-[70%] xl:h-[63%] bg-[#f3f4fe] top-0 left-0"/>
         <div className="container px-4">
           <div className="flex flex-wrap items-center -mx-4">
             <div className="px-4 w-full lg:w-7/12 xl:w-8/12">
               <div className="ud-contact-content-wrapper">
-                <div className="ud-contact-title mb-12 lg:mb-[150px]">
-                <span className="text-dark font-semibold text-base mb-5">
-                  CONTACT US
-                </span>
-                  <h2 className="text-[35px] font-semibold">
-                    Let's talk about <br/>
-                    Love to hear from you!
+                <div className="ud-contact-title mb-16 lg:mb-[100px]">
+                  <h2 className="text-[24px] font-semibold mb-6">
+                    Video Review
                   </h2>
+                  <iframe width="620" height="340" src="https://www.youtube.com/embed/R5AKJqWNcVs"
+                          frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen></iframe>
                 </div>
+
+                <h2 className="text-[24px] font-semibold mb-6">
+                  Contact Us
+                </h2>
+
                 <div className="flex flex-wrap justify-between mb-12 lg:mb-0">
                   <div className="flex max-w-full w-[330px] mb-8">
                     <div className="text-[32px] text-primary mr-6">
@@ -1485,8 +1479,9 @@ export const Home = () => {
                         />
                       </svg>
                     </div>
+
                     <div>
-                      <h5 className="text-lg font-semibold mb-6">Our Location</h5>
+                      <h5 className="text-lg font-semibold mb-3">Our Location</h5>
                       <p className="text-base text-body-color">
                         401 Broadway, 24th Floor, Orchard Cloud View, London
                       </p>
@@ -1506,7 +1501,7 @@ export const Home = () => {
                       </svg>
                     </div>
                     <div>
-                      <h5 className="text-lg font-semibold mb-6">How Can We Help?</h5>
+                      <h5 className="text-lg font-semibold mb-3">How Can We Help?</h5>
                       <p className="text-base text-body-color">info@yourdomain.com</p>
                       <p className="text-base text-body-color">
                         contact@yourdomain.com
@@ -1606,7 +1601,7 @@ export const Home = () => {
                   </div>
                   <div className="mb-0">
                     <button
-                      type="submit"
+                      type="button"
                       className="
                       inline-flex
                       items-center
@@ -1623,6 +1618,7 @@ export const Home = () => {
                       duration-300
                       ease-in-out
                     "
+                      onClick={() => alert("Coming soon...")}
                     >
                       Send Message
                     </button>
