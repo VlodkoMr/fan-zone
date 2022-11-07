@@ -116,19 +116,19 @@ export const Header = ({ isInner, reloadCommunityList }) => {
                     ) : (
                       <>
                         <li className="relative group">
-                          <NavLink to="/">Home</NavLink>
+                          <NavLink to="/" dark={scroll ? "true" : undefined}>Home</NavLink>
                         </li>
                         <li className="relative group">
-                          <NavLink to="/#about">Features</NavLink>
+                          <NavLink to="/#about" dark={scroll ? "true" : undefined}>Features</NavLink>
                         </li>
                         <li className="relative group">
-                          <NavLink to="/#pricing">FAQ</NavLink>
+                          <NavLink to="/#pricing" dark={scroll ? "true" : undefined}>FAQ</NavLink>
                         </li>
                         <li className="relative group">
-                          <NavLink to="/#communities">Communities</NavLink>
+                          <NavLink to="/#communities" dark={scroll ? "true" : undefined}>Communities</NavLink>
                         </li>
                         <li className="relative group">
-                          <NavLink to="/#contact">Contact</NavLink>
+                          <NavLink to="/#contact" dark={scroll ? "true" : undefined}>Contact</NavLink>
                         </li>
                       </>
                     )}
@@ -140,23 +140,13 @@ export const Header = ({ isInner, reloadCommunityList }) => {
                         <MdKeyboardArrowLeft className="align-bottom mr-1 inline pt-1 text-xl"/>
                         Home
                       </NavLink>
-                      <span className="text-white opacity-40">/</span>
+                      <span className={`opacity-40 ${scroll ? "text-gray-800" : "text-white"}`}>/</span>
                     </li>
                     <li className="relative ml-4 mt-4 pt-0.5">
                       {communityList.length > 0 && currentCommunity ? (
-                        // <Select variant="static"
-                        //         arrow={<IoChevronDownSharp className="text-white" />}
-                        //         className={"text-white !border-none text-base"}
-                        //         value={currentCommunity.id}
-                        //         onChange={val => val === "new" ? setCommunityPopupVisible(true) : selectCommunity(val.id)}>
-                        //   {communityList.map(item => (
-                        //     <Option value={item.id} key={item.id}>
-                        //       {item.name}
-                        //     </Option>
-                        //   ))}
-                        // </Select>
                         <select
-                          className={`py-2 px-2 bg-transparent text-white focus:outline-none max-w-[240px]`}
+                          className={`py-2 px-2 bg-transparent focus:outline-none max-w-[240px]
+                          ${scroll ? "text-gray-800" : "text-white"}`}
                           value={currentCommunity.id}
                           onChange={e => {
                             e.target.value.length ? selectCommunity(e.target.value) : setCommunityPopupVisible(true)
