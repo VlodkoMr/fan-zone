@@ -2,6 +2,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useNavigate } from "react-router-dom";
 import { Btn, BtnSmall } from "../assets/css/common.style.jsx";
 import Identicon from 'react-hooks-identicons';
+import AuroraLogo from '../assets/images/logo/aurora.png';
 
 const dashboardURL = "/my/dashboard";
 
@@ -76,7 +77,7 @@ export const CustomConnect = ({ isHeader }) => {
                             />
                           )}
                         </div>
-                      ) : ("...")}
+                      ) : (<img src={AuroraLogo} style={{ width: 26, height: 26 }}/>)}
                       {/*{chain.name}*/}
                     </button>
 

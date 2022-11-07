@@ -32,7 +32,7 @@ const auroraTestnetChain = {
 }
 
 const { chains, provider } = configureChains(
-  [chain.hardhat, auroraTestnetChain],
+  [auroraTestnetChain],
   [
     // publicProvider(),
     jsonRpcProvider({

@@ -132,7 +132,6 @@ export const Header = ({ isInner, reloadCommunityList }) => {
                         </li>
                       </>
                     )}
-
                   </ul>
                 ) : (
                   <ul className="lg:flex">
