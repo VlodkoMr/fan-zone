@@ -1,4 +1,3 @@
-import { chain } from 'wagmi';
 import React from 'react';
 
 export const defaultCommunityLogo = "bafkreigrrdzq64tuawjek3gcbl2qrwqtad4kqayp2owtnokde7ayn7dvfu";
@@ -99,6 +98,8 @@ export const getCampaignType = (id) => {
       return "Mint NFT";
     case 2:
       return "Claim Token";
+    case 3:
+      return "Send Airdrop";
   }
 }
 

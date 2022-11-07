@@ -1,4 +1,4 @@
-import { formatPrice, isContractAddress, mediaURL, timestampToDate } from './format';
+import { convertFromEther, formatPrice, isContractAddress, mediaURL, timestampToDate } from './format';
 import { getCampaignType } from "./settings";
 
 export const transformCommunity = (item) => {
@@ -65,13 +65,21 @@ export const transformFTCampaign = (item) => {
 
 
 export const transformCampaignEvent = (event) => {
-  console.log(`event`, event);
+
+  let countDecimals = 5;
+  if (parseInt(event.args._deposit) > 100) {
+    countDecimals = 0;
+  } else if (parseInt(event.args._deposit) > 1) {
+    countDecimals = 2;
+  }
+
   let x = {
     address: event.args._address,
     campaignId: parseInt(event.args._campaignId),
+    campaignTypeId: parseInt(event.args._campaignType),
     campaignType: getCampaignType(parseInt(event.args._campaignType)),
     dateTime: timestampToDate(parseInt(event.args._dateTime) * 1000),
-    deposit: parseInt(event.args._deposit),
+    deposit: convertFromEther(event.args._deposit, countDecimals),
     email: event.args._email
   }
   console.log(`x`, x);

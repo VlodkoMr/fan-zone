@@ -23,11 +23,11 @@ export function DistributionCampaignFTPopup(
   const dispatch = useDispatch();
   const provider = useProvider();
   const { chain } = useNetwork();
-  const [ isLoading, setIsLoading ] = useState(false);
-  const [ approveFormData, setApproveFormData ] = useState({});
-  const [ submitFormData, setSubmitFormData ] = useState({});
-  const [ isLimit, setIsLimit ] = useState(false);
-  const [ formData, setFormData ] = useState({
+  const [isLoading, setIsLoading] = useState(false);
+  const [approveFormData, setApproveFormData] = useState({});
+  const [submitFormData, setSubmitFormData] = useState({});
+  const [isLimit, setIsLimit] = useState(false);
+  const [formData, setFormData] = useState({
     distributionType: "",
     dateFrom: "",
     dateTo: "",
@@ -44,7 +44,7 @@ export function DistributionCampaignFTPopup(
     contractInterface: FungibleTokenABI.abi,
     enabled: approveFormData?.distributionType > 0 && approveFormData.tokensAmount > 0,
     functionName: 'approve',
-    args: [ currentCommunity?.ftContract, approveFormData.tokensAmount ]
+    args: [currentCommunity?.ftContract, approveFormData.tokensAmount]
   });
 
   const { data: approveData, write: approveWrite, status: approveStatus } = useContractWrite({
@@ -82,7 +82,7 @@ export function DistributionCampaignFTPopup(
     if (approveWrite && approveStatus !== 'loading') {
       approveWrite();
     }
-  }, [ approveWrite ]);
+  }, [approveWrite]);
 
   // ------------ Create Distribution Campaign ------------
 
@@ -135,11 +135,11 @@ export function DistributionCampaignFTPopup(
     if (createWrite && createStatus !== 'loading') {
       createWrite();
     }
-  }, [ createWrite ]);
+  }, [createWrite]);
 
   useEffect(() => {
     console.log(`errorApprove`, errorApprove);
-  }, [ errorApprove ]);
+  }, [errorApprove]);
 
   // ------------ Actions ------------
 
@@ -264,6 +264,7 @@ export function DistributionCampaignFTPopup(
                      className="flex-1"
                      required={true}
                      maxLength={50}
+                     min={0}
                      value={formData.tokensAmount}
                      onChange={(e) => setFormData({ ...formData, tokensAmount: e.target.value })}
               />
@@ -275,6 +276,7 @@ export function DistributionCampaignFTPopup(
                        className="flex-1"
                        required={true}
                        maxLength={50}
+                       min={0}
                        value={formData.tokensPerUser}
                        onChange={(e) => setFormData({ ...formData, tokensPerUser: e.target.value })}
                 />

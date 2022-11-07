@@ -90,7 +90,7 @@ export const NftCollection = () => {
               <div className="flex justify-between text-sm mb-4">
                 <div>
                   {(parseInt(totalCollections || "0") === 0) ? (
-                    <>*No NFT Series</>
+                    <span className={"opacity-60"}>*No NFT Series</span>
                   ) : (
                     <div className="pt-1">
                       <span className="opacity-80">Total Series:</span>

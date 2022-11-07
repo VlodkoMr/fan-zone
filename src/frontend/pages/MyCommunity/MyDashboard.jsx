@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Badge, InnerBlock, InnerSmallBlock, InnerTransparentBlock, TableTd, TableTh } from '../../assets/css/common.style';
 import { Link } from "react-router-dom";
-import { useAccount, useContractRead, useContract, useProvider } from "wagmi";
+import { useContractRead, useContract, useProvider, useNetwork } from "wagmi";
 import NFTCollectionABI from "../../contractsData/NFTCollection.json";
 import FungibleTokenABI from '../../contractsData/FungibleToken.json';
-import { convertFromEther, formatNumber, isContractAddress } from "../../utils/format";
-import { transformCampaignEvent, transformFTCampaign } from "../../utils/transform";
+import { isContractAddress } from "../../utils/format";
+import { transformCampaignEvent, transformCollectionNFT, transformFTCampaign } from "../../utils/transform";
+import { distributionCampaignsFT, getTokenName } from "../../utils/settings";
 
 export const MyDashboard = () => {
-  const { address } = useAccount();
+  const { chain } = useNetwork();
   const [lastActions, setLastActions] = useState([]);
   const currentCommunity = useSelector(state => state.community.current);
   const provider = useProvider();
@@ -27,10 +28,11 @@ export const MyDashboard = () => {
     functionName: "collectionsTotal",
   });
 
-  const { data: mintedTotal } = useContractRead({
+  const { data: collectionItemsNFT } = useContractRead({
     ...myNFTContract,
     enabled: isContractAddress(currentCommunity?.nftContract),
-    functionName: "mintedTotal",
+    functionName: "getCollections",
+    select: data => data.map(collection => transformCollectionNFT(collection))
   });
 
   const contractNFT = useContract({
@@ -52,6 +54,12 @@ export const MyDashboard = () => {
     select: (data) => data.map(camp => transformFTCampaign(camp))
   });
 
+  const { data: tokenSymbol } = useContractRead({
+    ...myFTContract,
+    enabled: isContractAddress(currentCommunity?.ftContract),
+    functionName: "symbol",
+  });
+
   const contractFT = useContract({
     ...myFTContract,
     signerOrProvider: provider
@@ -69,12 +77,11 @@ export const MyDashboard = () => {
     allEvents.sort((a, b) => b.blockNumber - a.blockNumber);
 
     setLastActions(allEvents.map(event => transformCampaignEvent(event)));
-    console.log(`allEvents`, allEvents);
   }
 
   useEffect(() => {
     loadLastActions();
-  }, [])
+  }, []);
 
   const InfoBlock = ({ title, value }) => (
     <InnerSmallBlock className={"w-1/4"}>
@@ -88,6 +95,28 @@ export const MyDashboard = () => {
       </div>
     </InnerSmallBlock>
   );
+
+  const getTokenSymbol = (campaignTypeId) => {
+    if (campaignTypeId === 3) {
+      return tokenSymbol;
+    }
+    return getTokenName(chain);
+  }
+
+  const getCampaignTitle = (action) => {
+    let result = "";
+    if (action.campaignTypeId === 1) {
+      collectionItemsNFT.map(item => {
+        if (item.id === action.campaignId) {
+          result = item.title;
+        }
+      })
+    } else if (action.campaignTypeId === 2) {
+      result = distributionCampaignsFT[action.campaignTypeId - 1].title;
+    }
+
+    return result;
+  }
 
   return (
     <>
@@ -103,7 +132,6 @@ export const MyDashboard = () => {
                     {import.meta.env.VITE_WEBSITE_URL}category/{currentCommunity.category}/{currentCommunity.id}
                   </Link>
                 </Badge>
-                {/*<VscCopy className={"absolute right-1.5 top-1.5"}/>*/}
               </>
             ) : (
               <Badge className={"border border-red-100"}>
@@ -131,22 +159,38 @@ export const MyDashboard = () => {
                 <TableTh>Member</TableTh>
                 <TableTh>Action</TableTh>
                 <TableTh>Series / Campaign</TableTh>
-                <TableTh>Payment</TableTh>
+                <TableTh>Deposit</TableTh>
                 <TableTh>Date</TableTh>
               </tr>
               </thead>
               <tbody className="bg-white dark:bg-slate-800">
               {lastActions.map((action, index) => (
                 <tr key={index}>
-                  <TableTd>{action.address}</TableTd>
-                  <TableTd>{action.campaignType}</TableTd>
-                  <TableTd>{action.campaignId} / Serie v1</TableTd>
-                  <TableTd>{action.deposit || "&minus;"}</TableTd>
-                  <TableTd>{action.dateTime}</TableTd>
+                  <TableTd>
+                    <small>{action.address}</small>
+                  </TableTd>
+                  <TableTd>
+                    {action.campaignType}
+                  </TableTd>
+                  <TableTd>
+                    {action.campaignId > 0 ? getCampaignTitle(action) : ("-")}
+                  </TableTd>
+                  <TableTd>
+                    {action.deposit > 0 ? `${action.deposit} ${getTokenSymbol(action.campaignTypeId)}` : ("-")}
+                  </TableTd>
+                  <TableTd>
+                    {action.dateTime}
+                  </TableTd>
                 </tr>
               ))}
               </tbody>
             </table>
+
+            {lastActions.length === 0 && (
+              <div className={"text-center my-4 opacity-60 text-sm"}>
+                *No Activity
+              </div>
+            )}
           </div>
         </InnerBlock>
       </div>

@@ -84,7 +84,7 @@ export function AirdropFTPopup(
     contractInterface: FungibleTokenABI.abi,
     enabled: submitFormData?.whitelisted?.length > 0 && submitFormData?.tokensAmount > 0,
     functionName: 'sendTokenAirdrop',
-    args: [submitFormData.whitelisted, submitFormData.tokensAmount]
+    args: [currentCommunity.id, submitFormData.whitelisted, submitFormData.tokensAmount]
   });
 
   const { data: createData, write: createWrite, status: createStatus } = useContractWrite({
