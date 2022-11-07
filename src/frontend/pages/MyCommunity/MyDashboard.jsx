@@ -8,10 +8,12 @@ import FungibleTokenABI from '../../contractsData/FungibleToken.json';
 import { isContractAddress } from "../../utils/format";
 import { transformCampaignEvent, transformCollectionNFT, transformFTCampaign } from "../../utils/transform";
 import { distributionCampaignsFT, getTokenName } from "../../utils/settings";
+import { Loader } from "../../components/Loader";
 
 export const MyDashboard = () => {
   const { chain } = useNetwork();
   const provider = useProvider();
+  const [isLoading, setIsLoading] = useState(true);
   const [lastActions, setLastActions] = useState([]);
   const currentCommunity = useSelector(state => state.community.current);
 
@@ -77,6 +79,7 @@ export const MyDashboard = () => {
     allEvents.sort((a, b) => b.blockNumber - a.blockNumber);
 
     setLastActions(allEvents.filter((event, index) => index < 50).map(event => transformCampaignEvent(event)));
+    setIsLoading(false);
   }
 
   useEffect(() => {
@@ -161,42 +164,50 @@ export const MyDashboard = () => {
           <div className={"w-full"}>
             <InnerBlock.Header>Last Activity</InnerBlock.Header>
 
-            <table className="border-collapse table-auto w-full text-sm mt-4">
-              <thead className={"bg-gray-50"}>
-              <tr>
-                <TableTh>Member</TableTh>
-                <TableTh>Action</TableTh>
-                <TableTh>Series / Campaign</TableTh>
-                <TableTh>Deposit</TableTh>
-                <TableTh>Date</TableTh>
-              </tr>
-              </thead>
-              <tbody className="bg-white dark:bg-slate-800">
-              {lastActions.map((action, index) => (
-                <tr key={index}>
-                  <TableTd>
-                    <small>{action.address}</small>
-                  </TableTd>
-                  <TableTd>
-                    {action.campaignType}
-                  </TableTd>
-                  <TableTd>
-                    {action.campaignId > 0 ? getCampaignTitle(action) : ("-")}
-                  </TableTd>
-                  <TableTd>
-                    {action.deposit > 0 ? `${action.deposit} ${getTokenSymbol(action.campaignTypeId)}` : ("-")}
-                  </TableTd>
-                  <TableTd>
-                    {action.dateTime}
-                  </TableTd>
-                </tr>
-              ))}
-              </tbody>
-            </table>
+            {!isLoading ? (
+              <>
+                <table className="border-collapse table-auto w-full text-sm mt-4">
+                  <thead className={"bg-gray-50"}>
+                  <tr>
+                    <TableTh>Member</TableTh>
+                    <TableTh>Action</TableTh>
+                    <TableTh>Series / Campaign</TableTh>
+                    <TableTh>Deposit</TableTh>
+                    <TableTh>Date</TableTh>
+                  </tr>
+                  </thead>
+                  <tbody className="bg-white dark:bg-slate-800">
+                  {lastActions.map((action, index) => (
+                    <tr key={index}>
+                      <TableTd>
+                        <small>{action.address}</small>
+                      </TableTd>
+                      <TableTd>
+                        {action.campaignType}
+                      </TableTd>
+                      <TableTd>
+                        {action.campaignId > 0 ? getCampaignTitle(action) : ("-")}
+                      </TableTd>
+                      <TableTd>
+                        {action.deposit > 0 ? `${action.deposit} ${getTokenSymbol(action.campaignTypeId)}` : ("-")}
+                      </TableTd>
+                      <TableTd>
+                        {action.dateTime}
+                      </TableTd>
+                    </tr>
+                  ))}
+                  </tbody>
+                </table>
 
-            {lastActions.length === 0 && (
-              <div className={"text-center my-4 opacity-60 text-sm"}>
-                *No Activity
+                {lastActions.length === 0 && (
+                  <div className={"text-center my-4 opacity-60 text-sm"}>
+                    *No Activity
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className={"w-12 mx-auto my-4"}>
+                <Loader/>
               </div>
             )}
           </div>
