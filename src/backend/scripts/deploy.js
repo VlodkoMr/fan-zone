@@ -20,34 +20,58 @@ async function main() {
 
   // Deploy NFT factory contract
   const FactoryNFTContract = await hre.ethers.getContractFactory("FactoryNFTContract");
-  const factoryNFTContract = await hre.upgrades.deployProxy(FactoryNFTContract, [ mainContract.address, worldIDAddress ], {
+  const factoryNFTContract = await hre.upgrades.deployProxy(FactoryNFTContract, [mainContract.address, worldIDAddress], {
     initializer: "initialize"
   })
   await factoryNFTContract.deployed();
 
   // Deploy FT factory contract
   const FactoryFTContract = await hre.ethers.getContractFactory("FactoryFTContract");
-  const factoryFTContract = await hre.upgrades.deployProxy(FactoryFTContract, [ mainContract.address, worldIDAddress ], {
+  const factoryFTContract = await hre.upgrades.deployProxy(FactoryFTContract, [mainContract.address, worldIDAddress], {
     initializer: "initialize"
   })
   await factoryFTContract.deployed();
 
+  // Deploy Governance factory contract
+  const FactoryGovernanceContract = await hre.ethers.getContractFactory("FactoryGovernanceContract");
+  const factoryGovernanceContract = await hre.upgrades.deployProxy(FactoryGovernanceContract, [mainContract.address], {
+    initializer: "initialize"
+  })
+  await factoryGovernanceContract.deployed();
+
+  // Deploy Governance factory contract
+  const FactoryTimeLockContract = await hre.ethers.getContractFactory("FactoryTimeLockContract");
+  const factoryTimeLockContract = await hre.upgrades.deployProxy(FactoryTimeLockContract, [mainContract.address], {
+    initializer: "initialize"
+  })
+  await factoryTimeLockContract.deployed();
+
   // Update main contract - add factory address
   const MainContractInstance = await hre.ethers.getContractAt("MainContract", mainContract.address);
-  await MainContractInstance.updateFactoryContractsAddress(factoryNFTContract.address, factoryFTContract.address);
+  await MainContractInstance.updateFactoryContractsAddress(
+    factoryNFTContract.address,
+    factoryFTContract.address,
+    factoryGovernanceContract.address,
+    factoryTimeLockContract.address
+  );
 
   console.log("Main Contract: ", mainContract.address);
   console.log("Factory NFT Contract: ", factoryNFTContract.address);
   console.log("Factory FT Contract: ", factoryFTContract.address);
+  console.log("Factory TimeLock Contract: ", factoryTimeLockContract.address);
+  console.log("Factory Governance Contract: ", factoryGovernanceContract.address);
 
   // Save ABI & Address
   saveAllFrontendFiles(mainContract, "MainContract");
   saveAllFrontendFiles(factoryNFTContract, "FactoryNFTContract");
   saveAllFrontendFiles(factoryFTContract, "FactoryFTContract");
+  saveAllFrontendFiles(factoryTimeLockContract, "FactoryTimeLockContract");
+  saveAllFrontendFiles(factoryGovernanceContract, "FactoryGovernanceContract");
 
   // Save user contracts ABI
   saveFrontendArtifact("NFTCollection");
   saveFrontendArtifact("FungibleToken");
+  saveFrontendArtifact("Governance");
 }
 
 // We recommend this pattern to be able to use async/await everywhere

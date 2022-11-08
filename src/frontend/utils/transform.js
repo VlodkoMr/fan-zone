@@ -10,6 +10,8 @@ export const transformCommunity = (item) => {
     privacy: item.privacy.toString(),
     nftContract: item.nftContract,
     ftContract: item.ftContract,
+    daoContract: item.daoContract,
+    timeLockContract: item.timeLockContract,
     description: item.description,
   }
 };

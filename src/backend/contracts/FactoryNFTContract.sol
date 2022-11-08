@@ -13,7 +13,8 @@ contract FactoryNFTContract is Initializable, OwnableUpgradeable, UUPSUpgradeabl
 
 	event NewContract(
 		uint indexed _communityId,
-		address _contractAddress
+		address _contractAddress,
+		string _contractType
 	);
 
 	address mainContractAddress;
@@ -35,12 +36,17 @@ contract FactoryNFTContract is Initializable, OwnableUpgradeable, UUPSUpgradeabl
 	function _authorizeUpgrade(address newImplementation) internal onlyOwner override {}
 
 	// Deploy NFT Collection Contract
-	function deployNFTCollectionContract(uint _communityId, string memory _name, string memory _symbol) public {
+	function deployNFTCollectionContract(
+		uint _communityId,
+		string memory _name,
+		string memory _symbol
+	) public {
+		require(IMainContract(mainContractAddress).isCommunityOwner(_communityId, msg.sender), "No Access");
 		require(bytes(_name).length >= 3, "Collection name should be longer than 2 symbols");
 		require(bytes(_symbol).length >= 3 && bytes(_symbol).length <= 5, "Symbol length should be 3-5 chars");
 
 		// Check community owner & get contract details
-		(bool _isNFTContract,) = IMainContract(mainContractAddress).isContractExists(_communityId);
+		(bool _isNFTContract,,) = IMainContract(mainContractAddress).isContractExists(_communityId);
 		require(!_isNFTContract, "Community already have NFT Contract");
 
 		NFTCollection collection = new NFTCollection(mainContractAddress, _name, _symbol, msg.sender, worldId);
@@ -49,6 +55,6 @@ contract FactoryNFTContract is Initializable, OwnableUpgradeable, UUPSUpgradeabl
 		// Update contract address
 		IMainContract(mainContractAddress).updateCommunityNFT(_communityId, address(collection));
 
-		emit NewContract(_communityId, address(collection));
+		emit NewContract(_communityId, address(collection), "NFT");
 	}
 }

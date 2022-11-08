@@ -7,8 +7,10 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract MainContract is Initializable, OwnableUpgradeable, UUPSUpgradeable {
-	address factoryNFTContract;
-	address factoryFTContract;
+	address public factoryNFTContract;
+	address public factoryFTContract;
+	address public factoryDAOContract;
+	address public factoryTimeLockContract;
 
 	uint public communityCount;
 	mapping(uint => Community) public communities;
@@ -51,7 +53,8 @@ contract MainContract is Initializable, OwnableUpgradeable, UUPSUpgradeable {
 		address owner;
 		address nftContract;
 		address ftContract;
-		address membersContract;
+		address daoContract;
+		address timeLockContract;
 		string name;
 		string description;
 		string logo;
@@ -69,9 +72,20 @@ contract MainContract is Initializable, OwnableUpgradeable, UUPSUpgradeable {
 
 	function _authorizeUpgrade(address newImplementation) internal onlyOwner override {}
 
-	function updateFactoryContractsAddress(address _factoryNFTContract, address _factoryFTContract) public onlyOwner {
+	function isCommunityOwner(uint _id, address checkAddress) external view returns (bool) {
+		return communities[_id].owner == checkAddress;
+	}
+
+	function updateFactoryContractsAddress(
+		address _factoryNFTContract,
+		address _factoryFTContract,
+		address _factoryDAOContract,
+		address _factoryTimeLockContract
+	) public onlyOwner {
 		factoryNFTContract = _factoryNFTContract;
 		factoryFTContract = _factoryFTContract;
+		factoryDAOContract = _factoryDAOContract;
+		factoryTimeLockContract = _factoryTimeLockContract;
 	}
 
 	// Add new community
@@ -84,7 +98,7 @@ contract MainContract is Initializable, OwnableUpgradeable, UUPSUpgradeable {
 		uint _id = communityCount;
 
 		communities[_id] = Community(
-			_id, _category, _privacy, msg.sender, address(0), address(0), address(0), _name, _description, _logo
+			_id, _category, _privacy, msg.sender, address(0), address(0), address(0), address(0), _name, _description, _logo
 		);
 		userCommunities[msg.sender].push(_id);
 		categoryCommunities[_category].push(_id);
@@ -127,10 +141,11 @@ contract MainContract is Initializable, OwnableUpgradeable, UUPSUpgradeable {
 	}
 
 	// Check if contracts exist
-	function isContractExists(uint _id) external view returns (bool, bool) {
+	function isContractExists(uint _id) external view returns (bool, bool, bool) {
 		bool _isNFT = communities[_id].nftContract != address(0);
 		bool _isFT = communities[_id].ftContract != address(0);
-		return (_isNFT, _isFT);
+		bool _isDAO = communities[_id].daoContract != address(0);
+		return (_isNFT, _isFT, _isDAO);
 	}
 
 	// Update NFT contract address
@@ -143,6 +158,17 @@ contract MainContract is Initializable, OwnableUpgradeable, UUPSUpgradeable {
 	function updateCommunityFT(uint _id, address _ftContract) external {
 		require(msg.sender == factoryFTContract, "No Access for this action");
 		communities[_id].ftContract = _ftContract;
+	}
+
+	// Update DAO contract address
+	function updateCommunityDAO(uint _id, address _daoContract) external {
+		require(msg.sender == factoryDAOContract, "No Access for this action");
+		communities[_id].daoContract = _daoContract;
+	}
+	// Update DAO contract address
+	function updateCommunityTokenLock(uint _id, address _timeLockContract) external {
+		require(msg.sender == factoryTimeLockContract, "No Access for this action");
+		communities[_id].timeLockContract = _timeLockContract;
 	}
 
 }

@@ -13,7 +13,8 @@ contract FactoryFTContract is Initializable, OwnableUpgradeable, UUPSUpgradeable
 
 	event NewContract(
 		uint indexed _communityId,
-		address _contractAddress
+		address _contractAddress,
+		string _contractType
 	);
 
 	address mainContractAddress;
@@ -35,13 +36,19 @@ contract FactoryFTContract is Initializable, OwnableUpgradeable, UUPSUpgradeable
 	function _authorizeUpgrade(address newImplementation) internal onlyOwner override {}
 
 	// Deploy FT Contract
-	function deployFTContract(uint _communityId, string memory _name, string memory _symbol, uint _supply) public {
+	function deployFTContract(
+		uint _communityId,
+		string memory _name,
+		string memory _symbol,
+		uint _supply
+	) public {
+		require(IMainContract(mainContractAddress).isCommunityOwner(_communityId, msg.sender), "No Access");
 		require(bytes(_name).length >= 3, "Collection name should be longer than 2 symbols");
 		require(bytes(_symbol).length >= 3 && bytes(_symbol).length <= 5, "Symbol length should be 3-5 chars");
 		require(_supply > 0, "Wrong supply amount");
 
 		// Check community owner & get contract details
-		(,bool _isFTContract) = IMainContract(mainContractAddress).isContractExists(_communityId);
+		(,bool _isFTContract,) = IMainContract(mainContractAddress).isContractExists(_communityId);
 		require(!_isFTContract, "Community already have FT Contract");
 
 		//		FungibleToken token = new FungibleToken();
@@ -52,6 +59,6 @@ contract FactoryFTContract is Initializable, OwnableUpgradeable, UUPSUpgradeable
 		// Update contract address
 		IMainContract(mainContractAddress).updateCommunityFT(_communityId, address(token));
 
-		emit NewContract(_communityId, address(token));
+		emit NewContract(_communityId, address(token), "FT");
 	}
 }

@@ -5,13 +5,15 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/draft-ERC20Permit.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
 
 import "../abstract/utils.sol";
 import "../interfaces/IMainContract.sol";
 import {ByteHasher} from '../helpers/ByteHasher.sol';
 import {IWorldID} from '../interfaces/IWorldID.sol';
 
-contract FungibleToken is ERC20, Pausable, Ownable, Utils {
+contract FungibleToken is ERC20, Pausable, Ownable, ERC20Permit, ERC20Votes, Utils {
 
 	event CampaignAction(
 		uint indexed _communityId,
@@ -61,7 +63,7 @@ contract FungibleToken is ERC20, Pausable, Ownable, Utils {
 
 	constructor(
 		address _mainContract, string memory _name, string memory _symbol, address _owner, uint _supply, IWorldID _worldId
-	) ERC20(_name, _symbol) {
+	) ERC20(_name, _symbol) ERC20Permit(_name) {
 		mainContractAddress = _mainContract;
 		_mint(_owner, _supply * 1e18);
 		transferOwnership(_owner);
@@ -204,4 +206,15 @@ contract FungibleToken is ERC20, Pausable, Ownable, Utils {
 		super._beforeTokenTransfer(from, to, amount);
 	}
 
+	function _afterTokenTransfer(address from, address to, uint256 amount) internal override(ERC20, ERC20Votes) {
+		super._afterTokenTransfer(from, to, amount);
+	}
+
+	function _mint(address to, uint256 amount) internal override(ERC20, ERC20Votes) {
+		super._mint(to, amount);
+	}
+
+	function _burn(address account, uint256 amount) internal override(ERC20, ERC20Votes) {
+		super._burn(account, amount);
+	}
 }

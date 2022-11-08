@@ -23,7 +23,7 @@
     "@ethersproject/providers": "^5.7.1",
     "@material-tailwind/react": "^1.2.4",
     "@openzeppelin/contracts": "^4.7.3",
-    "@openzeppelin/contracts-upgradeable": "^4.8.0-rc.1",
+    "@openzeppelin/contracts-upgradeable": "^4.8.0-rc.2",
     "@openzeppelin/hardhat-upgrades": "^1.20.0",
     "@rainbow-me/rainbowkit": "^0.6.1",
     "@reduxjs/toolkit": "^1.8.5",
