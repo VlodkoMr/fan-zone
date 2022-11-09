@@ -66,14 +66,14 @@ export const Category = () => {
                     </div>
 
                     <Typography variant="small" className="max-h-20 overflow-hidden leading-5">
-                      {community.description || "No community description."}
+                      {community.description || "No community description"}
                     </Typography>
                   </CardBody>
 
                   <CardFooter divider className="flex items-center justify-between py-3">
-                    <Typography variant="small">
-                      ...
-                    </Typography>
+                    <Link to={`/category/${categoryId}/${community.id}`} variant="small" className={"text-sm text-blue-400"}>
+                      open &raquo;
+                    </Link>
                     <div className="flex gap-1 text-gray-500 text-sm">
                       <i className="fas fa-map-marker-alt fa-sm mt-[3px]"/>
                       {isContractAddress(community.nftContract) && (
@@ -81,6 +81,9 @@ export const Category = () => {
                       )}
                       {isContractAddress(community.ftContract) && (
                         <Badge>FT</Badge>
+                      )}
+                      {isContractAddress(community.daoContract) && (
+                        <Badge>DAO</Badge>
                       )}
                     </div>
                   </CardFooter>
