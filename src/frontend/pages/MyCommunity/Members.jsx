@@ -61,12 +61,12 @@ export const Members = () => {
         <InnerBlock.Header className="flex justify-between">
           <span>Members</span>
 
-          <div className={"flex flex-row w-1/2 justify-end"}>
-            <div className="w-32 mr-6 text-sm font-normal">
-              <Switch checked={isShowEmail} onChange={() => setIsShowEmail(prev => !prev)} label="Show emails"/>
-            </div>
-            <div className="w-48 -mt-3">
-              {collectionItems && (
+          {collectionItems.length > 0 && (
+            <div className={"flex flex-row w-1/2 justify-end"}>
+              <div className="w-32 mr-6 text-sm font-normal">
+                <Switch checked={isShowEmail} onChange={() => setIsShowEmail(prev => !prev)} label="Show emails"/>
+              </div>
+              <div className="w-48 -mt-3">
                 <Select label="NFT Collection*"
                         value={filterCollection}
                         className={"bg-white"}
@@ -78,9 +78,9 @@ export const Members = () => {
                     </Option>
                   ))}
                 </Select>
-              )}
+              </div>
             </div>
-          </div>
+          )}
         </InnerBlock.Header>
       </InnerTransparentBlock>
 
@@ -111,7 +111,14 @@ export const Members = () => {
             </>
           ) : (
             <div className={"text-gray-500"}>
-              Please select NFT Collection to view all NFT holders.
+              {collectionItems.length > 0 ? (
+                <>Please select NFT Collection to view all NFT holders</>
+              ) : (
+                <>
+                  No NFT Collections. <br/>
+                  <small>Create NFT series and distribute it to get first Members.</small>
+                </>
+              )}
             </div>
           )}
         </div>
