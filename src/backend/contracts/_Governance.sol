@@ -9,22 +9,17 @@ import "@openzeppelin/contracts/governance/extensions/GovernorVotes.sol";
 import "@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFraction.sol";
 import "@openzeppelin/contracts/governance/extensions/GovernorTimelockControl.sol";
 
-import "../interfaces/IMainContract.sol";
-
 contract Governance is Governor, GovernorSettings, GovernorCountingSimple, GovernorVotes, GovernorVotesQuorumFraction, GovernorTimelockControl, Ownable {
-	address mainContractAddress;
-	string[] public proposeDatabaseKeys;
-	mapping(string => string) public proposeDatabase;
+	string[] public governanceResultKeys;
+	mapping(string => string) public governanceResults;
 
-	constructor(address _mainContract, IVotes _token, TimelockController _timeLock, uint _quorum, uint _delay, uint _period)
+	constructor(IVotes _token, TimelockController _timeLock, uint _quorum, uint _delay, uint _period)
 	Governor("Governance")
 	GovernorSettings(_delay, _period, 0)
 	GovernorVotes(_token)
 	GovernorVotesQuorumFraction(_quorum)
 	GovernorTimelockControl(_timeLock)
-	{
-		mainContractAddress = _mainContract;
-	}
+	{}
 
 	// The following functions are overrides required by Solidity.
 
@@ -82,9 +77,9 @@ contract Governance is Governor, GovernorSettings, GovernorCountingSimple, Gover
 	// ---------------- Voting Results ----------------
 
 	function voteResultsUpdate(string memory key, string memory val) onlyOwner public {
-		proposeDatabase[key] = val;
-		if (bytes(proposeDatabase[key]).length == 0) {
-			proposeDatabaseKeys.push(key);
+		governanceResults[key] = val;
+		if (bytes(governanceResults[key]).length == 0) {
+			governanceResultKeys.push(key);
 		}
 	}
 

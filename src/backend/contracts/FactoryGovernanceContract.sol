@@ -52,7 +52,7 @@ contract FactoryGovernanceContract is Initializable, OwnableUpgradeable, UUPSUpg
 		require(!_isDAOContract, "Community already have DAO Contract");
 		require(_isFTContract, "Community don't have Token for voting");
 
-		Governance _contractDAO = new Governance(mainContractAddress, _ftContractAddress, _governanceTimeLock, _quorum, _delay, _period);
+		Governance _contractDAO = new Governance(_ftContractAddress, _governanceTimeLock, _quorum, _delay, _period);
 		contractsList.push(_contractDAO);
 
 		// Transfer ownership to timeLock

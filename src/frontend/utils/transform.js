@@ -84,3 +84,12 @@ export const transformCampaignEvent = (event) => {
     email: event.args._email
   }
 };
+
+export const transformProposal = (item) => {
+  return {
+    id: parseInt(item.args.proposalId),
+    description: item.args.description,
+    startBlock: parseInt(item.args.endBlock),
+    endBlock: parseInt(item.args.endBlock),
+  }
+};

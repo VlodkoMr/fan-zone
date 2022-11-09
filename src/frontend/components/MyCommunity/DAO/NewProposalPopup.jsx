@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Textarea } from '@material-tailwind/react';
+import { Button, Input, Textarea } from '@material-tailwind/react';
 import { Loader } from '../../Loader';
 import { Popup } from '../../Popup';
 import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from "wagmi";
@@ -32,7 +32,7 @@ export function NewProposalPopup(
   const { config: configPropose, error: errorPropose } = usePrepareContractWrite({
     addressOrName: currentCommunity?.daoContract,
     contractInterface: GovernanceABI.abi,
-    enabled: submitFormData?.description?.length > 0,
+    enabled: submitFormData?.description?.length > 10 && submitFormData?.key?.length > 0,
     functionName: 'propose',
     args: [[currentCommunity?.daoContract], [0], [encodedFunctionCall], submitFormData.description]
   });
@@ -53,7 +53,7 @@ export function NewProposalPopup(
   });
 
   useWaitForTransaction({
-    hash: submitFormData?.hash,
+    hash: proposeData?.hash,
     onError: error => {
       setIsLoading(false);
       console.log('is err', error);
@@ -62,6 +62,7 @@ export function NewProposalPopup(
       if (data) {
         setSubmitFormData({});
         handleSuccess?.();
+        setIsSuccess(true);
       }
     },
   });
@@ -81,6 +82,14 @@ export function NewProposalPopup(
 
   const handleNewProposal = (e) => {
     e.preventDefault();
+    if (formData.key.length === 0) {
+      alert("Please provide voting key");
+      return false;
+    }
+    if (formData.value.length === 0) {
+      alert("Please provide voting value");
+      return false;
+    }
     if (formData.description.length < 10) {
       alert("Please provide full proposal description");
       return false;
@@ -101,6 +110,8 @@ export function NewProposalPopup(
       setIsSuccess(false);
       setFormData({
         description: "",
+        key: "",
+        value: "",
       });
     }
   }, [popupVisible]);
@@ -112,8 +123,26 @@ export function NewProposalPopup(
              setIsVisible={setPopupVisible}>
         {!isSuccess ? (
           <form className={"p-4"} onSubmit={handleNewProposal}>
-            <div className={"rounded-md w-full"}>
-              <Textarea label={`Proposal Text*`}
+            <div className={"flex flex-row gap-8"}>
+              <div className={"w-full"}>
+                <Input type="text"
+                       label="Voting Key*"
+                       required={true}
+                       value={formData.key}
+                       onChange={(e) => setFormData({ ...formData, key: e.target.value })}
+                />
+              </div>
+              <div className={"w-full"}>
+                <Input type="text"
+                       label="Voting Value*"
+                       required={true}
+                       value={formData.value}
+                       onChange={(e) => setFormData({ ...formData, value: e.target.value })}
+                />
+              </div>
+            </div>
+            <div className={"rounded-md w-full mt-4"}>
+              <Textarea label={`Proposal Description*`}
                         className="flex-1 bg-white h-12"
                         required={true}
                         value={formData.description}
