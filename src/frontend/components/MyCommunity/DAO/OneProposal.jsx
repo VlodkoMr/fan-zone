@@ -104,7 +104,10 @@ export function OneProposal({ proposal, showBlocks, canVote, currentCommunity, c
             <span className={"font-semibold text-gray-400"}>Voting not Started</span>
           )}
           {currentBlockNumber > proposal.endBlock && (
-            <span className={"font-semibold text-green-600"}>Voting End</span>
+            <span className={"font-semibold text-red-600"}>Voting End</span>
+          )}
+          {(currentBlockNumber >= proposal.startBlock && currentBlockNumber < proposal.endBlock) && (
+            <span className={"font-semibold text-green-600"}>Active Voting</span>
           )}
         </div>
       )}
