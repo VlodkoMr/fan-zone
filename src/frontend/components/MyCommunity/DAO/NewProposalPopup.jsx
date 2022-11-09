@@ -164,7 +164,11 @@ export function NewProposalPopup(
           </form>
         ) : (
           <div className={"text-center font-medium py-16 text-green-500 text-xl"}>
-            DAO Proposal created.
+            <div className={"mb-4"}>
+              DAO Proposal Created
+            </div>
+
+            <Button onClick={() => setPopupVisible(false)}>close</Button>
           </div>
         )}
       </Popup>

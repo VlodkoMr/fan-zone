@@ -87,6 +87,7 @@ export const transformCampaignEvent = (event) => {
 
 export const transformProposal = (item) => {
   return {
+    proposalId: item.args.proposalId,
     id: parseInt(item.args.proposalId),
     description: item.args.description,
     startBlock: parseInt(item.args.endBlock),

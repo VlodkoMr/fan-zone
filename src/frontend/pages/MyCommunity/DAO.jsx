@@ -101,7 +101,10 @@ export const DAO = () => {
 
                     <div className={"mt-4"}>
                       {proposals.map(proposal => (
-                        <OneProposal key={proposal.id} proposal={proposal}/>
+                        <OneProposal key={proposal.id}
+                                     currentCommunity={currentCommunity}
+                                     proposal={proposal}
+                        />
                       ))}
                     </div>
                   </>
@@ -121,6 +124,7 @@ export const DAO = () => {
       <NewProposalPopup currentCommunity={currentCommunity}
                         setPopupVisible={setCreateProposalPopupVisible}
                         popupVisible={createProposalPopupVisible}
+                        handleSuccess={loadAllProposals}
       />
     </>
   );
