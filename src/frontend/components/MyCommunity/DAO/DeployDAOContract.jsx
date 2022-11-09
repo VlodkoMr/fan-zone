@@ -57,8 +57,10 @@ export function DeployDAOContract({ reloadCommunityList }) {
   });
 
   useEffect(() => {
-    if (deployTimeLockWrite && deployTimeLockStatus !== 'loading') {
-      deployTimeLockWrite();
+    if (!isContractAddress(currentCommunity?.timeLockContract)) {
+      if (deployTimeLockWrite && deployTimeLockStatus !== 'loading') {
+        deployTimeLockWrite();
+      }
     }
   }, [deployTimeLockWrite]);
 

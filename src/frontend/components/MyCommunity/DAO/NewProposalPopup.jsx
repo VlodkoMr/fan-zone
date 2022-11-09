@@ -6,6 +6,7 @@ import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from
 import GovernanceABI from "../../../contractsData/Governance.json";
 import { addTransaction } from "../../../store/transactionSlice";
 import { useDispatch } from "react-redux";
+import { governanceInterface } from "../../../utils/contracts";
 
 export function NewProposalPopup(
   {
@@ -19,19 +20,21 @@ export function NewProposalPopup(
   const [isSuccess, setIsSuccess] = useState(false);
   const [submitFormData, setSubmitFormData] = useState({});
   const [formData, setFormData] = useState({
+    key: "",
+    value: "",
     description: ""
   });
 
   // ------------ Propose ------------
 
-  const encodedFunction = {};
+  const encodedFunctionCall = governanceInterface.encodeFunctionData("voteResultsUpdate", [formData.key || "", formData.value || ""]);
 
   const { config: configPropose, error: errorPropose } = usePrepareContractWrite({
     addressOrName: currentCommunity?.daoContract,
     contractInterface: GovernanceABI.abi,
     enabled: submitFormData?.description?.length > 0,
     functionName: 'propose',
-    args: [[currentCommunity?.daoContract], [0], [encodedFunction], submitFormData.description]
+    args: [[currentCommunity?.daoContract], [0], [encodedFunctionCall], submitFormData.description]
   });
 
   const { data: proposeData, write: proposeWrite, status: proposeStatus } = useContractWrite({

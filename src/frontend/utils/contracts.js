@@ -11,11 +11,13 @@ import factoryTimeLockContractLocal from '../contractsData/localhost/FactoryTime
 // import factoryFTContractAurora from '../contractsData/aurora/FactoryFTContract-address.json';
 // import factoryGovernanceContractAurora from '../contractsData/aurora/FactoryGovernanceContract-address.json';
 
+import { Interface } from "ethers/lib/utils";
 import mainContractABI from '../contractsData/MainContract.json';
 import factoryNFTContractABI from '../contractsData/FactoryNFTContract.json';
 import factoryFTContractABI from '../contractsData/FactoryFTContract.json';
 import factoryGovernanceContractABI from '../contractsData/FactoryGovernanceContract.json';
 import factoryTimeLockContractABI from '../contractsData/FactoryTimeLockContract.json';
+import GovernanceABI from "../contractsData/Governance.json";
 
 const provider = new ethers.providers.Web3Provider(window.ethereum);
 const network = await provider.getNetwork();
@@ -60,3 +62,5 @@ export const factoryGovernanceContract = {
   addressOrName: factoryGovernanceAddress,
   contractInterface: factoryGovernanceContractABI.abi,
 }
+
+export const governanceInterface = new Interface(GovernanceABI.abi);

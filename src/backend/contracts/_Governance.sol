@@ -13,11 +13,12 @@ import "../interfaces/IMainContract.sol";
 
 contract Governance is Governor, GovernorSettings, GovernorCountingSimple, GovernorVotes, GovernorVotesQuorumFraction, GovernorTimelockControl, Ownable {
 	address mainContractAddress;
-	mapping(string => string) proposeDatabase;
+	string[] public proposeDatabaseKeys;
+	mapping(string => string) public proposeDatabase;
 
 	constructor(address _mainContract, IVotes _token, TimelockController _timeLock, uint _quorum, uint _delay, uint _period)
 	Governor("Governance")
-	GovernorSettings(_delay /* delay blocks */, _period /* voting period */, 0)
+	GovernorSettings(_delay, _period, 0)
 	GovernorVotes(_token)
 	GovernorVotesQuorumFraction(_quorum)
 	GovernorTimelockControl(_timeLock)
@@ -78,7 +79,13 @@ contract Governance is Governor, GovernorSettings, GovernorCountingSimple, Gover
 		return super.supportsInterface(interfaceId);
 	}
 
-	// ---------------- Voting ----------------
+	// ---------------- Voting Results ----------------
 
+	function voteResultsUpdate(string memory key, string memory val) onlyOwner public {
+		proposeDatabase[key] = val;
+		if (bytes(proposeDatabase[key]).length == 0) {
+			proposeDatabaseKeys.push(key);
+		}
+	}
 
 }
