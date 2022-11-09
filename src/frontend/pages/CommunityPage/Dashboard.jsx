@@ -4,18 +4,21 @@ import { Container, InnerBlock } from "../../assets/css/common.style";
 import { Link, useOutletContext } from "react-router-dom";
 import { Breadcrumbs } from "@material-tailwind/react";
 import { communityTypes, distributionCampaignsNFT } from "../../utils/settings";
-import { useContractRead } from "wagmi";
+import { useAccount, useContract, useContractRead, useProvider, useBlockNumber } from "wagmi";
 import { convertFromEther, formatNumber, isContractAddress } from "../../utils/format";
-import { transformFTCampaign } from "../../utils/transform";
+import { transformFTCampaign, transformProposal } from "../../utils/transform";
 import FungibleTokenABI from "../../contractsData/FungibleToken.json";
+import GovernanceABI from "../../contractsData/Governance.json";
 import { OneTokenCampaign } from "../../components/CommunityPage/OneTokenCampaign";
+import { OneProposal } from "../../components/MyCommunity/DAO/OneProposal";
 
 export const Dashboard = () => {
+  const { address } = useAccount();
+  const provider = useProvider();
   const [community] = useOutletContext();
-  // const { address } = useAccount();
-  // const [ myBalance, setMyBalance ] = useState("");
-  const [isTokenReady, setIsTokenReady] = useState(false);
+  const [proposals, setProposals] = useState([]);
   const [ftCampaignTitles, setFtCampaignTitles] = useState({});
+  const { data: currentBlockNumber } = useBlockNumber({ watch: true });
 
   const loadCampaignsTitle = () => {
     let ftCampaigns = {};
@@ -41,6 +44,14 @@ export const Dashboard = () => {
     functionName: "symbol",
   });
 
+  const { data: myBalance } = useContractRead({
+    ...myFTContract,
+    enabled: isContractAddress(community?.ftContract),
+    functionName: "balanceOf",
+    args: [address],
+    select: (data) => parseInt(data)
+  });
+
   const { data: communityFTCampaigns } = useContractRead({
     ...myFTContract,
     enabled: isContractAddress(community?.ftContract),
@@ -48,9 +59,29 @@ export const Dashboard = () => {
     select: (data) => data.map(camp => transformFTCampaign(camp))
   });
 
+  const myDAOContract = {
+    addressOrName: community?.daoContract,
+    contractInterface: GovernanceABI.abi,
+  }
+
+  const contractDAO = useContract({
+    ...myDAOContract,
+    signerOrProvider: provider
+  });
+
+  const loadAllProposals = async () => {
+    const actionsFilterProposals = await contractDAO.filters.ProposalCreated();
+    const proposalList = await contractDAO.queryFilter(actionsFilterProposals);
+    const activeProposals = proposalList.map(proposal => transformProposal(proposal)).filter(
+      proposal => proposal.startBlock <= currentBlockNumber && proposal.endBlock > currentBlockNumber
+    );
+    setProposals(activeProposals);
+    console.log(`proposalList`, proposalList);
+  }
 
   useEffect(() => {
     loadCampaignsTitle();
+    loadAllProposals();
   }, [community]);
 
   return (
@@ -74,39 +105,62 @@ export const Dashboard = () => {
 
         {(parseInt(totalSupply) > 0) && (
           <div className={"w-1/3 relative mb-8"}>
-            <h3 className={"text-lg font-semibold text-gray-800 border-b pt-2 pb-4 text-center"}>
-              Community Token
-            </h3>
-            <InnerBlock className={"w-full text-center mt-1"}>
-              <div>
-                <p>Total Supply: <b>{formatNumber(convertFromEther(totalSupply))} {tokenSymbol}</b></p>
-                <div className={"mt-3 mb-6 pt-3 text-sm border-t"}>
-                  There are many variations of passages of Lorem Ipsum available but the majority have suffered alteration in some form.
-                </div>
+            <div className={"mb-8"}>
+              <h3 className={"text-lg font-semibold text-gray-800 border-b pt-2 pb-2 text-center"}>
+                Community Token
+              </h3>
+              <InnerBlock className={"w-full text-center mt-1"}>
+                <div>
+                  <p>Total Supply: <b>{formatNumber(convertFromEther(totalSupply))} {tokenSymbol}</b></p>
+                  <div className={"mt-3 mb-4 pt-3 text-sm border-t"}>
+                    There are many variations of passages of Lorem Ipsum available but the majority have suffered alteration in some form.
+                  </div>
 
-                {communityFTCampaigns?.length > 0 && (
-                  <>
-                    <b className={"block mb-1 font-semibold text-left text-sm"}>Distribution Campaigns</b>
-                    <div className={"text-left"}>
-                      {communityFTCampaigns.map(campaign => (
-                        <OneTokenCampaign
-                          key={campaign.id}
-                          campaign={campaign}
-                          community={community}
-                          tokenSymbol={tokenSymbol}
-                          ftCampaignTitles={ftCampaignTitles}
-                          // onSuccess={() => loadSuperToken()}
+                  {communityFTCampaigns?.length > 0 && (
+                    <>
+                      <b className={"block mb-1 font-semibold text-left text-sm"}>Distribution Campaigns</b>
+                      <div className={"text-left"}>
+                        {communityFTCampaigns.map(campaign => (
+                          <OneTokenCampaign
+                            key={campaign.id}
+                            campaign={campaign}
+                            community={community}
+                            tokenSymbol={tokenSymbol}
+                            ftCampaignTitles={ftCampaignTitles}
+                            // onSuccess={() => loadSuperToken()}
+                          />
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
+              </InnerBlock>
+            </div>
+
+            {proposals.length > 0 && (
+              <div className={"mb-8"}>
+                <h3 className={"text-lg font-semibold text-gray-800 border-b pt-2 pb-2 text-center"}>
+                  DAO Governance
+                </h3>
+                <div className={"w-full text-center mt-1"}>
+                  <div>
+                    <div className={"mt-3 mb-3 text-sm"}>
+                      {proposals.map(proposal => (
+                        <OneProposal proposal={proposal}
+                                     canVote={myBalance > 0}
+                                     currentBlockNumber={currentBlockNumber}
+                                     currentCommunity={community}
+                                     key={proposal.id}
                         />
                       ))}
                     </div>
-                  </>
-                )}
+                  </div>
+                </div>
               </div>
-            </InnerBlock>
+            )}
           </div>
         )}
       </Container>
-
     </>
   );
 }

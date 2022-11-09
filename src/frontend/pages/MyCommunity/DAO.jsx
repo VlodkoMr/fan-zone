@@ -5,7 +5,7 @@ import { isContractAddress } from "../../utils/format";
 import { useOutletContext } from "react-router-dom";
 import { DeployDAOContract } from "../../components/MyCommunity/DAO/DeployDAOContract";
 import GovernanceABI from "../../contractsData/Governance.json";
-import { useContract, useContractRead, useProvider } from "wagmi";
+import { useBlockNumber, useContract, useContractRead, useProvider } from "wagmi";
 import { Button } from "@material-tailwind/react";
 import { NewProposalPopup } from "../../components/MyCommunity/DAO/NewProposalPopup";
 import { Loader } from "../../components/Loader";
@@ -14,6 +14,7 @@ import { OneProposal } from "../../components/MyCommunity/DAO/OneProposal";
 
 export const DAO = () => {
   const provider = useProvider();
+  const { data: currentBlockNumber } = useBlockNumber({ watch: true });
   const [reloadCommunityList] = useOutletContext();
   const [proposals, setProposals] = useState([]);
   const [isReady, setIsReady] = useState(false);
@@ -53,10 +54,6 @@ export const DAO = () => {
   useEffect(() => {
     loadAllProposals();
   }, []);
-
-  const handleVote = (id) => {
-
-  }
 
   return (
     <>
@@ -102,6 +99,9 @@ export const DAO = () => {
                     <div className={"mt-4"}>
                       {proposals.map(proposal => (
                         <OneProposal key={proposal.id}
+                                     canVote={false}
+                                     showBlocks={true}
+                                     currentBlockNumber={currentBlockNumber}
                                      currentCommunity={currentCommunity}
                                      proposal={proposal}
                         />

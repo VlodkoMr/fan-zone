@@ -74,7 +74,7 @@ export const Header = ({ isInner, reloadCommunityList }) => {
               <img
                 src={scroll ? logoColor : logoWhite}
                 alt="logo"
-                className="w-full header-logo -mt-1"
+                className="w-full header-logo mt-1"
               />
             </Link>
           </div>

@@ -90,7 +90,7 @@ export const transformProposal = (item) => {
     proposalId: item.args.proposalId,
     id: parseInt(item.args.proposalId),
     description: item.args.description,
-    startBlock: parseInt(item.args.endBlock),
+    startBlock: parseInt(item.args.startBlock),
     endBlock: parseInt(item.args.endBlock),
   }
 };

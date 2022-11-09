@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const defaultCommunityLogo = "bafkreigrrdzq64tuawjek3gcbl2qrwqtad4kqayp2owtnokde7ayn7dvfu";
+export const defaultCommunityLogo = "bafkreiay2vqt2at4mpvesur66mqwcl6ppyyaqa67hw7jvoic2ocf5ssxfi";
 
 export const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
