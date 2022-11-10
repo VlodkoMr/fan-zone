@@ -35,7 +35,7 @@ contract FactoryTimeLockContract is Initializable, OwnableUpgradeable, UUPSUpgra
 		require(IMainContract(mainContractAddress).isCommunityOwner(_communityId, msg.sender), "No Access");
 		require(_proposers.length >= 0, "Provide proposers list");
 
-		uint _initialVotingDelay = 1;
+		uint _initialVotingDelay = 0;
 		// Check community owner & get contract details
 		(,bool _isFTContract, bool _isDAOContract) = IMainContract(mainContractAddress).isContractExists(_communityId);
 		require(!_isDAOContract, "Community already have DAO Contract");

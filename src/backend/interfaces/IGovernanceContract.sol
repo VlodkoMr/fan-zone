@@ -9,6 +9,13 @@ interface IGovernanceContract {
 		bytes32
 	) payable external returns (uint);
 
+	function queue(
+		address[] memory,
+		uint[] memory,
+		bytes[] memory,
+		bytes32
+	) payable external returns (uint);
+
 	function proposalDeadline(
 		uint
 	) external view returns (uint);

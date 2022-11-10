@@ -19,6 +19,7 @@
     "start:aurora": "vite --mode aurora"
   },
   "dependencies": {
+    "@chainlink/contracts": "^0.5.1",
     "@ethersproject/bignumber": "^5.7.0",
     "@ethersproject/providers": "^5.7.1",
     "@material-tailwind/react": "^1.2.4",

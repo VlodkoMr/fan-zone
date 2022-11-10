@@ -158,8 +158,9 @@ contract FungibleToken is ERC20, Pausable, Ownable, ERC20Permit, ERC20Votes, Uti
 		);
 	}
 
-	function claimFromCampaign(uint _communityId, uint _campaignId, uint _eventCode, string memory _email,
-		uint root, uint nullifierHash, uint[8] calldata proof) public whenNotPaused payable {
+	function claimFromCampaign(
+		uint _communityId, uint _campaignId, uint _eventCode, string memory _email, uint root, uint nullifierHash, uint[8] calldata proof
+	) public whenNotPaused payable {
 
 		DistributionCampaign storage campaign = distributionCampaigns[_campaignId];
 		require(campaign.tokensMinted + campaign.tokensPerUser <= campaign.tokensTotal, "Not enough tokens to claim");

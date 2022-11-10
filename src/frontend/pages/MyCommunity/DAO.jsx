@@ -58,12 +58,7 @@ export const DAO = () => {
     const actionsFilterProposals = await contractDAO.filters.ProposalCreated();
     const proposalList = await contractDAO.queryFilter(actionsFilterProposals);
     setProposals(proposalList.map(proposal => transformProposal(proposal)));
-    console.log(`proposalList`, proposalList);
     setIsReady(true);
-
-    // const execFilter = await contractDAO.filters.ProposalExecuted();
-    // const execList = await contractDAO.queryFilter(execFilter);
-    // console.log(`execList`, execList);
   }
 
 
@@ -96,10 +91,6 @@ export const DAO = () => {
       }
     },
   });
-
-  useEffect(() => {
-    console.log(`errorExecution`, errorExecution);
-  }, [errorExecution]);
 
   const runExecute = () => {
     executionWrite();

@@ -75,8 +75,9 @@ export const Dashboard = () => {
     const activeProposals = proposalList.map(proposal => transformProposal(proposal)).filter(
       proposal => proposal.startBlock <= currentBlockNumber && proposal.endBlock > currentBlockNumber
     );
+    console.log(`currentBlockNumber`, currentBlockNumber);
+    console.log(`activeProposals`, activeProposals);
     setProposals(activeProposals);
-    console.log(`proposalList`, proposalList);
   }
 
   useEffect(() => {
