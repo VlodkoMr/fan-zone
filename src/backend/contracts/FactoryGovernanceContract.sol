@@ -18,6 +18,7 @@ contract FactoryGovernanceContract is Initializable, OwnableUpgradeable, UUPSUpg
 	);
 
 	address mainContractAddress;
+	address executorAddress;
 	Governance[] private contractsList;
 
 	/// @custom:oz-upgrades-unsafe-allow constructor
@@ -25,10 +26,11 @@ contract FactoryGovernanceContract is Initializable, OwnableUpgradeable, UUPSUpg
 		_disableInitializers();
 	}
 
-	function initialize(address _mainContractAddress) initializer public {
+	function initialize(address _mainContractAddress, address _executorAddress) initializer public {
 		__Ownable_init();
 		__UUPSUpgradeable_init();
 		mainContractAddress = _mainContractAddress;
+		executorAddress = _executorAddress;
 	}
 
 	function _authorizeUpgrade(address newImplementation) internal onlyOwner override {}
@@ -52,7 +54,7 @@ contract FactoryGovernanceContract is Initializable, OwnableUpgradeable, UUPSUpg
 		require(!_isDAOContract, "Community already have DAO Contract");
 		require(_isFTContract, "Community don't have Token for voting");
 
-		Governance _contractDAO = new Governance(_ftContractAddress, _governanceTimeLock, _quorum, _delay, _period);
+		Governance _contractDAO = new Governance(executorAddress, _ftContractAddress, _governanceTimeLock, _quorum, _delay, _period);
 		contractsList.push(_contractDAO);
 
 		// Transfer ownership to timeLock

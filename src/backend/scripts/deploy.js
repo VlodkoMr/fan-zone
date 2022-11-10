@@ -32,9 +32,16 @@ async function main() {
   })
   await factoryFTContract.deployed();
 
+  // Deploy executor contract
+  const ChainlinkExecutor = await hre.ethers.getContractFactory("ChainlinkExecutor");
+  const chainlinkExecutor = await hre.upgrades.deployProxy(ChainlinkExecutor, [], {
+    initializer: "initialize"
+  })
+  await chainlinkExecutor.deployed();
+
   // Deploy Governance factory contract
   const FactoryGovernanceContract = await hre.ethers.getContractFactory("FactoryGovernanceContract");
-  const factoryGovernanceContract = await hre.upgrades.deployProxy(FactoryGovernanceContract, [mainContract.address], {
+  const factoryGovernanceContract = await hre.upgrades.deployProxy(FactoryGovernanceContract, [mainContract.address, chainlinkExecutor.address], {
     initializer: "initialize"
   })
   await factoryGovernanceContract.deployed();
@@ -57,6 +64,7 @@ async function main() {
 
   console.log("Main Contract: ", mainContract.address);
   console.log("Factory NFT Contract: ", factoryNFTContract.address);
+  console.log("Chainlink Executor Contract: ", chainlinkExecutor.address);
   console.log("Factory FT Contract: ", factoryFTContract.address);
   console.log("Factory TimeLock Contract: ", factoryTimeLockContract.address);
   console.log("Factory Governance Contract: ", factoryGovernanceContract.address);
@@ -66,6 +74,7 @@ async function main() {
   saveAllFrontendFiles(factoryNFTContract, "FactoryNFTContract");
   saveAllFrontendFiles(factoryFTContract, "FactoryFTContract");
   saveAllFrontendFiles(factoryTimeLockContract, "FactoryTimeLockContract");
+  saveAllFrontendFiles(chainlinkExecutor, "ChainlinkExecutor");
   saveAllFrontendFiles(factoryGovernanceContract, "FactoryGovernanceContract");
 
   // Save user contracts ABI

@@ -8,18 +8,23 @@ import "@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol
 import "@openzeppelin/contracts/governance/extensions/GovernorVotes.sol";
 import "@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFraction.sol";
 import "@openzeppelin/contracts/governance/extensions/GovernorTimelockControl.sol";
+import "../interfaces/IChainlinkExecutorContract.sol";
+
 
 contract Governance is Governor, GovernorSettings, GovernorCountingSimple, GovernorVotes, GovernorVotesQuorumFraction, GovernorTimelockControl, Ownable {
 	string[] public governanceResultKeys;
 	mapping(string => string) public governanceResults;
+	address executorAddress;
 
-	constructor(IVotes _token, TimelockController _timeLock, uint _quorum, uint _delay, uint _period)
+	constructor(address _executorAddress, IVotes _token, TimelockController _timeLock, uint _quorum, uint _delay, uint _period)
 	Governor("Governance")
 	GovernorSettings(_delay, _period, 0)
 	GovernorVotes(_token)
 	GovernorVotesQuorumFraction(_quorum)
 	GovernorTimelockControl(_timeLock)
-	{}
+	{
+		executorAddress = _executorAddress;
+	}
 
 	// The following functions are overrides required by Solidity.
 
@@ -44,7 +49,17 @@ contract Governance is Governor, GovernorSettings, GovernorCountingSimple, Gover
 	override(Governor, IGovernor)
 	returns (uint256)
 	{
-		return super.propose(targets, values, calldatas, description);
+		uint id = super.propose(targets, values, calldatas, description);
+
+		IChainlinkExecutorContract(executorAddress).addProposal(
+			address(this),
+			id,
+			targets,
+			values,
+			calldatas,
+			keccak256(bytes(description))
+		);
+		return id;
 	}
 
 	function proposalThreshold() public view override(Governor, GovernorSettings) returns (uint256) {
