@@ -5,6 +5,7 @@ import factoryNFTContractLocal from '../contractsData/localhost/FactoryNFTContra
 import factoryFTContractLocal from '../contractsData/localhost/FactoryFTContract-address.json';
 import factoryGovernanceContractLocal from '../contractsData/localhost/FactoryGovernanceContract-address.json';
 import factoryTimeLockContractLocal from '../contractsData/localhost/FactoryTimeLockContract-address.json';
+import executionContractLocal from '../contractsData/localhost/ChainlinkExecutor-address.json';
 
 // import mainContractAurora from '../contractsData/aurora/MainContract-address.json';
 // import factoryNFTContractAurora from '../contractsData/aurora/FactoryNFTContract-address.json';
@@ -16,6 +17,7 @@ import mainContractABI from '../contractsData/MainContract.json';
 import factoryNFTContractABI from '../contractsData/FactoryNFTContract.json';
 import factoryFTContractABI from '../contractsData/FactoryFTContract.json';
 import factoryGovernanceContractABI from '../contractsData/FactoryGovernanceContract.json';
+import ChainlinkExecutorContractABI from '../contractsData/ChainlinkExecutor.json';
 import factoryTimeLockContractABI from '../contractsData/FactoryTimeLockContract.json';
 import GovernanceABI from "../contractsData/Governance.json";
 
@@ -27,6 +29,7 @@ let mainAddress = mainContractLocal.address;
 let factoryNFTAddress = factoryNFTContractLocal.address;
 let factoryFTAddress = factoryFTContractLocal.address;
 let factoryGovernanceAddress = factoryGovernanceContractLocal.address;
+let executionAddress = executionContractLocal.address;
 let factoryTimeLockAddress = factoryTimeLockContractLocal.address;
 
 // switch (chainId) {
@@ -61,6 +64,11 @@ export const factoryTimeLockContract = {
 export const factoryGovernanceContract = {
   addressOrName: factoryGovernanceAddress,
   contractInterface: factoryGovernanceContractABI.abi,
+}
+
+export const executionContract = {
+  addressOrName: executionAddress,
+  contractInterface: ChainlinkExecutorContractABI.abi,
 }
 
 export const governanceInterface = new Interface(GovernanceABI.abi);

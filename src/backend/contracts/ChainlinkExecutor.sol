@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.12;
 
+import "hardhat/console.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
@@ -9,7 +10,7 @@ import "../interfaces/IGovernanceContract.sol";
 
 contract ChainlinkExecutor is Initializable, OwnableUpgradeable, UUPSUpgradeable, Utils {
 	uint[] proposalEndBlocks;
-	mapping(uint => Proposal[]) blockProposals;
+	mapping(uint => Proposal[]) public blockProposals;
 
 	struct Proposal {
 		address contractAddress;
@@ -45,6 +46,8 @@ contract ChainlinkExecutor is Initializable, OwnableUpgradeable, UUPSUpgradeable
 		(, bool _exists) = Utils.indexOf(proposalEndBlocks, endBlock);
 		if (!_exists) {
 			proposalEndBlocks.push(endBlock);
+
+			console.log("-------- add endBlock", endBlock);
 		}
 
 		blockProposals[endBlock].push(
@@ -53,8 +56,11 @@ contract ChainlinkExecutor is Initializable, OwnableUpgradeable, UUPSUpgradeable
 	}
 
 	function checkExecutions() public {
+		console.log("-------- start checkExecutions");
 		for (uint _i = 0; _i < proposalEndBlocks.length; ++_i) {
 			if (proposalEndBlocks[_i] < block.number) {
+				console.log("-------- block.number", block.number);
+
 				for (uint _j = 0; _j < blockProposals[proposalEndBlocks[_i]].length; ++_j) {
 					executeProposal(blockProposals[proposalEndBlocks[_i]][_j]);
 					delete blockProposals[proposalEndBlocks[_i]][_j];
@@ -69,7 +75,14 @@ contract ChainlinkExecutor is Initializable, OwnableUpgradeable, UUPSUpgradeable
 	}
 
 	function executeProposal(Proposal memory proposal) internal {
+		console.log("-------- execute proposal", proposal.proposalId);
 
+		IGovernanceContract(proposal.contractAddress).execute(
+			proposal.targets,
+			proposal.values,
+			proposal.calldatas,
+			proposal.descriptionHash
+		);
 	}
 
 }
