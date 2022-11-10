@@ -6,7 +6,7 @@ import { Feature } from '../components/Home/Feature';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { communityTypes } from "../utils/settings";
 import auroraLogo from "../assets/images/logo/aurora-logo.png";
-import heroImage from "../assets/images/hero/hero-image.jpeg";
+import heroImage from "../assets/images/hero/hero-image.jpg";
 import dotsImage from "../assets/images/home/dots-about.svg";
 import aboutImage from "../assets/images/about/about-image.svg";
 import { CustomConnect } from "../components/CustomConnect.jsx";
@@ -39,10 +39,10 @@ export const Home = () => {
                 </h1>
                 <p
                   className="text-base sm:text-lg sm:leading-relaxed md:text-xl md:leading-relaxed mx-auto
-                  mb-10 text-[#e4e4e4] max-w-[600px]"
+                  mb-10 text-[#e4e4e4] max-w-[640px]"
                 >
                   Take advantage of web3 in a few clicks: create NFT collection,
-                  fungible token, share news and extend your audience!
+                  fungible token, DAO voting, share news and extend your audience!
                 </p>
                 <ul className="flex flex-wrap items-center justify-center mb-10">
                   <li>
@@ -146,7 +146,6 @@ export const Home = () => {
                       Use Cases
                     </h2>
                     <p className="text-base text-body-color mb-6 leading-relaxed">
-                      Create your own community or fan-zone in a few clicks with modern web3 features.
                       Can be used by sport, gaming teams, musicians, artists, singers and groups of people by interest:
                     </p>
                     <div className="text-base text-body-color mb-4 leading-relaxed">

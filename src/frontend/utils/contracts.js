@@ -6,10 +6,11 @@ import factoryFTContractLocal from '../contractsData/localhost/FactoryFTContract
 import factoryGovernanceContractLocal from '../contractsData/localhost/FactoryGovernanceContract-address.json';
 import factoryTimeLockContractLocal from '../contractsData/localhost/FactoryTimeLockContract-address.json';
 
-// import mainContractAurora from '../contractsData/aurora/MainContract-address.json';
-// import factoryNFTContractAurora from '../contractsData/aurora/FactoryNFTContract-address.json';
-// import factoryFTContractAurora from '../contractsData/aurora/FactoryFTContract-address.json';
-// import factoryGovernanceContractAurora from '../contractsData/aurora/FactoryGovernanceContract-address.json';
+import mainContractAurora from '../contractsData/aurora/MainContract-address.json';
+import factoryNFTContractAurora from '../contractsData/aurora/FactoryNFTContract-address.json';
+import factoryFTContractAurora from '../contractsData/aurora/FactoryFTContract-address.json';
+import factoryGovernanceContractAurora from '../contractsData/aurora/FactoryGovernanceContract-address.json';
+import factoryTimeLockContractAurora from '../contractsData/aurora/FactoryTimeLockContract-address.json';
 
 import { Interface } from "ethers/lib/utils";
 import mainContractABI from '../contractsData/MainContract.json';
@@ -29,14 +30,16 @@ let factoryFTAddress = factoryFTContractLocal.address;
 let factoryGovernanceAddress = factoryGovernanceContractLocal.address;
 let factoryTimeLockAddress = factoryTimeLockContractLocal.address;
 
-// switch (chainId) {
-//   // case 1313161555:
-//   case 1313161554:
-//     mainAddress = mainContractAurora.address;
-//     factoryNFTAddress = factoryNFTContractAurora.address;
-//     factoryFTAddress = factoryFTContractAurora.address;
-//     break;
-// }
+switch (chainId) {
+  // case 1313161555:
+  case 1313161554:
+    mainAddress = mainContractAurora.address;
+    factoryNFTAddress = factoryNFTContractAurora.address;
+    factoryFTAddress = factoryFTContractAurora.address;
+    factoryGovernanceAddress = factoryGovernanceContractAurora.address;
+    factoryTimeLockAddress = factoryTimeLockContractAurora.address;
+    break;
+}
 
 export const mainContract = {
   addressOrName: mainAddress,
