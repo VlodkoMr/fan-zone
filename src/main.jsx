@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom/client'
 import App from './frontend/App'
 import store from "./frontend/store"
 
-import { chain, configureChains, createClient, WagmiConfig } from 'wagmi'
-import { Provider } from "react-redux"
-
+import { chain, configureChains, createClient, WagmiConfig } from 'wagmi';
+import { Provider } from "react-redux";
 import { ThemeProvider } from "@material-tailwind/react";
 import { publicProvider } from 'wagmi/providers/public';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
+import { connectorsForWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import { coinbaseWallet, injectedWallet, metaMaskWallet, walletConnectWallet } from "@rainbow-me/rainbowkit/wallets";
 
-import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import '@rainbow-me/rainbowkit/styles.css';
 
 const auroraChain = {
@@ -46,10 +46,17 @@ const { chains, provider } = configureChains(
   ]
 );
 
-const { connectors } = getDefaultWallets({
-  appName: 'FanZone',
-  chains
-});
+const connectors = connectorsForWallets([
+  {
+    groupName: 'FanZone',
+    wallets: [
+      injectedWallet({ chains }),
+      metaMaskWallet({ chains }),
+      walletConnectWallet({ chains }),
+      coinbaseWallet({ chains, appName: 'FanZone App' }),
+    ],
+  },
+]);
 
 const wagmiClient = createClient({
   autoConnect: true,
