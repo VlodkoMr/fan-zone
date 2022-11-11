@@ -137,6 +137,14 @@ export function DistributionCampaignFTPopup(
     }
   }, [createWrite]);
 
+  useEffect(() => {
+    console.log(`errorApprove`, errorApprove);
+  }, [errorApprove]);
+
+  useEffect(() => {
+    console.log(`errorCreate`, errorCreate);
+  }, [errorCreate]);
+
   // ------------ Actions ------------
 
   const handleCreateCampaign = (e) => {

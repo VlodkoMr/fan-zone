@@ -61,7 +61,7 @@ export const Members = () => {
         <InnerBlock.Header className="flex justify-between">
           <span>Members</span>
 
-          {collectionItems.length > 0 && (
+          {collectionItems && collectionItems.length > 0 && (
             <div className={"flex flex-row w-1/2 justify-end"}>
               <div className="w-32 mr-6 text-sm font-normal">
                 <Switch checked={isShowEmail} onChange={() => setIsShowEmail(prev => !prev)} label="Show emails"/>
@@ -111,7 +111,7 @@ export const Members = () => {
             </>
           ) : (
             <div className={"text-gray-500"}>
-              {collectionItems.length > 0 ? (
+              {collectionItems && collectionItems.length > 0 ? (
                 <>Please select NFT Collection to view all NFT holders</>
               ) : (
                 <>

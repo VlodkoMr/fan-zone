@@ -41,11 +41,11 @@ contract FactoryTimeLockContract is Initializable, OwnableUpgradeable, UUPSUpgra
 		require(!_isDAOContract, "Community already have DAO Contract");
 		require(_isFTContract, "Community don't have Token for voting");
 
-		TimelockController _contractTimeLock = new GovernanceTimeLock(_initialVotingDelay, _proposers, _executors);
+		TimelockController _contractTimeLock = new GovernanceTimeLock(_initialVotingDelay, _proposers, _executors, address(0));
 		contractsList.push(_contractTimeLock);
 
-		bytes32 _adminRole = _contractTimeLock.TIMELOCK_ADMIN_ROLE();
-		_contractTimeLock.revokeRole(_adminRole, msg.sender);
+		//		bytes32 _adminRole = _contractTimeLock.TIMELOCK_ADMIN_ROLE();
+		//		_contractTimeLock.revokeRole(_adminRole, msg.sender);
 
 		// Update contract address
 		IMainContract(mainContractAddress).updateCommunityTokenLock(_communityId, address(_contractTimeLock));

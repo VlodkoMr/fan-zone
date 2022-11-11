@@ -57,7 +57,7 @@ export function DeployDAOContract({ reloadCommunityList }) {
   });
 
   useEffect(() => {
-    if (!isContractAddress(currentCommunity?.timeLockContract)) {
+    if (!isContractAddress(currentCommunity?.timeLockContract) && !isFormErrors()) {
       if (deployTimeLockWrite && deployTimeLockStatus !== 'loading') {
         deployTimeLockWrite();
       }
@@ -120,13 +120,13 @@ export function DeployDAOContract({ reloadCommunityList }) {
   // ------------- Form -------------
 
   const isFormErrors = () => {
-    if (parseInt(formData.quorum) < 1) {
+    if (formData.quorum.length === 0 || parseInt(formData.quorum) < 1) {
       return "Wrong voting quorum";
     }
     if (parseInt(formData.delay) < 0) {
       return "Wrong voting delay";
     }
-    if (parseInt(formData.period) < 1) {
+    if (formData.period.length === 0 || parseInt(formData.period) < 1) {
       return "Wrong voting period";
     }
     return false;
@@ -134,7 +134,7 @@ export function DeployDAOContract({ reloadCommunityList }) {
 
   // ------------- Actions -------------
 
-  const deployFTContract = async (e) => {
+  const deployFTContract = (e) => {
     e.preventDefault();
 
     const formError = isFormErrors();
@@ -191,8 +191,8 @@ export function DeployDAOContract({ reloadCommunityList }) {
             <Button disabled={isLoadingCreate || isFormErrors()} type="Submit" variant="gradient">
               {isLoadingCreate && (
                 <span className="mr-2 align-bottom">
-              <Loader size={"sm"}/>
-            </span>
+                  <Loader size={"sm"}/>
+                </span>
               )}
               Create Governance
             </Button>
