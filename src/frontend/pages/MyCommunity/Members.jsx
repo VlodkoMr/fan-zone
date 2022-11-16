@@ -41,6 +41,8 @@ export const Members = () => {
     setIsReady(true);
   }
 
+  // -------------- Actions --------------
+
   useEffect(() => {
     setIsReady(false);
     setNftOwners([]);

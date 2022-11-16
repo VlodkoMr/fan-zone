@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.12;
 
+import "hardhat/console.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
@@ -176,9 +177,9 @@ contract MainContract is Initializable, OwnableUpgradeable, UUPSUpgradeable {
 		communities[_id].timeLockContract = _timeLockContract;
 	}
 
-	function newRaffle(uint _communityId, uint _maxValue, uint32 _winnersAmount) public returns (uint) {
+	function newRaffle(uint _communityId, uint _maxValue, uint32 _winnersAmount) public {
 		require(communities[_communityId].owner == msg.sender, "No access");
-		return IChainlinkVRF(chainlinkVRFContract).requestRandomWords(_communityId, _maxValue, _winnersAmount);
+		IChainlinkVRF(chainlinkVRFContract).requestRandomWords(_communityId, _maxValue, _winnersAmount);
 	}
 
 }

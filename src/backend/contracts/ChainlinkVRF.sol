@@ -43,12 +43,12 @@ contract ChainlinkVRF is VRFConsumerBaseV2, ConfirmedOwner, Utils {
 		mainContractAddress = _mainContractAddress;
 	}
 
-	function requestRandomWords(uint _communityId, uint _maxValue, uint32 _winnersAmount) external returns (uint requestId) {
+	function requestRandomWords(uint _communityId, uint _maxValue, uint32 _winnersAmount) external returns (uint) {
 		require(_winnersAmount <= 110, "Winners amount limit is 110 winners per raffle");
-		require(msg.sender != mainContractAddress, "No Access");
+		require(msg.sender == mainContractAddress, "No Access to requestRandomWords");
 
 		uint32 _callbackGasLimit = _winnersAmount * 22000;
-		requestId = COORDINATOR.requestRandomWords(
+		uint requestId = COORDINATOR.requestRandomWords(
 			keyHash,
 			s_subscriptionId,
 			requestConfirmations,
@@ -57,11 +57,9 @@ contract ChainlinkVRF is VRFConsumerBaseV2, ConfirmedOwner, Utils {
 		);
 
 		// Add community raffle
-		communityRaffles[_communityId].push(Raffle({
-		requestId : requestId,
-		maxValue : _maxValue,
-		result : new uint[](0)
-		}));
+		Raffle memory _raffle = Raffle(requestId, _maxValue, new uint[](0));
+
+		communityRaffles[_communityId].push(_raffle);
 
 		s_requests[requestId] = RequestStatus({
 		randomWords : new uint[](0),
@@ -70,6 +68,7 @@ contract ChainlinkVRF is VRFConsumerBaseV2, ConfirmedOwner, Utils {
 		communityId : _communityId,
 		raffleIndex : communityRaffles[_communityId].length - 1
 		});
+
 		requestIds.push(requestId);
 		lastRequestId = requestId;
 		emit RequestSent(requestId, _winnersAmount);
@@ -99,8 +98,12 @@ contract ChainlinkVRF is VRFConsumerBaseV2, ConfirmedOwner, Utils {
 		return (request.fulfilled, request.randomWords);
 	}
 
-	function getCommunityRaffles(uint _communityId) public view returns (Raffle[] memory){
-		return communityRaffles[_communityId];
+	function getCommunityRaffles(uint _communityId) public view returns (Raffle[] memory) {
+		Raffle[] memory _result = new Raffle[](communityRaffles[_communityId].length);
+		for (uint _i = 0; _i < communityRaffles[_communityId].length; ++_i) {
+			_result[_i] = communityRaffles[_communityId][_i];
+		}
+		return _result;
 	}
 
 }
