@@ -53,6 +53,11 @@ async function main() {
   })
   await factoryTimeLockContract.deployed();
 
+  // Deploy ChainlinkVRF contract
+  const ChainlinkVRF = await hre.ethers.getContractFactory("ChainlinkVRF");
+  const chainlinkVRF = await ChainlinkVRF.deploy(1301, "0x7a1BaC17Ccc5b313516C5E16fb24f7659aA5ebed", "0x4b09e658ed251bcafeebbc69400383d49f344ace09b9576fe248bb02c003fe9f");
+  await chainlinkVRF.deployed();
+
   // Update main contract - add factory address
   const MainContractInstance = await hre.ethers.getContractAt("MainContract", mainContract.address);
   await MainContractInstance.updateFactoryContractsAddress(

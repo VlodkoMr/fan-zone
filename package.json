@@ -13,10 +13,14 @@
     "build:local": "vite build",
     "start": "vite",
     "deploy:aurora": "env $(cat .env) npx hardhat run src/backend/scripts/deploy.js --network aurora",
+    "deploy:mumbai": "env $(cat .env) npx hardhat run src/backend/scripts/deploy.js --network mumbai",
     "update:aurora": "env $(cat .env) npx hardhat run src/backend/scripts/update.aurora.js --network aurora",
-    "verify:aurora": "env $(cat .env) npx hardhat verify '0x1229EBc5C2b50714E8b52114082ee5A0d55ABd23' --network aurora",
+    "verify:aurora": "env $(cat .env) npx hardhat verify '' --network aurora",
+    "verify:mumbai": "env $(cat .env) npx hardhat verify '' --network mumbai",
     "build:aurora": "vite build --mode aurora",
-    "start:aurora": "vite --mode aurora"
+    "build:mumbai": "vite build --mode mumbai",
+    "start:aurora": "vite --mode aurora",
+    "start:mumbai": "vite --mode mumbai"
   },
   "dependencies": {
     "@chainlink/contracts": "^0.5.1",

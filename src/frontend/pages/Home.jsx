@@ -6,7 +6,7 @@ import { Feature } from '../components/Home/Feature';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { communityTypes } from "../utils/settings";
 import auroraLogo from "../assets/images/logo/aurora-logo.png";
-import heroImage from "../assets/images/hero/hero-image.jpeg";
+import heroImage from "../assets/images/hero/hero-image.jpg";
 import dotsImage from "../assets/images/home/dots-about.svg";
 import aboutImage from "../assets/images/about/about-image.svg";
 import { CustomConnect } from "../components/CustomConnect.jsx";

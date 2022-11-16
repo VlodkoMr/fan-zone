@@ -7,10 +7,10 @@ import factoryGovernanceContractLocal from '../contractsData/localhost/FactoryGo
 import factoryTimeLockContractLocal from '../contractsData/localhost/FactoryTimeLockContract-address.json';
 import executionContractLocal from '../contractsData/localhost/ChainlinkExecutor-address.json';
 
-// import mainContractAurora from '../contractsData/aurora/MainContract-address.json';
-// import factoryNFTContractAurora from '../contractsData/aurora/FactoryNFTContract-address.json';
-// import factoryFTContractAurora from '../contractsData/aurora/FactoryFTContract-address.json';
-// import factoryGovernanceContractAurora from '../contractsData/aurora/FactoryGovernanceContract-address.json';
+// import mainContractMumbai from '../contractsData/mumbai/MainContract-address.json';
+// import factoryNFTContractMumbai from '../contractsData/mumbai/FactoryNFTContract-address.json';
+// import factoryFTContractMumbai from '../contractsData/mumbai/FactoryFTContract-address.json';
+// import factoryGovernanceContractMumbai from '../contractsData/mumbai/FactoryGovernanceContract-address.json';
 
 import { Interface } from "ethers/lib/utils";
 import mainContractABI from '../contractsData/MainContract.json';
@@ -33,8 +33,8 @@ let executionAddress = executionContractLocal.address;
 let factoryTimeLockAddress = factoryTimeLockContractLocal.address;
 
 // switch (chainId) {
-//   // case 1313161555:
-//   case 1313161554:
+//   // case 1313161554:
+//   case 80001:
 //     mainAddress = mainContractAurora.address;
 //     factoryNFTAddress = factoryNFTContractAurora.address;
 //     factoryFTAddress = factoryFTContractAurora.address;

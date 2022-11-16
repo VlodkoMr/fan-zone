@@ -53,6 +53,7 @@ contract ChainlinkExecutor is Initializable, OwnableUpgradeable, UUPSUpgradeable
 		);
 	}
 
+	// Call by Chainlink Time-based Automation
 	function checkExecutions() public {
 		for (uint _i = 0; _i < proposalEndBlocks.length; ++_i) {
 			if (proposalEndBlocks[_i] < block.number) {
@@ -77,7 +78,7 @@ contract ChainlinkExecutor is Initializable, OwnableUpgradeable, UUPSUpgradeable
 			proposal.calldatas,
 			proposal.descriptionHash
 		);
-		uint proposalId = IGovernanceContract(proposal.contractAddress).execute(
+		IGovernanceContract(proposal.contractAddress).execute(
 			proposal.targets,
 			proposal.values,
 			proposal.calldatas,

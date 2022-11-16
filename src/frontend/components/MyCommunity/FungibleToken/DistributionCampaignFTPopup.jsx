@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useContractWrite, useNetwork, usePrepareContractWrite, useProvider, useWaitForTransaction } from 'wagmi';
+import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi';
 import FungibleTokenABI from '../../../contractsData/FungibleToken.json';
 import { useDispatch } from 'react-redux';
 import { addTransaction } from '../../../store/transactionSlice';
@@ -21,8 +21,6 @@ export function DistributionCampaignFTPopup(
     myBalance,
   }) {
   const dispatch = useDispatch();
-  const provider = useProvider();
-  const { chain } = useNetwork();
   const [isLoading, setIsLoading] = useState(false);
   const [approveFormData, setApproveFormData] = useState({});
   const [submitFormData, setSubmitFormData] = useState({});

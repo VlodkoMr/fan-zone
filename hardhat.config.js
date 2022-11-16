@@ -37,6 +37,10 @@ module.exports = {
     aurora: {
       url: process.env.AURORA_RPC_URL !== undefined ? process.env.AURORA_RPC_URL : "",
       accounts: process.env.AURORA_PRIVATE_KEY !== undefined ? [process.env.AURORA_PRIVATE_KEY] : []
+    },
+    mumbai: {
+      url: process.env.MUMBAI_RPC_URL !== undefined ? process.env.MUMBAI_RPC_URL : "",
+      accounts: process.env.MUMBAI_PRIVATE_KEY !== undefined ? [process.env.MUMBAI_PRIVATE_KEY] : []
     }
   }
 };

@@ -34,7 +34,7 @@ const auroraChain = {
 console.log(`auroraChain`, auroraChain);
 
 const { chains, provider } = configureChains(
-  [auroraChain, chain.hardhat],
+  [auroraChain, chain.hardhat, chain.polygonMumbai],
   [
     // publicProvider(),
     jsonRpcProvider({
