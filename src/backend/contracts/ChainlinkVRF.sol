@@ -1,14 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.12;
 
-import "hardhat/console.sol";
-import "../abstract/utils.sol";
 import '@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol';
 import '@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol';
 import '@chainlink/contracts/src/v0.8/ConfirmedOwner.sol';
 
-contract ChainlinkVRF is VRFConsumerBaseV2, ConfirmedOwner, Utils {
+contract ChainlinkVRF is VRFConsumerBaseV2, ConfirmedOwner {
 	address mainContractAddress;
+	uint public totalCommunityRaffles;
 	mapping(uint => Raffle[]) public communityRaffles;
 
 	struct Raffle {
@@ -44,10 +43,10 @@ contract ChainlinkVRF is VRFConsumerBaseV2, ConfirmedOwner, Utils {
 	}
 
 	function requestRandomWords(uint _communityId, uint _maxValue, uint32 _winnersAmount) external returns (uint) {
-		require(_winnersAmount <= 110, "Winners amount limit is 110 winners per raffle");
+		require(_winnersAmount <= 100, "Winners amount limit is 100 winners per raffle");
 		require(msg.sender == mainContractAddress, "No Access to requestRandomWords");
 
-		uint32 _callbackGasLimit = _winnersAmount * 22000;
+		uint32 _callbackGasLimit = 100000 + _winnersAmount * 30000;
 		uint requestId = COORDINATOR.requestRandomWords(
 			keyHash,
 			s_subscriptionId,
@@ -58,8 +57,9 @@ contract ChainlinkVRF is VRFConsumerBaseV2, ConfirmedOwner, Utils {
 
 		// Add community raffle
 		Raffle memory _raffle = Raffle(requestId, _maxValue, new uint[](0));
-
-		communityRaffles[_communityId].push(_raffle);
+		Raffle[] storage currentRaffles = communityRaffles[_communityId];
+		currentRaffles.push(_raffle);
+		totalCommunityRaffles += 1;
 
 		s_requests[requestId] = RequestStatus({
 		randomWords : new uint[](0),
@@ -78,14 +78,15 @@ contract ChainlinkVRF is VRFConsumerBaseV2, ConfirmedOwner, Utils {
 
 	function fulfillRandomWords(uint _requestId, uint[] memory _randomWords) internal override {
 		require(s_requests[_requestId].exists, 'request not found');
-		s_requests[_requestId].fulfilled = true;
-		s_requests[_requestId].randomWords = _randomWords;
-		emit RequestFulfilled(_requestId, _randomWords);
 
 		RequestStatus storage _request = s_requests[_requestId];
-		Raffle storage raffle = communityRaffles[_request.communityId][_request.raffleIndex];
+		_request.fulfilled = true;
+		_request.randomWords = _randomWords;
+		emit RequestFulfilled(_requestId, _randomWords);
 
+		Raffle storage raffle = communityRaffles[_request.communityId][_request.raffleIndex];
 		uint[] memory _results = new uint[](_randomWords.length);
+
 		for (uint _i = 0; _i < _randomWords.length; ++_i) {
 			_results[_i] = (_randomWords[_i] % raffle.maxValue) + 1;
 		}
@@ -98,7 +99,7 @@ contract ChainlinkVRF is VRFConsumerBaseV2, ConfirmedOwner, Utils {
 		return (request.fulfilled, request.randomWords);
 	}
 
-	function getCommunityRaffles(uint _communityId) public view returns (Raffle[] memory) {
+	function getCommunityRaffleList(uint _communityId) public view returns (Raffle[] memory) {
 		Raffle[] memory _result = new Raffle[](communityRaffles[_communityId].length);
 		for (uint _i = 0; _i < communityRaffles[_communityId].length; ++_i) {
 			_result[_i] = communityRaffles[_communityId][_i];

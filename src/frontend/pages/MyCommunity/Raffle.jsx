@@ -16,11 +16,11 @@ export const Raffle = () => {
     signerOrProvider: provider
   });
 
-  const { data: raffles } = useContractRead({
+  const { data: raffleList } = useContractRead({
     ...chainlinkVRF,
     enabled: currentCommunity?.id?.length > 0,
-    functionName: "getCommunityRaffles",
-    args: [currentCommunity.id]
+    functionName: "communityRaffles",
+    args: [parseInt(currentCommunity?.id)],
   });
 
   // ------------ New Raffle -------------
@@ -28,7 +28,8 @@ export const Raffle = () => {
   const { config: configRaffle, error: errorRaffle } = usePrepareContractWrite({
     ...mainContract,
     functionName: 'newRaffle',
-    args: ["1", 100, 2]
+    enabled: currentCommunity?.id?.length > 0,
+    args: [currentCommunity?.id, 100, 2]
   });
 
   const { data: raffleData, write: raffleWrite } = useContractWrite({
@@ -60,23 +61,13 @@ export const Raffle = () => {
     console.log(`errorRaffle`, errorRaffle);
   }, [errorRaffle]);
 
-  useEffect(() => {
-    console.log(`mainContract`, mainContract);
-    console.log(`raffleWrite`, raffleWrite);
-  }, [raffleWrite]);
-
-  useEffect(() => {
-    console.log(`currentCommunity`, currentCommunity);
-  }, [currentCommunity]);
-
   const handleNewRaffle = () => {
     raffleWrite();
   }
 
   useEffect(() => {
-    console.log(`currentCommunity`, currentCommunity);
-    console.log(`raffles`, raffles);
-  }, [raffles]);
+    console.log(`raffleList`, raffleList);
+  }, [raffleList]);
 
   return (
     <div>

@@ -31,8 +31,6 @@ const auroraChain = {
   testnet: false,
 }
 
-console.log(`auroraChain`, auroraChain);
-
 const { chains, provider } = configureChains(
   [auroraChain, chain.hardhat, chain.polygonMumbai],
   [
