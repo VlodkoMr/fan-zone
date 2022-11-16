@@ -177,9 +177,12 @@ contract MainContract is Initializable, OwnableUpgradeable, UUPSUpgradeable {
 		communities[_id].timeLockContract = _timeLockContract;
 	}
 
-	function newRaffle(uint _communityId, uint _maxValue, uint32 _winnersAmount) public {
+	function newRaffle(uint _nftSeries, uint _communityId, address[] memory _participants, uint32 _winnersAmount) public {
 		require(communities[_communityId].owner == msg.sender, "No access");
-		IChainlinkVRF(chainlinkVRFContract).requestRandomWords(_communityId, _maxValue, _winnersAmount);
+		require(_participants.length > 1, "Not enough participants");
+		require(_participants.length >= _winnersAmount, "Not enough participants for winners amount");
+
+		IChainlinkVRF(chainlinkVRFContract).requestRandomWords(_nftSeries ,_communityId, _participants, _winnersAmount);
 	}
 
 }

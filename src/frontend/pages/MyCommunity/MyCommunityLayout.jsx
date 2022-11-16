@@ -12,17 +12,15 @@ import { setCommunityList, setCurrentCommunity } from '../../store/communitySlic
 import { transformCommunity } from '../../utils/transform';
 import { mainContract } from '../../utils/contracts';
 import { Loader } from '../../components/Loader';
+import { isContractAddress } from "../../utils/format";
 
 export const MyCommunityLayout = () => {
   const dispatch = useDispatch();
   const { address } = useAccount();
   const [isReady, setIsReady] = useState(false);
-  const {
-    data: communityList,
-    isLoading,
-    refetch: RefetchCommunityList
-  } = useContractRead({
+  const { data: communityList, isLoading, refetch: RefetchCommunityList } = useContractRead({
     ...mainContract,
+    enabled: isContractAddress(mainContract.addressOrName),
     functionName: 'getUserCommunities',
     args: [address]
   })

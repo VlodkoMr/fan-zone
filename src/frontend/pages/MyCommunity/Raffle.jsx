@@ -1,16 +1,16 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { InnerBlock, InnerTransparentBlock } from '../../assets/css/common.style';
 import { Button } from "@material-tailwind/react";
-import { useContract, useContractRead, useContractWrite, usePrepareContractWrite, useProvider, useWaitForTransaction } from "wagmi";
-import { chainlinkVRFContract, mainContract } from "../../utils/contracts";
-import { addTransaction } from "../../store/transactionSlice";
-import { isContractAddress } from "../../utils/format";
-import { transformFTCampaign } from "../../utils/transform";
+import { useContractRead } from "wagmi";
+import { chainlinkVRFContract } from "../../utils/contracts";
+import { transformCollectionNFT, transformRaffle } from "../../utils/transform";
 import NFTCollectionABI from "../../contractsData/NFTCollection.json";
+import { isContractAddress } from "../../utils/format";
+import { NewRafflePopup } from "../../components/MyCommunity/Raffle/NewRafflePopup";
 
 export const Raffle = () => {
-  const dispatch = useDispatch();
+  const [isRafflePopupVisible, setIsRafflePopupVisible] = useState(false);
   const currentCommunity = useSelector(state => state.community.current);
 
   const { data: raffleList } = useContractRead({
@@ -18,72 +18,76 @@ export const Raffle = () => {
     enabled: currentCommunity?.id?.length > 0,
     functionName: "getCommunityRaffleList",
     args: [parseInt(currentCommunity?.id)],
+    select: data => data.map(raffle => transformRaffle(raffle))
   });
 
-  // ------------ New Raffle -------------
+  // ------------ NFT Series -------------
 
-  const { config: configRaffle, error: errorRaffle } = usePrepareContractWrite({
-    ...mainContract,
-    functionName: 'newRaffle',
-    enabled: currentCommunity?.id?.length > 0,
-    args: [currentCommunity?.id, 100, 2]
+  const myNFTContract = {
+    addressOrName: currentCommunity?.nftContract,
+    contractInterface: NFTCollectionABI.abi,
+  };
+
+  const { data: collectionItems } = useContractRead({
+    ...myNFTContract,
+    enabled: isContractAddress(currentCommunity?.nftContract),
+    functionName: "getCollections",
+    select: data => data.map(collection => transformCollectionNFT(collection))
   });
-
-  const { data: raffleData, write: raffleWrite } = useContractWrite({
-    ...configRaffle,
-    onSuccess: ({ hash }) => {
-      dispatch(addTransaction({
-        hash: hash,
-        description: `Create new Raffle`
-      }));
-    },
-    onError: ({ message }) => {
-      console.log('onError message', message);
-    },
-  });
-
-  useWaitForTransaction({
-    hash: raffleData?.hash,
-    onError: error => {
-      console.log('is err', error)
-    },
-    onSuccess: data => {
-      if (data) {
-        console.log(`onSuccess`);
-      }
-    },
-  });
-
-  useEffect(() => {
-    console.log(`errorRaffle`, errorRaffle);
-  }, [errorRaffle]);
-
-  const handleNewRaffle = () => {
-    raffleWrite();
-  }
 
   useEffect(() => {
     console.log(`raffleList`, raffleList);
   }, [raffleList]);
 
+  useEffect(() => {
+    console.log(`collectionItems`, collectionItems);
+  }, [collectionItems]);
+
   return (
     <div>
       <InnerTransparentBlock>
         <InnerBlock.Header className="flex justify-between">
-          <span>Raffle (coming soon)</span>
+          <span>Raffle</span>
           <div className="-mt-3 justify-end">
-            <Button onClick={() => handleNewRaffle()}>
-              New Raffle
-            </Button>
+            {collectionItems.length > 0 && (
+              <Button onClick={() => setIsRafflePopupVisible(true)}>
+                New Raffle
+              </Button>
+            )}
           </div>
         </InnerBlock.Header>
       </InnerTransparentBlock>
 
       <InnerBlock className={"flex-1"}>
         <div className="flex-auto">
-          Create raffle and <b>get random winners</b> from your NFT Holders!
+          Create raffle and <b>get random winners</b> from your NFT Series campaign participants.
+          {!collectionItems.length && (
+            <p className={"mt-2 text-red-400"}>Please create NFT Series before using it for Raffles!</p>
+          )}
+
+          {raffleList.length > 0 ? (
+            <>
+              <hr className={"my-4"}/>
+              {raffleList.map(raffle => (
+                <div key={raffle.requestId}>
+                  ...
+                </div>
+              ))}
+            </>
+          ) : (
+            <p className={"text-gray-400"}>*No Raffles</p>
+          )}
         </div>
       </InnerBlock>
+
+      {isRafflePopupVisible && (
+        <NewRafflePopup currentCommunity={currentCommunity}
+                        collectionItems={collectionItems}
+                        setPopupVisible={setIsRafflePopupVisible}
+                        popupVisible={isRafflePopupVisible}
+        />
+      )}
+
     </div>
   );
 }

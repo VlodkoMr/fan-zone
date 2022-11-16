@@ -94,3 +94,12 @@ export const transformProposal = (item) => {
     endBlock: parseInt(item.args.endBlock),
   }
 };
+
+export const transformRaffle = (item) => {
+  return {
+    nftSeries: parseInt(item.nftSeries),
+    participants: item.participants,
+    requestId: item.requestId.toString(),
+    result: item.result.map(num => parseInt(num)),
+  }
+};

@@ -11,8 +11,9 @@ contract ChainlinkVRF is VRFConsumerBaseV2, ConfirmedOwner {
 	mapping(uint => Raffle[]) public communityRaffles;
 
 	struct Raffle {
+		uint nftSeries;
 		uint requestId;
-		uint maxValue;
+		address[] participants;
 		uint[] result;
 	}
 
@@ -42,8 +43,8 @@ contract ChainlinkVRF is VRFConsumerBaseV2, ConfirmedOwner {
 		mainContractAddress = _mainContractAddress;
 	}
 
-	function requestRandomWords(uint _communityId, uint _maxValue, uint32 _winnersAmount) external returns (uint) {
-		require(_winnersAmount <= 100, "Winners amount limit is 100 winners per raffle");
+	function requestRandomWords(uint _nftSeries, uint _communityId, address[] memory _participants, uint32 _winnersAmount) external returns (uint) {
+		require(_winnersAmount <= 500, "Winners amount limit is 500 winners per raffle");
 		require(msg.sender == mainContractAddress, "No Access to requestRandomWords");
 
 		uint32 _callbackGasLimit = 100000 + _winnersAmount * 30000;
@@ -56,7 +57,7 @@ contract ChainlinkVRF is VRFConsumerBaseV2, ConfirmedOwner {
 		);
 
 		// Add community raffle
-		Raffle memory _raffle = Raffle(requestId, _maxValue, new uint[](0));
+		Raffle memory _raffle = Raffle(_nftSeries, requestId, _participants, new uint[](0));
 		Raffle[] storage currentRaffles = communityRaffles[_communityId];
 		currentRaffles.push(_raffle);
 		totalCommunityRaffles += 1;
@@ -88,7 +89,7 @@ contract ChainlinkVRF is VRFConsumerBaseV2, ConfirmedOwner {
 		uint[] memory _results = new uint[](_randomWords.length);
 
 		for (uint _i = 0; _i < _randomWords.length; ++_i) {
-			_results[_i] = (_randomWords[_i] % raffle.maxValue) + 1;
+			_results[_i] = (_randomWords[_i] % raffle.participants.length) + 1;
 		}
 		raffle.result = _results;
 	}
