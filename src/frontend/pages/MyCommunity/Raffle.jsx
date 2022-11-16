@@ -68,11 +68,28 @@ export const Raffle = () => {
               <hr className={"my-4"}/>
               {raffleList && raffleList.length > 0 ? (
                 <>
+                  <div className={"flex flex-row p-2 border-b gap-6 bg-gray-100"}>
+                    <div className={"w-1/3"}>NFT Series</div>
+                    <div className={"w-1/3"}>Result</div>
+                    <div className={"w-32"}>Participants</div>
+                    <div className={"w-32"}></div>
+                  </div>
                   {raffleList.map(raffle => (
-                    <div key={raffle.requestId}>
-                      <div>{raffle.nftSeries}</div>
-                      <div>Result: {raffle.result}</div>
-                      <div>participants count: {raffle.participants.length}</div>
+                    <div key={raffle.requestId} className={"flex flex-row p-2 border-b gap-6"}>
+                      <div className={"w-1/3"}>{raffle.nftSeries}</div>
+                      <div className={"w-1/3"}>
+                        {raffle.result.length > 0 ? (
+                          <small>{raffle.result}</small>
+                        ) : (
+                          <>pending</>
+                        )}
+                      </div>
+                      <div className={"w-32"}>
+                        {raffle.participants.length}
+                      </div>
+                      <div className={"w-32"}>
+                        <span className={"cursor-pointer text-blue-400 hover:text-blue-500 text-sm"}>view participants</span>
+                      </div>
                     </div>
                   ))}
                 </>
