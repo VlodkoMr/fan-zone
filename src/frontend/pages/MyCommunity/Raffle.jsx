@@ -94,7 +94,7 @@ export const Raffle = () => {
                             ))}
                           </small>
                         ) : (
-                          <>pending</>
+                          <small className={"bg-yellow-800 text-white rounded px-2 py-0.5 uppercase font-medium"}>pending</small>
                         )}
                       </div>
                       <div className={"w-32"}>
