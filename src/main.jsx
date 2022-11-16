@@ -20,8 +20,6 @@ const { chains, provider } = configureChains(
   ]
 );
 
-console.log(`import.meta.env.VITE_MUMBAI_API_KEY`, import.meta.env.VITE_MUMBAI_API_KEY);
-
 const { connectors } = getDefaultWallets({
   appName: 'FanZone',
   chains

@@ -6,19 +6,20 @@ import { useContractRead } from "wagmi";
 import { chainlinkVRFContract } from "../../utils/contracts";
 import { transformCollectionNFT, transformRaffle } from "../../utils/transform";
 import NFTCollectionABI from "../../contractsData/NFTCollection.json";
-import { isContractAddress } from "../../utils/format";
+import { isContractAddress, timestampToDate } from "../../utils/format";
 import { NewRafflePopup } from "../../components/MyCommunity/Raffle/NewRafflePopup";
 
 export const Raffle = () => {
   const [isRafflePopupVisible, setIsRafflePopupVisible] = useState(false);
   const currentCommunity = useSelector(state => state.community.current);
 
-  const { data: raffleList } = useContractRead({
+  const { data: raffleList, refetch: refetchRaffleList } = useContractRead({
     ...chainlinkVRFContract,
     enabled: currentCommunity?.id?.length > 0,
     functionName: "getCommunityRaffleList",
     args: [parseInt(currentCommunity?.id)],
-    select: data => data.map(raffle => transformRaffle(raffle))
+    select: data => data.map(raffle => transformRaffle(raffle)).reverse(),
+    watch: true
   });
 
   // ------------ NFT Series -------------
@@ -34,6 +35,13 @@ export const Raffle = () => {
     functionName: "getCollections",
     select: data => data.map(collection => transformCollectionNFT(collection))
   });
+
+  const getSeriesTitle = (id) => {
+    const item = collectionItems.filter(item => item.id === id);
+    if (item) {
+      return item[0].title;
+    }
+  }
 
   useEffect(() => {
     console.log(`raffleList`, raffleList);
@@ -68,26 +76,33 @@ export const Raffle = () => {
               <hr className={"my-4"}/>
               {raffleList && raffleList.length > 0 ? (
                 <>
-                  <div className={"flex flex-row p-2 border-b gap-6 bg-gray-100"}>
+                  <div className={"flex flex-row p-2 border-b gap-6 bg-gray-100 font-medium"}>
                     <div className={"w-32"}>Date</div>
                     <div className={"w-1/4"}>NFT Series</div>
                     <div className={"w-1/3"}>Result</div>
                     <div className={"w-32"}>Participants</div>
                   </div>
                   {raffleList.map(raffle => (
-                    <div key={raffle.requestId} className={"flex flex-row p-2 border-b gap-6"}>
-                      <div className={"w-32"}>Date</div>
-                      <div className={"w-1/4"}>{raffle.nftSeries}</div>
+                    <div key={raffle.requestId} className={"flex flex-row p-2 border-b gap-6 text-sm"}>
+                      <div className={"w-32"}>{timestampToDate(raffle.date * 1000)}</div>
+                      <div className={"w-1/4"}>{getSeriesTitle(raffle.nftSeries)}</div>
                       <div className={"w-1/3"}>
                         {raffle.result.length > 0 ? (
-                          <small>{raffle.result}</small>
+                          <small className={"leading-4"}>
+                            {raffle.result.map(num => (
+                              <div>{raffle.participants[num - 1]}</div>
+                            ))}
+                          </small>
                         ) : (
                           <>pending</>
                         )}
                       </div>
                       <div className={"w-32"}>
                         {raffle.participants.length}
-                        <span className={"cursor-pointer text-blue-400 hover:text-blue-500 text-sm ml-10"}>view</span>
+                        <span className={"cursor-pointer text-blue-400 hover:text-blue-500 text-sm ml-6"}
+                              onClick={() => alert("Coming soon...")}>
+                          view all
+                        </span>
                       </div>
                     </div>
                   ))}
@@ -105,6 +120,7 @@ export const Raffle = () => {
                         collectionItems={collectionItems}
                         setPopupVisible={setIsRafflePopupVisible}
                         popupVisible={isRafflePopupVisible}
+                        handleSuccess={refetchRaffleList}
         />
       )}
 

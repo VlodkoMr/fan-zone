@@ -97,6 +97,7 @@ export const transformProposal = (item) => {
 
 export const transformRaffle = (item) => {
   return {
+    date: parseInt(item.date),
     nftSeries: parseInt(item.nftSeries),
     participants: item.participants,
     requestId: item.requestId.toString(),

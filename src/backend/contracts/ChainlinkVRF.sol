@@ -11,6 +11,7 @@ contract ChainlinkVRF is VRFConsumerBaseV2, ConfirmedOwner {
 	mapping(uint => Raffle[]) public communityRaffles;
 
 	struct Raffle {
+		uint date;
 		uint nftSeries;
 		uint requestId;
 		address[] participants;
@@ -57,7 +58,7 @@ contract ChainlinkVRF is VRFConsumerBaseV2, ConfirmedOwner {
 		);
 
 		// Add community raffle
-		Raffle memory _raffle = Raffle(_nftSeries, requestId, _participants, new uint[](0));
+		Raffle memory _raffle = Raffle(block.timestamp, _nftSeries, requestId, _participants, new uint[](0));
 		Raffle[] storage currentRaffles = communityRaffles[_communityId];
 		currentRaffles.push(_raffle);
 		totalCommunityRaffles += 1;

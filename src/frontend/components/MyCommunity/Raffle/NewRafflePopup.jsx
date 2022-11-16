@@ -78,7 +78,8 @@ export function NewRafflePopup(
 
     const actionsFilterNFT = await contractNFT.filters.CampaignAction(currentCommunity.id, formData.nftSeries.toString(), 1);
     const actionsNFT = await contractNFT.queryFilter(actionsFilterNFT);
-    const addressList = actionsNFT.map(event => event.args._address);
+    const addressList = actionsNFT.map(event => event.args._address).sort(() => 0.5 - Math.random());
+    console.log(`addressList`, addressList);
 
     if (addressList.length > 500) {
       alert("Winners amount limit is 500 winners per raffle");
