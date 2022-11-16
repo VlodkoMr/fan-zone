@@ -49,7 +49,7 @@ export const Raffle = () => {
         <InnerBlock.Header className="flex justify-between">
           <span>Raffle</span>
           <div className="-mt-3 justify-end">
-            {collectionItems.length > 0 && (
+            {collectionItems && collectionItems.length > 0 && (
               <Button onClick={() => setIsRafflePopupVisible(true)}>
                 New Raffle
               </Button>
@@ -61,21 +61,23 @@ export const Raffle = () => {
       <InnerBlock className={"flex-1"}>
         <div className="flex-auto">
           Create raffle and <b>get random winners</b> from your NFT Series campaign participants.
-          {!collectionItems.length && (
+          {(!collectionItems || !collectionItems.length) ? (
             <p className={"mt-2 text-red-400"}>Please create NFT Series before using it for Raffles!</p>
-          )}
-
-          {raffleList.length > 0 ? (
-            <>
-              <hr className={"my-4"}/>
-              {raffleList.map(raffle => (
-                <div key={raffle.requestId}>
-                  ...
-                </div>
-              ))}
-            </>
           ) : (
-            <p className={"text-gray-400"}>*No Raffles</p>
+            <>
+              {raffleList && raffleList.length > 0 ? (
+                <>
+                  <hr className={"my-4"}/>
+                  {raffleList.map(raffle => (
+                    <div key={raffle.requestId}>
+                      ...
+                    </div>
+                  ))}
+                </>
+              ) : (
+                <p className={"text-gray-400"}>*No Raffles</p>
+              )}
+            </>
           )}
         </div>
       </InnerBlock>
