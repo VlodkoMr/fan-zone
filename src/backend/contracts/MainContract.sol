@@ -5,12 +5,14 @@ import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
+import "../interfaces/IChainlinkVRF.sol";
 
 contract MainContract is Initializable, OwnableUpgradeable, UUPSUpgradeable {
 	address public factoryNFTContract;
 	address public factoryFTContract;
 	address public factoryDAOContract;
 	address public factoryTimeLockContract;
+	address public chainlinkVRFContract;
 
 	uint public communityCount;
 	mapping(uint => Community) public communities;
@@ -80,12 +82,14 @@ contract MainContract is Initializable, OwnableUpgradeable, UUPSUpgradeable {
 		address _factoryNFTContract,
 		address _factoryFTContract,
 		address _factoryDAOContract,
-		address _factoryTimeLockContract
+		address _factoryTimeLockContract,
+		address _chainlinkVRFContract
 	) public onlyOwner {
 		factoryNFTContract = _factoryNFTContract;
 		factoryFTContract = _factoryFTContract;
 		factoryDAOContract = _factoryDAOContract;
 		factoryTimeLockContract = _factoryTimeLockContract;
+		chainlinkVRFContract = _chainlinkVRFContract;
 	}
 
 	// Add new community
@@ -165,10 +169,16 @@ contract MainContract is Initializable, OwnableUpgradeable, UUPSUpgradeable {
 		require(msg.sender == factoryDAOContract, "No Access for this action");
 		communities[_id].daoContract = _daoContract;
 	}
+
 	// Update DAO contract address
 	function updateCommunityTokenLock(uint _id, address _timeLockContract) external {
 		require(msg.sender == factoryTimeLockContract, "No Access for this action");
 		communities[_id].timeLockContract = _timeLockContract;
+	}
+
+	function newRaffle(uint _communityId, uint _maxValue, uint32 _winnersAmount) public returns (uint) {
+		require(communities[_communityId].owner == msg.sender, "No access");
+		return IChainlinkVRF(chainlinkVRFContract).requestRandomWords(_communityId, _maxValue, _winnersAmount);
 	}
 
 }
