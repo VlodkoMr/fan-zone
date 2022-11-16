@@ -82,12 +82,20 @@ export function NewRafflePopup(
 
     if (addressList.length > 500) {
       alert("Winners amount limit is 500 winners per raffle");
+      setIsLoading(false);
       return;
     }
     if (addressList.length < formData.countWinners) {
       alert("Not enough participants for this count of winners");
+      setIsLoading(false);
       return;
     }
+    if (addressList.length < 1) {
+      alert("Wrong count of winners");
+      setIsLoading(false);
+      return;
+    }
+
 
     setNewRaffle({
       nftSeries: formData.nftSeries,

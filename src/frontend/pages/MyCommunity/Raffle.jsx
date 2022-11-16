@@ -65,12 +65,14 @@ export const Raffle = () => {
             <p className={"mt-2 text-red-400"}>Please create NFT Series before using it for Raffles!</p>
           ) : (
             <>
+              <hr className={"my-4"}/>
               {raffleList && raffleList.length > 0 ? (
                 <>
-                  <hr className={"my-4"}/>
                   {raffleList.map(raffle => (
                     <div key={raffle.requestId}>
-                      ...
+                      <div>{raffle.nftSeries}</div>
+                      <div>Result: {raffle.result}</div>
+                      <div>participants count: {raffle.participants.length}</div>
                     </div>
                   ))}
                 </>
