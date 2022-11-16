@@ -138,9 +138,9 @@ export const DAO = () => {
                         <Button onClick={() => setCreateProposalPopupVisible(true)}>
                           Create new Proposal
                         </Button>
-                        <Button className={"ml-3"} onClick={() => runExecute()}>
-                          Execute
-                        </Button>
+                        {/*<Button className={"ml-3"} onClick={() => runExecute()}>*/}
+                        {/*  Execute*/}
+                        {/*</Button>*/}
                       </div>
                     </div>
 
