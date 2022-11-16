@@ -5,21 +5,18 @@ import { Button } from "@material-tailwind/react";
 import { useContract, useContractRead, useContractWrite, usePrepareContractWrite, useProvider, useWaitForTransaction } from "wagmi";
 import { chainlinkVRFContract, mainContract } from "../../utils/contracts";
 import { addTransaction } from "../../store/transactionSlice";
+import { isContractAddress } from "../../utils/format";
+import { transformFTCampaign } from "../../utils/transform";
+import NFTCollectionABI from "../../contractsData/NFTCollection.json";
 
 export const Raffle = () => {
-  const provider = useProvider();
   const dispatch = useDispatch();
   const currentCommunity = useSelector(state => state.community.current);
 
-  const chainlinkVRF = useContract({
-    ...chainlinkVRFContract,
-    signerOrProvider: provider
-  });
-
   const { data: raffleList } = useContractRead({
-    ...chainlinkVRF,
+    ...chainlinkVRFContract,
     enabled: currentCommunity?.id?.length > 0,
-    functionName: "communityRaffles",
+    functionName: "getCommunityRaffleList",
     args: [parseInt(currentCommunity?.id)],
   });
 
