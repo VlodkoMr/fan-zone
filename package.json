@@ -12,14 +12,9 @@
     "update:local": "env $(cat .env) npx hardhat run src/backend/scripts/update.local.js --network localhost",
     "build:local": "vite build",
     "start": "vite",
-    "deploy:aurora": "env $(cat .env) npx hardhat run src/backend/scripts/deploy.js --network aurora",
     "deploy:mumbai": "env $(cat .env) npx hardhat run src/backend/scripts/deploy.js --network mumbai",
-    "update:aurora": "env $(cat .env) npx hardhat run src/backend/scripts/update.aurora.js --network aurora",
-    "verify:aurora": "env $(cat .env) npx hardhat verify '' --network aurora",
     "verify:mumbai": "env $(cat .env) npx hardhat verify '' --network mumbai",
-    "build:aurora": "vite build --mode aurora",
     "build:mumbai": "vite build --mode mumbai",
-    "start:aurora": "vite --mode aurora",
     "start:mumbai": "vite --mode mumbai"
   },
   "dependencies": {
