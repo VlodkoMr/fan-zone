@@ -43,6 +43,10 @@ export const Raffle = () => {
     }
   }
 
+  const getWinner = (num) => {
+    // raffle.participants[num - 1]
+  }
+
   useEffect(() => {
     console.log(`raffleList`, raffleList);
   }, [raffleList]);
@@ -87,10 +91,10 @@ export const Raffle = () => {
                       <div className={"w-32"}>{timestampToDate(raffle.date * 1000)}</div>
                       <div className={"w-1/4"}>{getSeriesTitle(raffle.nftSeries)}</div>
                       <div className={"w-1/3"}>
-                        {raffle.result.length > 0 ? (
+                        {raffle.winners.length > 0 ? (
                           <small className={"leading-4"}>
-                            {raffle.result.map(num => (
-                              <div>{raffle.participants[num - 1]}</div>
+                            {raffle.winners.map((address, index) => (
+                              <div key={index}>{address}</div>
                             ))}
                           </small>
                         ) : (

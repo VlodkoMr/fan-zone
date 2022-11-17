@@ -95,12 +95,30 @@ export const transformProposal = (item) => {
   }
 };
 
+const getWinner = (list, num) => {
+  let index = num - 1;
+  if (list.length >= num) {
+    return list.splice(index, 1);
+  } else {
+    return list.pop();
+  }
+}
+
 export const transformRaffle = (item) => {
+  const winnerNumbers = item.result.map(num => parseInt(num));
+  let list = [...item.participants];
+
+  let winners = [];
+  winnerNumbers.map(num => {
+    winners.push(getWinner(list, num));
+  });
+
   return {
     date: parseInt(item.date),
     nftSeries: parseInt(item.nftSeries),
     participants: item.participants,
     requestId: item.requestId.toString(),
-    result: item.result.map(num => parseInt(num)),
+    result: winnerNumbers,
+    winners: winners,
   }
 };

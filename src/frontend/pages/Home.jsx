@@ -39,10 +39,10 @@ export const Home = () => {
                 </h1>
                 <p
                   className="text-base sm:text-lg sm:leading-relaxed md:text-xl md:leading-relaxed mx-auto
-                  mb-10 text-[#e4e4e4] max-w-[600px]"
+                  mb-10 text-[#e4e4e4] max-w-[640px]"
                 >
                   Take advantage of web3 in a few clicks: create NFT collection,
-                  fungible token, share news and extend your audience!
+                  fungible token, DAO, raffles, share news and extend your audience!
                 </p>
                 <ul className="flex flex-wrap items-center justify-center mb-10">
                   <li>
@@ -65,10 +65,10 @@ export const Home = () => {
                 data-wow-delay=".25s"
               >
                 <div className="absolute left-6 -top-10">
-                  <a href="https://aurora.dev/" target={"_blank"}>
-                    <img src={auroraLogo} alt="aurora"
-                         className={"h-8 opacity-30 hover:opacity-100 transition"}/>
-                  </a>
+                  {/*<a href="https://aurora.dev/" target={"_blank"}>*/}
+                  {/*  <img src={auroraLogo} alt="aurora"*/}
+                  {/*       className={"h-8 opacity-30 hover:opacity-100 transition"}/>*/}
+                  {/*</a>*/}
                 </div>
 
                 <div className="mt-12">
@@ -102,7 +102,7 @@ export const Home = () => {
                 </h2>
                 <p className="text-lg text-center sm:text-lg leading-relaxed sm:leading-relaxed text-body-color">
                   Create and manage your community in few clicks:
-                  your own tokenomic, NFT Collections, DAO, events and distribution campaigns.
+                  your own tokenomic, NFT Collections, DAO, raffles, events and distribution campaigns.
                 </p>
               </div>
             </div>
