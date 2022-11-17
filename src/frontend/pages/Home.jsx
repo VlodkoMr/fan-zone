@@ -1452,9 +1452,8 @@ export const Home = () => {
                   <h2 className="text-[24px] font-semibold mb-6">
                     Video Review
                   </h2>
-                  <iframe width="620" height="340" src="https://www.youtube.com/embed/R5AKJqWNcVs"
-                          frameBorder="0"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  <iframe width="620" height="340" src="https://www.youtube.com/embed/yEXkDMmtRfo" title="YouTube video player"
+                          frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen></iframe>
                 </div>
 

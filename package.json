@@ -16,7 +16,7 @@
     "deploy:mumbai": "env $(cat .env) npx hardhat run src/backend/scripts/deploy.js --network mumbai",
     "update:aurora": "env $(cat .env) npx hardhat run src/backend/scripts/update.aurora.js --network aurora",
     "verify:aurora": "env $(cat .env) npx hardhat verify '' --network aurora",
-    "verify:mumbai": "env $(cat .env) npx hardhat verify '0xC3dE6bcA85f05a1dD5E6Fb5B7244E55e5f71bb1a' '0x6d78276578afBbE59D174109f069630E8590cbF7' 1301 '0x7a1BaC17Ccc5b313516C5E16fb24f7659aA5ebed' '0x4b09e658ed251bcafeebbc69400383d49f344ace09b9576fe248bb02c003fe9f' --network mumbai",
+    "verify:mumbai": "env $(cat .env) npx hardhat verify '' --network mumbai",
     "build:aurora": "vite build --mode aurora",
     "build:mumbai": "vite build --mode mumbai",
     "start:aurora": "vite --mode aurora",
